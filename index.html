@@ -2,17 +2,18 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>BetSmart Pro</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/telegram-web-app/7.0.0/telegram-web-app.min.js"></script>
-    <!-- Ajout des icônes -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary: #00ff9d;
+            --primary: #4CAF50;
             --secondary: #1a1a2e;
-            --accent: #ffd700;
+            --accent: #FFC107;
             --text: #ffffff;
+            --success: #4CAF50;
+            --danger: #f44336;
         }
 
         * {
@@ -22,244 +23,341 @@
         }
 
         body {
-            background: linear-gradient(135deg, #1a1a2e, #0d0d1a);
+            background: linear-gradient(135deg, #1F2937, #111827);
             color: var(--text);
             font-family: 'Helvetica Neue', Arial, sans-serif;
             min-height: 100vh;
-            padding: 20px;
+            max-height: 100vh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .container {
             max-width: 600px;
             margin: 0 auto;
             padding: 20px;
+            height: 100%;
         }
 
-        /* Titre amélioré */
+        .page {
+            display: none;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Styles du header */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: inherit;
+            padding: 15px 0;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+
         .app-title {
             text-align: center;
-            margin-bottom: 40px;
             text-transform: uppercase;
             letter-spacing: 2px;
         }
 
         .bet-smart {
             color: var(--primary);
-            font-size: 36px;
+            font-size: 32px;
             font-weight: 800;
-            text-shadow: 0 0 20px rgba(0, 255, 157, 0.3);
+            text-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
         }
 
         .pro {
             color: var(--accent);
-            font-size: 36px;
+            font-size: 32px;
             font-weight: 800;
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
         }
 
-        /* Menus principaux améliorés */
-        .menu-option {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 255, 157, 0.2);
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 25px;
+        /* Menu principal */
+        .main-menu-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
             cursor: pointer;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
         }
 
-        .menu-option::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(0, 255, 157, 0.1), transparent);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .menu-option:hover {
-            transform: translateY(-5px);
+        .main-menu-option:hover {
+            transform: translateY(-3px);
+            background: rgba(76, 175, 80, 0.1);
             border-color: var(--primary);
-            box-shadow: 0 10px 30px rgba(0, 255, 157, 0.15);
         }
 
-        .menu-option:hover::before {
-            opacity: 1;
+        /* Catégories de prédictions */
+        .prediction-categories {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 10px;
         }
 
-        .menu-title {
+        .prediction-category {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .prediction-category:hover {
+            background: rgba(76, 175, 80, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .category-icon {
             font-size: 24px;
+            margin-bottom: 10px;
             color: var(--primary);
-            margin-bottom: 15px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 12px;
         }
 
-        .menu-description {
-            color: rgba(255, 255, 255, 0.8);
+        .category-title {
             font-size: 14px;
-            line-height: 1.6;
-            font-style: italic;
-            margin-left: 36px;
+            font-weight: 600;
+            color: var(--text);
         }
 
-        /* Boutons sociaux améliorés */
+        /* Matchs */
+        .match-container {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .match-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .match-teams {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .team {
+            text-align: center;
+            flex: 1;
+        }
+
+        .team-name {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .vs {
+            margin: 0 15px;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        .prediction-info {
+            background: rgba(76, 175, 80, 0.1);
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 13px;
+        }
+
+        .prediction-value {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Boutons sociaux */
         .social-buttons {
             display: flex;
             justify-content: center;
             gap: 20px;
-            margin-top: 40px;
+            padding: 20px;
+            position: sticky;
+            bottom: 0;
+            background: inherit;
+            backdrop-filter: blur(10px);
         }
 
         .social-button {
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             border: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 20px;
             color: white;
             cursor: pointer;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .social-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
-            opacity: 0;
-            transition: opacity 0.3s ease;
         }
 
         .social-button:hover {
-            transform: translateY(-5px);
+            transform: translateY(-3px);
         }
 
-        .social-button:hover::before {
-            opacity: 1;
-        }
+        .telegram { background: #0088cc; }
+        .youtube { background: #ff0000; }
+        .tiktok { background: #000000; }
 
-        .telegram {
-            background: #0088cc;
-        }
-
-        .youtube {
-            background: #ff0000;
-        }
-
-        .tiktok {
-            background: #000000;
-        }
-
-        /* Section des prédictions */
-        .predictions-container {
-            display: none;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            margin-top: 20px;
-        }
-
-        .prediction-category {
-            background: rgba(0, 255, 157, 0.05);
-            border: 1px solid rgba(0, 255, 157, 0.2);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .prediction-category:hover {
-            background: rgba(0, 255, 157, 0.1);
-            border-color: var(--primary);
-        }
-
-        .prediction-title {
+        /* Back button */
+        .back-button {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            background: none;
+            border: none;
             color: var(--primary);
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 101;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="app-title">
-            <span class="bet-smart">BetSmart</span> <span class="pro">Pro</span>
-        </h1>
-
-        <div class="menu-option" onclick="showComboDay()">
-            <div class="menu-title">
-                <i class="fas fa-chart-line" style="color: var(--primary)"></i>
-                Combo du Jour
+        <!-- Page principale -->
+        <div id="main-page" class="page active">
+            <div class="header">
+                <h1 class="app-title">
+                    <span class="bet-smart">BetSmart</span> <span class="pro">Pro</span>
+                </h1>
             </div>
-            <div class="menu-description">
-                Prédictions fiables basées sur une analyse approfondie et des intelligences artificielles
+
+            <div class="main-menu-option" onclick="showPage('combo-page')">
+                <div class="menu-title">
+                    <i class="fas fa-chart-line"></i>
+                    Combo du Jour
+                </div>
+                <div class="menu-description">
+                    Prédictions fiables basées sur une analyse approfondie
+                </div>
+            </div>
+
+            <div class="main-menu-option" onclick="showTopScore()">
+                <div class="menu-title">
+                    <i class="fas fa-trophy"></i>
+                    Top Score
+                </div>
+                <div class="menu-description">
+                    Meilleurs scores à fort potentiel
+                </div>
             </div>
         </div>
 
-        <div class="menu-option" onclick="showTopScore()">
-            <div class="menu-title">
-                <i class="fas fa-trophy" style="color: var(--primary)"></i>
-                Top Score
+        <!-- Page Combo du Jour -->
+        <div id="combo-page" class="page">
+            <button class="back-button" onclick="showPage('main-page')">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            
+            <div class="header">
+                <h1 class="app-title">
+                    <span class="bet-smart">Combo</span> <span class="pro">du Jour</span>
+                </h1>
             </div>
-            <div class="menu-description">
-                Meilleurs scores à fort potentiel avec des statistiques détaillées
-            </div>
-        </div>
 
-        <!-- Container pour les prédictions -->
-        <div id="predictions-container" class="predictions-container">
-            <div class="prediction-category" onclick="showPrediction('victoire')">
-                <div class="prediction-title">
-                    <i class="fas fa-flag-checkered"></i> Victoire Direct
+            <div class="prediction-categories">
+                <div class="prediction-category" onclick="showPredictions('victoire')">
+                    <div class="category-icon">
+                        <i class="fas fa-trophy-alt"></i>
+                    </div>
+                    <div class="category-title">Victoire Direct</div>
+                </div>
+
+                <div class="prediction-category" onclick="showPredictions('double-chance')">
+                    <div class="category-icon">
+                        <i class="fas fa-dice"></i>
+                    </div>
+                    <div class="category-title">Double Chance</div>
+                </div>
+
+                <div class="prediction-category" onclick="showPredictions('total-15')">
+                    <div class="category-icon">
+                        <i class="fas fa-futbol"></i>
+                    </div>
+                    <div class="category-title">Total 1.5 But</div>
+                </div>
+
+                <div class="prediction-category" onclick="showPredictions('total-25')">
+                    <div class="category-icon">
+                        <i class="fas fa-futbol"></i>
+                    </div>
+                    <div class="category-title">Total 2.5 Buts</div>
+                </div>
+
+                <div class="prediction-category" onclick="showPredictions('btts')">
+                    <div class="category-icon">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <div class="category-title">Les Deux Équipes Marquent</div>
+                </div>
+
+                <div class="prediction-category" onclick="showPredictions('under-35')">
+                    <div class="category-icon">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                    <div class="category-title">Moins de 3.5 Buts</div>
                 </div>
             </div>
-            
-            <div class="prediction-category" onclick="showPrediction('double-chance')">
-                <div class="prediction-title">
-                    <i class="fas fa-dice"></i> Double Chance
+
+            <!-- Exemple de matchs -->
+            <div id="predictions-content" style="display: none; margin-top: 20px;">
+                <div class="match-container">
+                    <div class="match-header">
+                        <span>Premier League</span>
+                        <span>20:45</span>
+                    </div>
+                    <div class="match-teams">
+                        <div class="team">
+                            <div class="team-name">Manchester City</div>
+                        </div>
+                        <div class="vs">VS</div>
+                        <div class="team">
+                            <div class="team-name">Liverpool</div>
+                        </div>
+                    </div>
+                    <div class="prediction-info">
+                        <span>Prédiction:</span>
+                        <span class="prediction-value">1X (Double Chance)</span>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="prediction-category" onclick="showPrediction('total-15')">
-                <div class="prediction-title">
-                    <i class="fas fa-futbol"></i> Total 1.5 But
-                </div>
-            </div>
-            
-            <div class="prediction-category" onclick="showPrediction('total-25')">
-                <div class="prediction-title">
-                    <i class="fas fa-futbol"></i> Total 2.5 Buts
-                </div>
-            </div>
-            
-            <div class="prediction-category" onclick="showPrediction('btts')">
-                <div class="prediction-title">
-                    <i class="fas fa-exchange-alt"></i> Les Deux Équipes Marquent
-                </div>
-            </div>
-            
-            <div class="prediction-category" onclick="showPrediction('under-35')">
-                <div class="prediction-title">
-                    <i class="fas fa-arrow-down"></i> Moins de 3.5 Buts
+
+                <div class="match-container">
+                    <div class="match-header">
+                        <span>Ligue 1</span>
+                        <span>21:00</span>
+                    </div>
+                    <div class="match-teams">
+                        <div class="team">
+                            <div class="team-name">PSG</div>
+                        </div>
+                        <div class="vs">VS</div>
+                        <div class="team">
+                            <div class="team-name">Marseille</div>
+                        </div>
+                    </div>
+                    <div class="prediction-info">
+                        <span>Prédiction:</span>
+                        <span class="prediction-value">Plus de 2.5 buts</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -281,18 +379,24 @@
         let tg = window.Telegram.WebApp;
         tg.expand();
 
-        function showComboDay() {
-            const predictionsContainer = document.getElementById('predictions-container');
-            predictionsContainer.style.display = predictionsContainer.style.display === 'none' ? 'block' : 'none';
+        function showPage(pageId) {
+            // Cache toutes les pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            // Affiche la page demandée
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        function showPredictions(category) {
+            const predictionsContent = document.getElementById('predictions-content');
+            predictionsContent.style.display = 'block';
+            // Faire défiler jusqu'aux prédictions
+            predictionsContent.scrollIntoView({ behavior: 'smooth' });
         }
 
         function showTopScore() {
             tg.showAlert('Chargement des Top Scores...');
-        }
-
-        function showPrediction(category) {
-            // Ici on peut ajouter la logique pour afficher les prédictions spécifiques
-            tg.showAlert(`Chargement des prédictions pour ${category}...`);
         }
 
         function openTelegram() {
