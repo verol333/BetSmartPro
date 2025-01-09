@@ -8,11 +8,11 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary: #2ecc71;
+            --primary: #00c853;
             --secondary: #1a1a2e;
             --accent: #ffd700;
-            --dark-bg: #111827;
-            --card-bg: rgba(46, 204, 113, 0.05);
+            --dark-bg: #0a0f1c;
+            --card-bg: rgba(0, 200, 83, 0.08);
             --text: #ffffff;
         }
 
@@ -23,136 +23,119 @@
         }
 
         body {
-            background: linear-gradient(135deg, #1a1a2e, #0d0d1a);
+            background: linear-gradient(145deg, #0a0f1c, #141e33);
             color: var(--text);
             font-family: 'Helvetica Neue', Arial, sans-serif;
             min-height: 100vh;
             overflow-x: hidden;
-            position: relative;
         }
 
         .container {
             max-width: 600px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 30px 20px;
         }
 
-        /* Cartes de menu */
-        .menu-card {
-            background: rgba(46, 204, 113, 0.05);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(46, 204, 113, 0.2);
+        /* Nouveaux styles pour les menus principaux */
+        .main-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .menu-item {
+            background: linear-gradient(145deg, rgba(0, 200, 83, 0.1), rgba(0, 200, 83, 0.05));
             border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 25px;
+            padding: 25px;
             cursor: pointer;
-            transition: all 0.4s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
-            overflow: hidden;
+            border: 1px solid rgba(0, 200, 83, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
 
-        .menu-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(46, 204, 113, 0.1), transparent);
-            opacity: 0;
-            transition: opacity 0.3s ease;
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 200, 83, 0.2);
+            border-color: rgba(0, 200, 83, 0.3);
         }
 
-        .menu-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--primary);
-            box-shadow: 0 10px 30px rgba(46, 204, 113, 0.2);
-        }
-
-        .menu-card:hover::before {
-            opacity: 1;
-        }
-
-        /* Titre des menus */
-        .menu-title {
-            font-size: 26px;
-            color: var(--primary);
+        .menu-icon {
+            font-size: 32px;
             margin-bottom: 15px;
-            font-weight: 700;
+            color: var(--primary);
             display: flex;
             align-items: center;
             gap: 15px;
         }
 
-        .menu-emoji {
-            font-size: 32px;
+        .menu-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 10px;
         }
 
         .menu-description {
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(255, 255, 255, 0.8);
             font-size: 15px;
-            line-height: 1.6;
-            font-style: italic;
-            padding-left: 47px;
+            line-height: 1.5;
+            padding-left: 5px;
         }
 
-        /* Section avantages */
+        /* Section des avantages */
         .advantages {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
             margin-top: 40px;
             padding: 20px 0;
-            border-top: 1px solid rgba(46, 204, 113, 0.2);
+            border-top: 1px solid rgba(0, 200, 83, 0.1);
         }
 
-        .advantage-item {
+        .advantage-card {
+            flex: 1 1 calc(50% - 15px);
+            background: rgba(0, 200, 83, 0.03);
+            border-radius: 15px;
+            padding: 20px;
             display: flex;
             align-items: center;
             gap: 15px;
-            margin-bottom: 15px;
-            padding: 15px;
-            background: rgba(46, 204, 113, 0.03);
-            border-radius: 12px;
             transition: all 0.3s ease;
         }
 
-        .advantage-item:hover {
-            background: rgba(46, 204, 113, 0.07);
-            transform: translateX(5px);
+        .advantage-card:hover {
+            background: rgba(0, 200, 83, 0.06);
+            transform: translateY(-3px);
         }
 
         .advantage-icon {
-            color: var(--primary);
             font-size: 24px;
+            color: var(--primary);
         }
 
         .advantage-text {
-            color: rgba(255, 255, 255, 0.9);
             font-size: 14px;
-            font-style: italic;
+            color: rgba(255, 255, 255, 0.9);
         }
 
-        /* Pages de prédictions */
-        .page {
-            display: none;
+        /* Grid des catégories de prédictions */
+        #combo-page {
+            background: linear-gradient(145deg, #0a0f1c, #141e33);
             min-height: 100vh;
-            animation: fadeIn 0.3s ease;
         }
 
-        .page.active {
-            display: block;
-        }
-
-        /* Grille de prédictions */
         .predictions-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
-            padding: 20px;
-            margin-top: 30px;
+            margin-top: 20px;
         }
 
         .prediction-category {
-            background: rgba(46, 204, 113, 0.05);
-            border: 1px solid rgba(46, 204, 113, 0.2);
+            background: rgba(0, 200, 83, 0.05);
+            border: 1px solid rgba(0, 200, 83, 0.1);
             border-radius: 15px;
             padding: 25px;
             text-align: center;
@@ -161,15 +144,15 @@
         }
 
         .prediction-category:hover {
+            background: rgba(0, 200, 83, 0.1);
             transform: translateY(-5px);
-            background: rgba(46, 204, 113, 0.1);
             border-color: var(--primary);
-            box-shadow: 0 8px 25px rgba(46, 204, 113, 0.15);
+            box-shadow: 0 8px 25px rgba(0, 200, 83, 0.15);
         }
 
         .category-icon {
             font-size: 28px;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             color: var(--primary);
         }
 
@@ -179,12 +162,42 @@
             color: var(--text);
         }
 
-        /* Boutons de navigation */
+        /* Réseaux sociaux */
+        .social-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .social-button {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .social-button:hover {
+            transform: translateY(-3px);
+        }
+
+        .telegram { background: #0088cc; }
+        .youtube { background: #ff0000; }
+        .tiktok { background: #000000; }
+
+        /* Navigation */
         .back-button {
             position: fixed;
             top: 20px;
             left: 20px;
-            background: rgba(46, 204, 113, 0.1);
+            background: rgba(0, 200, 83, 0.1);
             border: none;
             border-radius: 50%;
             width: 45px;
@@ -199,104 +212,18 @@
         }
 
         .back-button:hover {
-            background: rgba(46, 204, 113, 0.2);
+            background: rgba(0, 200, 83, 0.2);
             transform: scale(1.1);
         }
 
-        /* Matchs */
-        .match-card {
-            background: rgba(46, 204, 113, 0.05);
-            border: 1px solid rgba(46, 204, 113, 0.2);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 15px;
-            transition: all 0.3s ease;
+        .page {
+            display: none;
+            animation: fadeIn 0.3s ease;
         }
 
-        .match-card:hover {
-            background: rgba(46, 204, 113, 0.08);
-            transform: translateY(-3px);
+        .page.active {
+            display: block;
         }
-
-        .match-header {
-            display: flex;
-            justify-content: space-between;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 14px;
-            margin-bottom: 15px;
-        }
-
-        .match-teams {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 15px 0;
-        }
-
-        .team {
-            text-align: center;
-            flex: 1;
-        }
-
-        .team-name {
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--text);
-        }
-
-        .vs {
-            margin: 0 15px;
-            color: var(--accent);
-            font-weight: bold;
-        }
-
-        .prediction-info {
-            margin-top: 15px;
-            padding: 10px;
-            background: rgba(46, 204, 113, 0.1);
-            border-radius: 8px;
-            font-size: 14px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .prediction-value {
-            color: var(--accent);
-            font-weight: 600;
-        }
-
-        /* Boutons sociaux */
-        .social-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            margin-top: 40px;
-        }
-
-        .social-button {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            border: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .social-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .telegram { background: #0088cc; }
-        .youtube { background: #ff0000; }
-        .tiktok { background: #000000; }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
@@ -308,54 +235,51 @@
     <!-- Page Principale -->
     <div id="main-page" class="page active">
         <div class="container">
-            <div class="menu-card" onclick="showPage('combo-page')">
-                <div class="menu-title">
-                    <span class="menu-emoji">🎯</span>
-                    Combo du Jour
+            <div class="main-menu">
+                <div class="menu-item" onclick="showPage('combo-page')">
+                    <div class="menu-icon">🎯</div>
+                    <div class="menu-title">Combo du Jour</div>
+                    <div class="menu-description">
+                        Prédictions premium basées sur l'analyse approfondie et l'intelligence artificielle.
+                    </div>
                 </div>
-                <div class="menu-description">
-                    Prédictions premium basées sur l'analyse approfondie et l'intelligence artificielle.
+
+                <div class="menu-item" onclick="showTopScore()">
+                    <div class="menu-icon">💎</div>
+                    <div class="menu-title">Top Score</div>
+                    <div class="menu-description">
+                        Sélections exclusives à fort potentiel, validées par nos algorithmes.
+                    </div>
                 </div>
             </div>
 
-            <div class="menu-card" onclick="showTopScore()">
-                <div class="menu-title">
-                    <span class="menu-emoji">💎</span>
-                    Top Score
-                </div>
-                <div class="menu-description">
-                    Sélections exclusives à fort potentiel, validées par nos algorithmes.
-                </div>
-            </div>
-
-            <!-- Section Avantages -->
             <div class="advantages">
-                <div class="advantage-item">
+                <div class="advantage-card">
                     <div class="advantage-icon">🤖</div>
-                    <div class="advantage-text">Intelligence Artificielle avancée pour l'analyse des données</div>
+                    <div class="advantage-text">Intelligence Artificielle de pointe</div>
                 </div>
-                <div class="advantage-item">
+                <div class="advantage-card">
                     <div class="advantage-icon">📊</div>
-                    <div class="advantage-text">Analyse approfondie des statistiques historiques</div>
+                    <div class="advantage-text">Analyse statistique avancée</div>
                 </div>
-                <div class="advantage-item">
+                <div class="advantage-card">
                     <div class="advantage-icon">💡</div>
-                    <div class="advantage-text">Algorithmes prédictifs de dernière génération</div>
+                    <div class="advantage-text">Algorithmes prédictifs</div>
                 </div>
-                <div class="advantage-item">
+                <div class="advantage-card">
                     <div class="advantage-icon">📈</div>
-                    <div class="advantage-text">Comparaison en temps réel des cotes bookmakers</div>
+                    <div class="advantage-text">Comparaison des cotes en direct</div>
                 </div>
             </div>
 
             <div class="social-buttons">
-                <button class="social-button telegram" onclick="openTelegram()">
+                <button class="social-button telegram">
                     <i class="fab fa-telegram-plane"></i>
                 </button>
-                <button class="social-button youtube" onclick="openYoutube()">
+                <button class="social-button youtube">
                     <i class="fab fa-youtube"></i>
                 </button>
-                <button class="social-button tiktok" onclick="openTiktok()">
+                <button class="social-button tiktok">
                     <i class="fab fa-tiktok"></i>
                 </button>
             </div>
@@ -372,7 +296,7 @@
             <div class="predictions-grid">
                 <div class="prediction-category" onclick="showCategoryPredictions('victoire')">
                     <div class="category-icon">⚡</div>
-                    <div class="category-title">Victoire Direct</div>
+                    <div class="category-title">Victoire</div>
                 </div>
 
                 <div class="prediction-category" onclick="showCategoryPredictions('double-chance')">
@@ -382,12 +306,12 @@
 
                 <div class="prediction-category" onclick="showCategoryPredictions('total-15')">
                     <div class="category-icon">⚽</div>
-                    <div class="category-title">+1.5 But</div>
+                    <div class="category-title">+1.5</div>
                 </div>
 
                 <div class="prediction-category" onclick="showCategoryPredictions('total-25')">
                     <div class="category-icon">⚽⚽</div>
-                    <div class="category-title">+2.5 Buts</div>
+                    <div class="category-title">+2.5</div>
                 </div>
 
                 <div class="prediction-category" onclick="showCategoryPredictions('btts')">
@@ -397,7 +321,7 @@
 
                 <div class="prediction-category" onclick="showCategoryPredictions('under-35')">
                     <div class="category-icon">📊</div>
-                    <div class="category-title">-3.5 Buts</div>
+                    <div class="category-title">-3.5</div>
                 </div>
             </div>
         </div>
@@ -409,202 +333,20 @@
 
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(page => {
+                page.style.display = 'none';
                 page.classList.remove('active');
             });
+            document.getElementById(pageId).style.display = 'block';
             document.getElementById(pageId).classList.add('active');
         }
 
         function showCategoryPredictions(category) {
-            const predictionPage = document.createElement('div');
-            predictionPage.className = 'page active';
-            predictionPage.id = `predictions-${category}`;
-
-            predictionPage.innerHTML = `
-                <button class="back-button" onclick="showPage('combo-page')">
-                    <i class="fas fa-arrow-left"></i>
-                </button>
-                <div class="container">
-                    <div class="prediction-content">
-                        ${generatePredictions(category)}
-                    </div>
-                </div>
-            `;
-
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
-
-            document.body.appendChild(predictionPage);
-        }
-
-        function generatePredictions(category) {
-            // Exemple de prédiction
-        function generatePredictions(category) {
-            let predictions = '';
-
-            switch(category) {
-                case 'victoire':
-                    predictions = `
-                        <div class="match-card">
-                            <div class="match-header">
-                                <span>Premier League 🏴󠁧󠁢󠁥󠁮󠁧󠁿</span>
-                                <span>20:45</span>
-                            </div>
-                            <div class="match-teams">
-                                <div class="team">
-                                    <div class="team-name">Manchester City</div>
-                                </div>
-                                <div class="vs">VS</div>
-                                <div class="team">
-                                    <div class="team-name">Liverpool</div>
-                                </div>
-                            </div>
-                            <div class="prediction-info">
-                                <span>Prédiction :</span>
-                                <span class="prediction-value">1</span>
-                            </div>
-                        </div>
-                    `;
-                    break;
-
-                case 'double-chance':
-                    predictions = `
-                        <div class="match-card">
-                            <div class="match-header">
-                                <span>Ligue 1 🇫🇷</span>
-                                <span>21:00</span>
-                            </div>
-                            <div class="match-teams">
-                                <div class="team">
-                                    <div class="team-name">PSG</div>
-                                </div>
-                                <div class="vs">VS</div>
-                                <div class="team">
-                                    <div class="team-name">Marseille</div>
-                                </div>
-                            </div>
-                            <div class="prediction-info">
-                                <span>Prédiction :</span>
-                                <span class="prediction-value">1X</span>
-                            </div>
-                        </div>
-                    `;
-                    break;
-
-                case 'total-15':
-                    predictions = `
-                        <div class="match-card">
-                            <div class="match-header">
-                                <span>Serie A 🇮🇹</span>
-                                <span>18:30</span>
-                            </div>
-                            <div class="match-teams">
-                                <div class="team">
-                                    <div class="team-name">Inter</div>
-                                </div>
-                                <div class="vs">VS</div>
-                                <div class="team">
-                                    <div class="team-name">Milan AC</div>
-                                </div>
-                            </div>
-                            <div class="prediction-info">
-                                <span>Prédiction :</span>
-                                <span class="prediction-value">+1.5</span>
-                            </div>
-                        </div>
-                    `;
-                    break;
-
-                case 'total-25':
-                    predictions = `
-                        <div class="match-card">
-                            <div class="match-header">
-                                <span>Liga 🇪🇸</span>
-                                <span>21:00</span>
-                            </div>
-                            <div class="match-teams">
-                                <div class="team">
-                                    <div class="team-name">Real Madrid</div>
-                                </div>
-                                <div class="vs">VS</div>
-                                <div class="team">
-                                    <div class="team-name">Barcelone</div>
-                                </div>
-                            </div>
-                            <div class="prediction-info">
-                                <span>Prédiction :</span>
-                                <span class="prediction-value">+2.5</span>
-                            </div>
-                        </div>
-                    `;
-                    break;
-
-                case 'btts':
-                    predictions = `
-                        <div class="match-card">
-                            <div class="match-header">
-                                <span>Bundesliga 🇩🇪</span>
-                                <span>19:30</span>
-                            </div>
-                            <div class="match-teams">
-                                <div class="team">
-                                    <div class="team-name">Bayern</div>
-                                </div>
-                                <div class="vs">VS</div>
-                                <div class="team">
-                                    <div class="team-name">Dortmund</div>
-                                </div>
-                            </div>
-                            <div class="prediction-info">
-                                <span>Prédiction :</span>
-                                <span class="prediction-value">Yes</span>
-                            </div>
-                        </div>
-                    `;
-                    break;
-
-                case 'under-35':
-                    predictions = `
-                        <div class="match-card">
-                            <div class="match-header">
-                                <span>Eredivisie 🇳🇱</span>
-                                <span>20:00</span>
-                            </div>
-                            <div class="match-teams">
-                                <div class="team">
-                                    <div class="team-name">Ajax</div>
-                                </div>
-                                <div class="vs">VS</div>
-                                <div class="team">
-                                    <div class="team-name">PSV</div>
-                                </div>
-                            </div>
-                            <div class="prediction-info">
-                                <span>Prédiction :</span>
-                                <span class="prediction-value">-3.5</span>
-                            </div>
-                        </div>
-                    `;
-                    break;
-            }
-
-            return predictions;
+            // Ici on créera les prédictions spécifiques pour chaque catégorie
+            tg.showAlert('Chargement des prédictions...');
         }
 
         function showTopScore() {
             tg.showAlert('Chargement des Top Scores...');
-        }
-
-        function openTelegram() {
-            tg.openLink('https://t.me/votre_chaine_telegram');
-        }
-
-        function openYoutube() {
-            tg.openLink('https://youtube.com/votre_chaine');
-        }
-
-        function openTiktok() {
-            tg.openLink('https://tiktok.com/@votre_compte');
         }
 
         tg.ready();
