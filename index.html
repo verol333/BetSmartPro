@@ -24,31 +24,52 @@
         .title {
             text-align: center;
             color: #00ff9d;
-            font-size: 28px;
-            margin-bottom: 40px;
-            text-shadow: 0 0 10px rgba(0, 255, 157, 0.5);
+            font-size: 32px;
+            margin-bottom: 50px;
+            text-shadow: 0 0 15px rgba(0, 255, 157, 0.5);
+            font-weight: bold;
+            letter-spacing: 1px;
         }
 
-        .menu-card {
+        .menu-option {
             background: rgba(0, 255, 157, 0.05);
-            border: 1px solid #00ff9d;
+            border: 2px solid #00ff9d;
             border-radius: 15px;
             padding: 25px;
             margin-bottom: 30px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 0 20px rgba(0, 255, 157, 0.1);
+            position: relative;
+            overflow: hidden;
         }
 
-        .menu-card:hover {
+        .menu-option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(0, 255, 157, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .menu-option:hover {
             transform: translateY(-5px);
             box-shadow: 0 0 30px rgba(0, 255, 157, 0.2);
+        }
+
+        .menu-option:hover::before {
+            opacity: 1;
         }
 
         .menu-title {
             font-size: 24px;
             color: #00ff9d;
             margin-bottom: 15px;
+            font-weight: bold;
+            position: relative;
         }
 
         .menu-description {
@@ -56,28 +77,7 @@
             line-height: 1.6;
             font-size: 16px;
             opacity: 0.9;
-        }
-
-        .glow-effect {
             position: relative;
-        }
-
-        .glow-effect::after {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            border-radius: 16px;
-            background: linear-gradient(45deg, #00ff9d, transparent);
-            opacity: 0;
-            z-index: -1;
-            transition: opacity 0.3s ease;
-        }
-
-        .menu-card:hover .glow-effect::after {
-            opacity: 0.2;
         }
     </style>
 </head>
@@ -85,17 +85,19 @@
     <div class="container">
         <h1 class="title">BetSmart Pro</h1>
 
-        <div class="menu-card glow-effect" onclick="showComboDay()">
+        <div class="menu-option" onclick="showComboDay()">
             <div class="menu-title">📊 Combo du Jour</div>
             <div class="menu-description">
-                Accédez à nos prédictions fiables basées sur une analyse approfondie et des intelligences artificielles. Mises à jour quotidiennes pour maximiser vos chances de succès.
+                Accédez à nos prédictions fiables basées sur une analyse approfondie et des intelligences artificielles. 
+                Nos experts sélectionnent pour vous les meilleures opportunités quotidiennes.
             </div>
         </div>
 
-        <div class="menu-card glow-effect" onclick="showTopScore()">
+        <div class="menu-option" onclick="showTopScore()">
             <div class="menu-title">🏆 Top Score</div>
             <div class="menu-description">
-                Découvrez les meilleurs scores à fort potentiel. Sélection minutieuse des matchs les plus prometteurs avec des statistiques détaillées.
+                Découvrez les meilleurs scores à fort potentiel. Une sélection minutieuse des matchs
+                les plus prometteurs avec un historique de performance prouvé.
             </div>
         </div>
     </div>
@@ -106,12 +108,10 @@
 
         function showComboDay() {
             tg.showAlert('Chargement du Combo du Jour...');
-            // Ici vous pouvez ajouter la logique pour afficher le contenu du Combo du Jour
         }
 
         function showTopScore() {
             tg.showAlert('Chargement des Top Scores...');
-            // Ici vous pouvez ajouter la logique pour afficher le contenu des Top Scores
         }
 
         tg.ready();
