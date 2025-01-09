@@ -209,7 +209,7 @@
     </style>
 </head>
 <body>
-    <div class="container main-content">
+    <div class="container main-content" id="main-content">
         <!-- Header -->
         <div class="header">
             <h1 class="header-title">Tableau de Bord</h1>
@@ -251,8 +251,8 @@
 
         <!-- Stats Section -->
         <div class="stats-container">
-            <img src="youtube-logo.png" class="social-logo" alt="YouTube">
-            <img src="telegram-logo.png" class="social-logo" alt="Telegram">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/75/YouTube_social_white_circle_%282017%29.svg" class="social-logo" alt="YouTube">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" class="social-logo" alt="Telegram">
         </div>
 
         <!-- Features List -->
@@ -305,9 +305,8 @@
         tg.expand();
 
         function showComboPage() {
-            tg.showAlert('Chargement des sections de Combo du Jour...');
-            // Simuler une redirection
-            document.querySelector('.main-content').innerHTML = `
+            const mainContent = document.getElementById('main-content');
+            mainContent.innerHTML = `
                 <h2>Sections des Combos du Jour</h2>
                 <div class="prediction-card">Victoire Directe</div>
                 <div class="prediction-card">Double Chance</div>
@@ -318,8 +317,8 @@
         }
 
         function showTopScore() {
-            tg.showAlert('Chargement des Top Scores...');
-            document.querySelector('.main-content').innerHTML = `
+            const mainContent = document.getElementById('main-content');
+            mainContent.innerHTML = `
                 <h2>Top Scores</h2>
                 <div class="prediction-card">Match 1 : Détails</div>
                 <div class="prediction-card">Match 2 : Détails</div>
