@@ -37,6 +37,28 @@
             padding: 20px;
         }
 
+        /* Description Section */
+        .app-description {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+
+        .app-description h2 {
+            font-size: 20px;
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+        }
+
+        .app-description p {
+            font-size: 14px;
+            color: var(--text-dark);
+            line-height: 1.5;
+        }
+
         /* Style des cartes de menu */
         .menu-grid {
             display: grid;
@@ -151,43 +173,6 @@
             text-align: center;
         }
 
-        /* Prediction Section */
-        .prediction-card {
-            background: var(--white);
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            box-shadow: 0 4px 15px var(--shadow-color);
-        }
-
-        .prediction-card.safe {
-            background: linear-gradient(to bottom, var(--success-green), var(--white));
-        }
-
-        .prediction-card.risky {
-            background: linear-gradient(to bottom, var(--risk-orange), var(--white));
-        }
-
-        .prediction-icon {
-            font-size: 36px;
-            margin-bottom: 10px;
-        }
-
-        .back-button {
-            background: var(--primary-blue);
-            color: var(--white);
-            padding: 10px 15px;
-            border-radius: 10px;
-            text-align: center;
-            cursor: pointer;
-            display: inline-block;
-            margin-bottom: 20px;
-        }
-
         /* Navigation Bottom */
         .nav-bottom {
             position: fixed;
@@ -223,10 +208,22 @@
     </style>
 </head>
 <body>
-    <div class="container main-content" id="main-content">
+    <div class="container main-content">
         <!-- Header -->
         <div class="header">
             <h1 class="header-title">Tableau de Bord</h1>
+        </div>
+
+        <!-- Application Description -->
+        <div class="app-description">
+            <h2>Bienvenue sur BetSmart Pro</h2>
+            <p>Votre application ultime pour des prédictions sportives fiables et optimisées. Profitez d'une intelligence artificielle avancée et d'une analyse en temps réel pour maximiser vos chances de réussite.</p>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg" class="social-logo" alt="YouTube">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" class="social-logo" alt="Telegram">
         </div>
 
         <!-- Menu Grid -->
@@ -259,12 +256,6 @@
                 <div class="menu-title">Historique</div>
             </div>
         </div>
-
-        <!-- Stats Section -->
-        <div class="stats-container">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/7/75/YouTube_social_white_circle_%282017%29.svg" class="social-logo" alt="YouTube">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" class="social-logo" alt="Telegram">
-        </div>
     </div>
 
     <!-- Bottom Navigation -->
@@ -288,31 +279,23 @@
         tg.expand();
 
         function showComboPage() {
-            const mainContent = document.getElementById('main-content');
+            const mainContent = document.querySelector('.main-content');
             mainContent.innerHTML = `
-                <div class="back-button" onclick="goBack()">Retour</div>
+                <div class="back-button" onclick="location.reload()">Retour</div>
                 <h1 class="header-title">Meilleures Prédictions</h1>
-                <div class="prediction-card safe">
+                <div class="prediction-card">
                     <div class="prediction-icon">💰</div>
-                    <div style="font-size: 18px; font-weight: bold;">Victoire Directe</div>
+                    <div>Victoire Directe</div>
                 </div>
-                <div class="prediction-card safe">
+                <div class="prediction-card">
                     <div class="prediction-icon">⚽</div>
-                    <div style="font-size: 18px; font-weight: bold;">Les 2 équipes marquent</div>
+                    <div>Les 2 équipes marquent</div>
                 </div>
-                <div class="prediction-card risky">
-                    <div class="prediction-icon">🔮</div>
-                    <div style="font-size: 18px; font-weight: bold;">Double Chance</div>
-                </div>
-                <div class="prediction-card risky">
+                <div class="prediction-card">
                     <div class="prediction-icon">📊</div>
-                    <div style="font-size: 18px; font-weight: bold;">Moins de 3,5 Buts</div>
+                    <div>Double Chance</div>
                 </div>
             `;
-        }
-
-        function goBack() {
-            location.reload();
         }
 
         tg.ready();
