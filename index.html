@@ -6,113 +6,98 @@
     <title>BetSmart Pro</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/telegram-web-app/7.0.0/telegram-web-app.min.js"></script>
     <style>
-        :root {
-            --primary-color: #00ff9d;
-            --secondary-color: #1a1a2e;
-            --accent-color: #ffd700;
-        }
-
         body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
             margin: 0;
-            padding: 0;
+            padding: 20px;
             background-color: #1a1a2e;
             color: white;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            min-height: 100vh;
         }
 
-        .header {
-            background: linear-gradient(to right, var(--secondary-color), #000);
-            padding: 20px;
-            text-align: center;
-            border-bottom: 2px solid var(--primary-color);
-        }
-
-        .logo {
-            color: var(--primary-color);
-            font-size: 24px;
-            font-weight: bold;
-            margin: 0;
-        }
-
-        .stats-container {
-            padding: 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        .stat-card {
-            background: rgba(0, 255, 157, 0.1);
-            border: 1px solid var(--primary-color);
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 32px;
-            color: var(--primary-color);
-            margin: 10px 0;
-        }
-
-        .stat-change {
-            color: var(--accent-color);
-            font-size: 14px;
-        }
-
-        .menu-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            padding: 20px;
-            max-width: 500px;
+        .container {
+            max-width: 600px;
             margin: 0 auto;
+            padding-top: 40px;
         }
 
-        .menu-button {
-            background: linear-gradient(45deg, var(--primary-color), #00cc7e);
-            border: none;
-            border-radius: 8px;
-            padding: 15px;
-            color: var(--secondary-color);
-            font-weight: bold;
-            font-size: 16px;
+        .title {
+            text-align: center;
+            color: #00ff9d;
+            font-size: 28px;
+            margin-bottom: 40px;
+            text-shadow: 0 0 10px rgba(0, 255, 157, 0.5);
+        }
+
+        .menu-card {
+            background: rgba(0, 255, 157, 0.05);
+            border: 1px solid #00ff9d;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 255, 157, 0.1);
         }
 
-        .menu-button:hover {
-            transform: translateY(-2px);
+        .menu-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px rgba(0, 255, 157, 0.2);
+        }
+
+        .menu-title {
+            font-size: 24px;
+            color: #00ff9d;
+            margin-bottom: 15px;
+        }
+
+        .menu-description {
+            color: #ffffff;
+            line-height: 1.6;
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .glow-effect {
+            position: relative;
+        }
+
+        .glow-effect::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 16px;
+            background: linear-gradient(45deg, #00ff9d, transparent);
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.3s ease;
+        }
+
+        .menu-card:hover .glow-effect::after {
+            opacity: 0.2;
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1 class="logo">BetSmart Pro</h1>
-        <p>Transformez votre petit capital en grand profit</p>
-    </div>
+    <div class="container">
+        <h1 class="title">BetSmart Pro</h1>
 
-    <div class="stats-container">
-        <div class="stat-card">
-            <div>Gains Générés</div>
-            <div class="stat-value">2.4M€</div>
-            <div class="stat-change">+12.5%</div>
+        <div class="menu-card glow-effect" onclick="showComboDay()">
+            <div class="menu-title">📊 Combo du Jour</div>
+            <div class="menu-description">
+                Accédez à nos prédictions fiables basées sur une analyse approfondie et des intelligences artificielles. Mises à jour quotidiennes pour maximiser vos chances de succès.
+            </div>
         </div>
-        <div class="stat-card">
-            <div>Parieurs Actifs</div>
-            <div class="stat-value">12.5K</div>
-            <div class="stat-change">+8.1%</div>
-        </div>
-        <div class="stat-card">
-            <div>Taux de Réussite</div>
-            <div class="stat-value">94.2%</div>
-            <div class="stat-change">+3.2%</div>
-        </div>
-    </div>
 
-    <div class="menu-buttons">
-        <button class="menu-button" onclick="showComboDay()">📊 Combo du Jour</button>
-        <button class="menu-button" onclick="showTopScore()">🏆 Top Score</button>
+        <div class="menu-card glow-effect" onclick="showTopScore()">
+            <div class="menu-title">🏆 Top Score</div>
+            <div class="menu-description">
+                Découvrez les meilleurs scores à fort potentiel. Sélection minutieuse des matchs les plus prometteurs avec des statistiques détaillées.
+            </div>
+        </div>
     </div>
 
     <script>
@@ -120,16 +105,15 @@
         tg.expand();
 
         function showComboDay() {
-            // Logique pour afficher le Combo du Jour
-            tg.showAlert('Combo du Jour - Mise à jour à 10h');
+            tg.showAlert('Chargement du Combo du Jour...');
+            // Ici vous pouvez ajouter la logique pour afficher le contenu du Combo du Jour
         }
 
         function showTopScore() {
-            // Logique pour afficher le Top Score
-            tg.showAlert('Top Score - Meilleures opportunités');
+            tg.showAlert('Chargement des Top Scores...');
+            // Ici vous pouvez ajouter la logique pour afficher le contenu des Top Scores
         }
 
-        // Initialize Telegram WebApp
         tg.ready();
     </script>
 </body>
