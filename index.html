@@ -89,33 +89,14 @@
             padding: 25px;
             margin-bottom: 30px;
             box-shadow: 0 4px 15px var(--shadow-color);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            display: flex;
+            justify-content: center;
             gap: 20px;
         }
 
-        .stat-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 15px;
-            background: var(--light-bg);
-            border-radius: 15px;
-        }
-
-        .stat-value {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--primary-blue);
-            margin-bottom: 5px;
-        }
-
-        .stat-label {
-            font-size: 14px;
-            color: var(--text-light);
+        .social-logo {
+            width: 50px;
+            height: 50px;
         }
 
         /* Features Section */
@@ -217,13 +198,21 @@
         .main-content {
             padding-bottom: 80px; /* Pour la navigation du bas */
         }
+
+        .prediction-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
     </style>
 </head>
 <body>
     <div class="container main-content">
         <!-- Header -->
         <div class="header">
-            <h1 class="header-title">Dashboard</h1>
+            <h1 class="header-title">Tableau de Bord</h1>
             <div class="header-action">
                 <i class="fas fa-bell"></i>
             </div>
@@ -231,7 +220,7 @@
 
         <!-- Menu Grid -->
         <div class="menu-grid">
-            <div class="menu-card" onclick="showPage('combo-page')">
+            <div class="menu-card" onclick="showComboPage()">
                 <div class="menu-icon">
                     <i class="fas fa-chart-line"></i>
                 </div>
@@ -262,24 +251,8 @@
 
         <!-- Stats Section -->
         <div class="stats-container">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-value">94.2%</div>
-                    <div class="stat-label">Taux de Réussite</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">12.5K</div>
-                    <div class="stat-label">Utilisateurs</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">+42%</div>
-                    <div class="stat-label">Performance</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">2.4M€</div>
-                    <div class="stat-label">Gains</div>
-                </div>
-            </div>
+            <img src="youtube-logo.png" class="social-logo" alt="YouTube">
+            <img src="telegram-logo.png" class="social-logo" alt="Telegram">
         </div>
 
         <!-- Features List -->
@@ -289,7 +262,7 @@
                     <i class="fas fa-robot"></i>
                 </div>
                 <div class="feature-text">
-                    Intelligence Artificielle avancée
+                    Intelligence Artificielle avancée et connectée à tous les bookmakers
                 </div>
             </div>
             <div class="feature-item">
@@ -318,12 +291,12 @@
             <span>Accueil</span>
         </a>
         <a href="#" class="nav-item">
-            <i class="fas fa-search"></i>
-            <span>Explorer</span>
+            <i class="fas fa-futbol"></i>
+            <span>FIFA</span>
         </a>
         <a href="#" class="nav-item">
-            <i class="fas fa-user"></i>
-            <span>Profil</span>
+            <i class="fas fa-crown"></i>
+            <span>VIP</span>
         </a>
     </div>
 
@@ -331,12 +304,27 @@
         let tg = window.Telegram.WebApp;
         tg.expand();
 
-        function showPage(pageId) {
-            tg.showAlert(`Navigation vers ${pageId}...`);
+        function showComboPage() {
+            tg.showAlert('Chargement des sections de Combo du Jour...');
+            // Simuler une redirection
+            document.querySelector('.main-content').innerHTML = `
+                <h2>Sections des Combos du Jour</h2>
+                <div class="prediction-card">Victoire Directe</div>
+                <div class="prediction-card">Double Chance</div>
+                <div class="prediction-card">Total +1,5 Buts</div>
+                <div class="prediction-card">Les 2 équipes marquent</div>
+                <div class="prediction-card">Moins de 3,5 Buts</div>
+            `;
         }
 
         function showTopScore() {
             tg.showAlert('Chargement des Top Scores...');
+            document.querySelector('.main-content').innerHTML = `
+                <h2>Top Scores</h2>
+                <div class="prediction-card">Match 1 : Détails</div>
+                <div class="prediction-card">Match 2 : Détails</div>
+                <div class="prediction-card">Match 3 : Détails</div>
+            `;
         }
 
         tg.ready();
