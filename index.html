@@ -15,6 +15,8 @@
             --text-dark: #1A1A1A;
             --text-light: #6B7280;
             --success-green: #4ADE80;
+            --secondary-orange: #FFA500;
+            --accent-purple: #8A2BE2;
         }
 
         * {
@@ -205,6 +207,14 @@
             padding: 15px;
             margin-bottom: 10px;
             box-shadow: 0 4px 15px var(--shadow-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .prediction-emoji {
+            font-size: 24px;
+            flex-shrink: 0;
         }
     </style>
 </head>
@@ -251,7 +261,7 @@
 
         <!-- Stats Section -->
         <div class="stats-container">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/7/75/YouTube_social_white_circle_%282017%29.svg" class="social-logo" alt="YouTube">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" class="social-logo" alt="YouTube">
             <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" class="social-logo" alt="Telegram">
         </div>
 
@@ -307,12 +317,27 @@
         function showComboPage() {
             const mainContent = document.getElementById('main-content');
             mainContent.innerHTML = `
-                <h2>Sections des Combos du Jour</h2>
-                <div class="prediction-card">Victoire Directe</div>
-                <div class="prediction-card">Double Chance</div>
-                <div class="prediction-card">Total +1,5 Buts</div>
-                <div class="prediction-card">Les 2 équipes marquent</div>
-                <div class="prediction-card">Moins de 3,5 Buts</div>
+                <h2>Meilleure Prédiction</h2>
+                <div class="prediction-card">
+                    <span class="prediction-emoji">\uD83C\uDFC6</span>
+                    <span>Victoire Directe</span>
+                </div>
+                <div class="prediction-card">
+                    <span class="prediction-emoji">\uD83D\uDCB0</span>
+                    <span>Double Chance</span>
+                </div>
+                <div class="prediction-card">
+                    <span class="prediction-emoji">\u26BD</span>
+                    <span>Total +1,5 Buts</span>
+                </div>
+                <div class="prediction-card">
+                    <span class="prediction-emoji">\uD83C\uDF1F</span>
+                    <span>Les 2 équipes marquent</span>
+                </div>
+                <div class="prediction-card">
+                    <span class="prediction-emoji">\uD83D\uDEE0</span>
+                    <span>Moins de 3,5 Buts</span>
+                </div>
             `;
         }
 
@@ -320,9 +345,18 @@
             const mainContent = document.getElementById('main-content');
             mainContent.innerHTML = `
                 <h2>Top Scores</h2>
-                <div class="prediction-card">Match 1 : Détails</div>
-                <div class="prediction-card">Match 2 : Détails</div>
-                <div class="prediction-card">Match 3 : Détails</div>
+                <div class="prediction-card">
+                    <span class="prediction-emoji">\uD83D\uDCCA</span>
+                    <span>Match 1 : Détails</span>
+                </div>
+                <div class="prediction-card">
+                    <span class="prediction-emoji">\uD83C\uDFC5</span>
+                    <span>Match 2 : Détails</span>
+                </div>
+                <div class="prediction-card">
+                    <span class="prediction-emoji">\uD83C\uDF0D</span>
+                    <span>Match 3 : Détails</span>
+                </div>
             `;
         }
 
