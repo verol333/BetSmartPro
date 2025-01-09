@@ -37,26 +37,6 @@
             padding: 20px;
         }
 
-        /* Titre principal */
-        .main-title {
-            text-align: center;
-            margin: 30px 0 50px;
-            font-size: 40px;
-            font-weight: 800;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-        }
-
-        .main-title .bet-smart {
-            color: var(--primary);
-            text-shadow: 0 0 20px rgba(46, 204, 113, 0.3);
-        }
-
-        .main-title .pro {
-            color: var(--accent);
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
-        }
-
         /* Cartes de menu */
         .menu-card {
             background: rgba(46, 204, 113, 0.05);
@@ -64,7 +44,7 @@
             border: 2px solid rgba(46, 204, 113, 0.2);
             border-radius: 20px;
             padding: 30px;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             cursor: pointer;
             transition: all 0.4s ease;
             position: relative;
@@ -95,30 +75,59 @@
 
         /* Titre des menus */
         .menu-title {
-            font-size: 28px;
+            font-size: 26px;
             color: var(--primary);
             margin-bottom: 15px;
             font-weight: 700;
             display: flex;
             align-items: center;
             gap: 15px;
-            position: relative;
         }
 
         .menu-emoji {
             font-size: 32px;
-            line-height: 1;
-            position: relative;
         }
 
-        /* Description des menus */
         .menu-description {
             color: rgba(255, 255, 255, 0.9);
-            font-size: 16px;
+            font-size: 15px;
             line-height: 1.6;
             font-style: italic;
             padding-left: 47px;
-            position: relative;
+        }
+
+        /* Section avantages */
+        .advantages {
+            margin-top: 40px;
+            padding: 20px 0;
+            border-top: 1px solid rgba(46, 204, 113, 0.2);
+        }
+
+        .advantage-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: rgba(46, 204, 113, 0.03);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .advantage-item:hover {
+            background: rgba(46, 204, 113, 0.07);
+            transform: translateX(5px);
+        }
+
+        .advantage-icon {
+            color: var(--primary);
+            font-size: 24px;
+        }
+
+        .advantage-text {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+            font-style: italic;
         }
 
         /* Pages de prédictions */
@@ -194,13 +203,75 @@
             transform: scale(1.1);
         }
 
+        /* Matchs */
+        .match-card {
+            background: rgba(46, 204, 113, 0.05);
+            border: 1px solid rgba(46, 204, 113, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .match-card:hover {
+            background: rgba(46, 204, 113, 0.08);
+            transform: translateY(-3px);
+        }
+
+        .match-header {
+            display: flex;
+            justify-content: space-between;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .match-teams {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 15px 0;
+        }
+
+        .team {
+            text-align: center;
+            flex: 1;
+        }
+
+        .team-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .vs {
+            margin: 0 15px;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        .prediction-info {
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(46, 204, 113, 0.1);
+            border-radius: 8px;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .prediction-value {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
         /* Boutons sociaux */
         .social-buttons {
             display: flex;
             justify-content: center;
             gap: 25px;
             margin-top: 40px;
-            padding: 20px;
         }
 
         .social-button {
@@ -223,84 +294,27 @@
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
 
-        .telegram {
-            background: #0088cc;
-        }
+        .telegram { background: #0088cc; }
+        .youtube { background: #ff0000; }
+        .tiktok { background: #000000; }
 
-        .youtube {
-            background: #ff0000;
-        }
-
-        .tiktok {
-            background: #000000;
-        }
-
-        /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        .prediction-content {
-            padding: 20px;
-            animation: fadeIn 0.3s ease;
-        }
-
-        /* Match cards */
-        .match-card {
-            background: rgba(46, 204, 113, 0.05);
-            border: 1px solid rgba(46, 204, 113, 0.2);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 15px;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .match-header {
-            display: flex;
-            justify-content: space-between;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 14px;
-            margin-bottom: 10px;
-        }
-
-        .match-teams {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 15px 0;
-        }
-
-        .team {
-            text-align: center;
-            flex: 1;
-        }
-
-        .vs {
-            margin: 0 20px;
-            color: var(--accent);
-            font-weight: bold;
-        }
-
     </style>
 </head>
 <body>
     <!-- Page Principale -->
     <div id="main-page" class="page active">
         <div class="container">
-            <h1 class="main-title">
-                <span class="bet-smart">BETSMART</span> <span class="pro">PRO</span>
-            </h1>
-
             <div class="menu-card" onclick="showPage('combo-page')">
                 <div class="menu-title">
                     <span class="menu-emoji">🎯</span>
                     Combo du Jour
                 </div>
                 <div class="menu-description">
-                    Découvrez nos prédictions premium minutieusement sélectionnées par nos experts.
-                    Analyses approfondies basées sur l'intelligence artificielle et les données 
-                    statistiques pour maximiser vos chances de réussite.
+                    Prédictions premium basées sur l'analyse approfondie et l'intelligence artificielle.
                 </div>
             </div>
 
@@ -310,9 +324,27 @@
                     Top Score
                 </div>
                 <div class="menu-description">
-                    Accédez à nos sélections exclusives à fort potentiel. Des opportunités 
-                    uniques validées par nos algorithmes avancés pour des performances 
-                    exceptionnelles.
+                    Sélections exclusives à fort potentiel, validées par nos algorithmes.
+                </div>
+            </div>
+
+            <!-- Section Avantages -->
+            <div class="advantages">
+                <div class="advantage-item">
+                    <div class="advantage-icon">🤖</div>
+                    <div class="advantage-text">Intelligence Artificielle avancée pour l'analyse des données</div>
+                </div>
+                <div class="advantage-item">
+                    <div class="advantage-icon">📊</div>
+                    <div class="advantage-text">Analyse approfondie des statistiques historiques</div>
+                </div>
+                <div class="advantage-item">
+                    <div class="advantage-icon">💡</div>
+                    <div class="advantage-text">Algorithmes prédictifs de dernière génération</div>
+                </div>
+                <div class="advantage-item">
+                    <div class="advantage-icon">📈</div>
+                    <div class="advantage-text">Comparaison en temps réel des cotes bookmakers</div>
                 </div>
             </div>
 
@@ -337,10 +369,6 @@
         </button>
 
         <div class="container">
-            <h2 class="main-title">
-                <span class="bet-smart">COMBO</span> <span class="pro">DU JOUR</span>
-            </h2>
-
             <div class="predictions-grid">
                 <div class="prediction-category" onclick="showCategoryPredictions('victoire')">
                     <div class="category-icon">⚡</div>
@@ -354,22 +382,22 @@
 
                 <div class="prediction-category" onclick="showCategoryPredictions('total-15')">
                     <div class="category-icon">⚽</div>
-                    <div class="category-title">Total 1.5 But</div>
+                    <div class="category-title">+1.5 But</div>
                 </div>
 
                 <div class="prediction-category" onclick="showCategoryPredictions('total-25')">
                     <div class="category-icon">⚽⚽</div>
-                    <div class="category-title">Total 2.5 Buts</div>
+                    <div class="category-title">+2.5 Buts</div>
                 </div>
 
                 <div class="prediction-category" onclick="showCategoryPredictions('btts')">
                     <div class="category-icon">🥅</div>
-                    <div class="category-title">Les Deux Équipes Marquent</div>
+                    <div class="category-title">BTTS</div>
                 </div>
 
                 <div class="prediction-category" onclick="showCategoryPredictions('under-35')">
                     <div class="category-icon">📊</div>
-                    <div class="category-title">Moins de 3.5 Buts</div>
+                    <div class="category-title">-3.5 Buts</div>
                 </div>
             </div>
         </div>
@@ -379,7 +407,6 @@
         let tg = window.Telegram.WebApp;
         tg.expand();
 
-        // Gestion de la navigation
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active');
@@ -387,92 +414,181 @@
             document.getElementById(pageId).classList.add('active');
         }
 
-        // Affichage des prédictions par catégorie
         function showCategoryPredictions(category) {
-            // Créer une nouvelle page pour les prédictions
             const predictionPage = document.createElement('div');
             predictionPage.className = 'page active';
             predictionPage.id = `predictions-${category}`;
 
-            // Ajouter le contenu
             predictionPage.innerHTML = `
                 <button class="back-button" onclick="showPage('combo-page')">
                     <i class="fas fa-arrow-left"></i>
                 </button>
                 <div class="container">
-                    <h2 class="main-title">
-                        <span class="bet-smart">${getCategoryTitle(category)}</span>
-                    </h2>
                     <div class="prediction-content">
                         ${generatePredictions(category)}
                     </div>
                 </div>
             `;
 
-            // Cacher les autres pages
             document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active');
             });
 
-            // Ajouter la nouvelle page
             document.body.appendChild(predictionPage);
         }
 
-        function getCategoryTitle(category) {
-            const titles = {
-                'victoire': 'VICTOIRE DIRECT',
-                'double-chance': 'DOUBLE CHANCE',
-                'total-15': 'TOTAL 1.5 BUT',
-                'total-25': 'TOTAL 2.5 BUTS',
-                'btts': 'LES DEUX ÉQUIPES MARQUENT',
-                'under-35': 'MOINS DE 3.5 BUTS'
-            };
-            return titles[category] || category;
-        }
-
         function generatePredictions(category) {
-            // Simuler quelques prédictions
-            return `
-                <div class="match-card">
-                    <div class="match-header">
-                        <span>Premier League</span>
-                        <span>20:45</span>
-                    </div>
-                    <div class="match-teams">
-                        <div class="team">
-                            <div class="team-name">Manchester City</div>
-                        </div>
-                        <div class="vs">VS</div>
-                        <div class="team">
-                            <div class="team-name">Liverpool</div>
-                        </div>
-                    </div>
-                    <div class="prediction-info">
-                        <span>Notre prédiction:</span>
-                        <span class="prediction-value">1X (Double Chance)</span>
-                    </div>
-                </div>
+            // Exemple de prédiction
+        function generatePredictions(category) {
+            let predictions = '';
 
-                <div class="match-card">
-                    <div class="match-header">
-                        <span>Ligue 1</span>
-                        <span>21:00</span>
-                    </div>
-                    <div class="match-teams">
-                        <div class="team">
-                            <div class="team-name">PSG</div>
+            switch(category) {
+                case 'victoire':
+                    predictions = `
+                        <div class="match-card">
+                            <div class="match-header">
+                                <span>Premier League 🏴󠁧󠁢󠁥󠁮󠁧󠁿</span>
+                                <span>20:45</span>
+                            </div>
+                            <div class="match-teams">
+                                <div class="team">
+                                    <div class="team-name">Manchester City</div>
+                                </div>
+                                <div class="vs">VS</div>
+                                <div class="team">
+                                    <div class="team-name">Liverpool</div>
+                                </div>
+                            </div>
+                            <div class="prediction-info">
+                                <span>Prédiction :</span>
+                                <span class="prediction-value">1</span>
+                            </div>
                         </div>
-                        <div class="vs">VS</div>
-                        <div class="team">
-                            <div class="team-name">Marseille</div>
+                    `;
+                    break;
+
+                case 'double-chance':
+                    predictions = `
+                        <div class="match-card">
+                            <div class="match-header">
+                                <span>Ligue 1 🇫🇷</span>
+                                <span>21:00</span>
+                            </div>
+                            <div class="match-teams">
+                                <div class="team">
+                                    <div class="team-name">PSG</div>
+                                </div>
+                                <div class="vs">VS</div>
+                                <div class="team">
+                                    <div class="team-name">Marseille</div>
+                                </div>
+                            </div>
+                            <div class="prediction-info">
+                                <span>Prédiction :</span>
+                                <span class="prediction-value">1X</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="prediction-info">
-                        <span>Notre prédiction:</span>
-                        <span class="prediction-value">Plus de 2.5 buts</span>
-                    </div>
-                </div>
-            `;
+                    `;
+                    break;
+
+                case 'total-15':
+                    predictions = `
+                        <div class="match-card">
+                            <div class="match-header">
+                                <span>Serie A 🇮🇹</span>
+                                <span>18:30</span>
+                            </div>
+                            <div class="match-teams">
+                                <div class="team">
+                                    <div class="team-name">Inter</div>
+                                </div>
+                                <div class="vs">VS</div>
+                                <div class="team">
+                                    <div class="team-name">Milan AC</div>
+                                </div>
+                            </div>
+                            <div class="prediction-info">
+                                <span>Prédiction :</span>
+                                <span class="prediction-value">+1.5</span>
+                            </div>
+                        </div>
+                    `;
+                    break;
+
+                case 'total-25':
+                    predictions = `
+                        <div class="match-card">
+                            <div class="match-header">
+                                <span>Liga 🇪🇸</span>
+                                <span>21:00</span>
+                            </div>
+                            <div class="match-teams">
+                                <div class="team">
+                                    <div class="team-name">Real Madrid</div>
+                                </div>
+                                <div class="vs">VS</div>
+                                <div class="team">
+                                    <div class="team-name">Barcelone</div>
+                                </div>
+                            </div>
+                            <div class="prediction-info">
+                                <span>Prédiction :</span>
+                                <span class="prediction-value">+2.5</span>
+                            </div>
+                        </div>
+                    `;
+                    break;
+
+                case 'btts':
+                    predictions = `
+                        <div class="match-card">
+                            <div class="match-header">
+                                <span>Bundesliga 🇩🇪</span>
+                                <span>19:30</span>
+                            </div>
+                            <div class="match-teams">
+                                <div class="team">
+                                    <div class="team-name">Bayern</div>
+                                </div>
+                                <div class="vs">VS</div>
+                                <div class="team">
+                                    <div class="team-name">Dortmund</div>
+                                </div>
+                            </div>
+                            <div class="prediction-info">
+                                <span>Prédiction :</span>
+                                <span class="prediction-value">Yes</span>
+                            </div>
+                        </div>
+                    `;
+                    break;
+
+                case 'under-35':
+                    predictions = `
+                        <div class="match-card">
+                            <div class="match-header">
+                                <span>Eredivisie 🇳🇱</span>
+                                <span>20:00</span>
+                            </div>
+                            <div class="match-teams">
+                                <div class="team">
+                                    <div class="team-name">Ajax</div>
+                                </div>
+                                <div class="vs">VS</div>
+                                <div class="team">
+                                    <div class="team-name">PSV</div>
+                                </div>
+                            </div>
+                            <div class="prediction-info">
+                                <span>Prédiction :</span>
+                                <span class="prediction-value">-3.5</span>
+                            </div>
+                        </div>
+                    `;
+                    break;
+            }
+
+            return predictions;
         }
 
         function showTopScore() {
