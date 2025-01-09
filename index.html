@@ -23,11 +23,12 @@
         }
 
         body {
-            background-color: var(--dark-bg);
+            background: linear-gradient(135deg, #1a1a2e, #0d0d1a);
             color: var(--text);
             font-family: 'Helvetica Neue', Arial, sans-serif;
             min-height: 100vh;
             overflow-x: hidden;
+            position: relative;
         }
 
         .container {
@@ -36,12 +37,14 @@
             padding: 20px;
         }
 
+        /* Titre principal */
         .main-title {
             text-align: center;
-            margin: 20px 0 40px;
-            font-size: 42px;
+            margin: 30px 0 50px;
+            font-size: 40px;
             font-weight: 800;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
         }
 
         .main-title .bet-smart {
@@ -54,14 +57,16 @@
             text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
         }
 
+        /* Cartes de menu */
         .menu-card {
-            background: var(--card-bg);
-            border: 1px solid rgba(46, 204, 113, 0.2);
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 20px;
+            background: rgba(46, 204, 113, 0.05);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(46, 204, 113, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
         }
@@ -79,43 +84,123 @@
         }
 
         .menu-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
             border-color: var(--primary);
-            box-shadow: 0 8px 30px rgba(46, 204, 113, 0.2);
+            box-shadow: 0 10px 30px rgba(46, 204, 113, 0.2);
         }
 
         .menu-card:hover::before {
             opacity: 1;
         }
 
+        /* Titre des menus */
         .menu-title {
-            font-size: 24px;
-            color: var(--text);
-            margin-bottom: 12px;
-            font-weight: 600;
+            font-size: 28px;
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 15px;
+            position: relative;
         }
 
-        .menu-title i {
-            color: var(--primary);
-            font-size: 24px;
+        .menu-emoji {
+            font-size: 32px;
+            line-height: 1;
+            position: relative;
         }
 
+        /* Description des menus */
         .menu-description {
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.9);
             font-size: 16px;
-            line-height: 1.5;
+            line-height: 1.6;
             font-style: italic;
-            padding-left: 36px;
+            padding-left: 47px;
+            position: relative;
         }
 
+        /* Pages de prédictions */
+        .page {
+            display: none;
+            min-height: 100vh;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Grille de prédictions */
+        .predictions-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .prediction-category {
+            background: rgba(46, 204, 113, 0.05);
+            border: 1px solid rgba(46, 204, 113, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .prediction-category:hover {
+            transform: translateY(-5px);
+            background: rgba(46, 204, 113, 0.1);
+            border-color: var(--primary);
+            box-shadow: 0 8px 25px rgba(46, 204, 113, 0.15);
+        }
+
+        .category-icon {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .category-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        /* Boutons de navigation */
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(46, 204, 113, 0.1);
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .back-button:hover {
+            background: rgba(46, 204, 113, 0.2);
+            transform: scale(1.1);
+        }
+
+        /* Boutons sociaux */
         .social-buttons {
             display: flex;
             justify-content: center;
             gap: 25px;
             margin-top: 40px;
+            padding: 20px;
         }
 
         .social-button {
@@ -150,54 +235,57 @@
             background: #000000;
         }
 
-        .page {
-            display: none;
-            min-height: 100vh;
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .prediction-content {
             padding: 20px;
             animation: fadeIn 0.3s ease;
         }
 
-        .page.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .nav-buttons {
-            display: flex;
-            gap: 10px;
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(17, 24, 39, 0.9);
-            padding: 15px;
+        /* Match cards */
+        .match-card {
+            background: rgba(46, 204, 113, 0.05);
+            border: 1px solid rgba(46, 204, 113, 0.2);
             border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
+            padding: 20px;
+            margin-bottom: 15px;
+            animation: fadeIn 0.3s ease;
         }
 
-        .nav-button {
-            background: var(--primary);
-            color: var(--dark-bg);
-            border: none;
-            border-radius: 8px;
-            padding: 10px 20px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        .match-header {
+            display: flex;
+            justify-content: space-between;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            margin-bottom: 10px;
         }
 
-        .nav-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+        .match-teams {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 15px 0;
         }
+
+        .team {
+            text-align: center;
+            flex: 1;
+        }
+
+        .vs {
+            margin: 0 20px;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
     </style>
 </head>
 <body>
+    <!-- Page Principale -->
     <div id="main-page" class="page active">
         <div class="container">
             <h1 class="main-title">
@@ -206,21 +294,25 @@
 
             <div class="menu-card" onclick="showPage('combo-page')">
                 <div class="menu-title">
-                    <i class="fas fa-chart-line"></i>
+                    <span class="menu-emoji">🎯</span>
                     Combo du Jour
                 </div>
                 <div class="menu-description">
-                    Prédictions fiables basées sur une analyse approfondie
+                    Découvrez nos prédictions premium minutieusement sélectionnées par nos experts.
+                    Analyses approfondies basées sur l'intelligence artificielle et les données 
+                    statistiques pour maximiser vos chances de réussite.
                 </div>
             </div>
 
             <div class="menu-card" onclick="showTopScore()">
                 <div class="menu-title">
-                    <i class="fas fa-trophy"></i>
+                    <span class="menu-emoji">💎</span>
                     Top Score
                 </div>
                 <div class="menu-description">
-                    Meilleurs scores à fort potentiel
+                    Accédez à nos sélections exclusives à fort potentiel. Des opportunités 
+                    uniques validées par nos algorithmes avancés pour des performances 
+                    exceptionnelles.
                 </div>
             </div>
 
@@ -238,15 +330,149 @@
         </div>
     </div>
 
+    <!-- Page Combo du Jour -->
+    <div id="combo-page" class="page">
+        <button class="back-button" onclick="showPage('main-page')">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+
+        <div class="container">
+            <h2 class="main-title">
+                <span class="bet-smart">COMBO</span> <span class="pro">DU JOUR</span>
+            </h2>
+
+            <div class="predictions-grid">
+                <div class="prediction-category" onclick="showCategoryPredictions('victoire')">
+                    <div class="category-icon">⚡</div>
+                    <div class="category-title">Victoire Direct</div>
+                </div>
+
+                <div class="prediction-category" onclick="showCategoryPredictions('double-chance')">
+                    <div class="category-icon">🎲</div>
+                    <div class="category-title">Double Chance</div>
+                </div>
+
+                <div class="prediction-category" onclick="showCategoryPredictions('total-15')">
+                    <div class="category-icon">⚽</div>
+                    <div class="category-title">Total 1.5 But</div>
+                </div>
+
+                <div class="prediction-category" onclick="showCategoryPredictions('total-25')">
+                    <div class="category-icon">⚽⚽</div>
+                    <div class="category-title">Total 2.5 Buts</div>
+                </div>
+
+                <div class="prediction-category" onclick="showCategoryPredictions('btts')">
+                    <div class="category-icon">🥅</div>
+                    <div class="category-title">Les Deux Équipes Marquent</div>
+                </div>
+
+                <div class="prediction-category" onclick="showCategoryPredictions('under-35')">
+                    <div class="category-icon">📊</div>
+                    <div class="category-title">Moins de 3.5 Buts</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         let tg = window.Telegram.WebApp;
         tg.expand();
 
+        // Gestion de la navigation
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active');
             });
             document.getElementById(pageId).classList.add('active');
+        }
+
+        // Affichage des prédictions par catégorie
+        function showCategoryPredictions(category) {
+            // Créer une nouvelle page pour les prédictions
+            const predictionPage = document.createElement('div');
+            predictionPage.className = 'page active';
+            predictionPage.id = `predictions-${category}`;
+
+            // Ajouter le contenu
+            predictionPage.innerHTML = `
+                <button class="back-button" onclick="showPage('combo-page')">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="container">
+                    <h2 class="main-title">
+                        <span class="bet-smart">${getCategoryTitle(category)}</span>
+                    </h2>
+                    <div class="prediction-content">
+                        ${generatePredictions(category)}
+                    </div>
+                </div>
+            `;
+
+            // Cacher les autres pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Ajouter la nouvelle page
+            document.body.appendChild(predictionPage);
+        }
+
+        function getCategoryTitle(category) {
+            const titles = {
+                'victoire': 'VICTOIRE DIRECT',
+                'double-chance': 'DOUBLE CHANCE',
+                'total-15': 'TOTAL 1.5 BUT',
+                'total-25': 'TOTAL 2.5 BUTS',
+                'btts': 'LES DEUX ÉQUIPES MARQUENT',
+                'under-35': 'MOINS DE 3.5 BUTS'
+            };
+            return titles[category] || category;
+        }
+
+        function generatePredictions(category) {
+            // Simuler quelques prédictions
+            return `
+                <div class="match-card">
+                    <div class="match-header">
+                        <span>Premier League</span>
+                        <span>20:45</span>
+                    </div>
+                    <div class="match-teams">
+                        <div class="team">
+                            <div class="team-name">Manchester City</div>
+                        </div>
+                        <div class="vs">VS</div>
+                        <div class="team">
+                            <div class="team-name">Liverpool</div>
+                        </div>
+                    </div>
+                    <div class="prediction-info">
+                        <span>Notre prédiction:</span>
+                        <span class="prediction-value">1X (Double Chance)</span>
+                    </div>
+                </div>
+
+                <div class="match-card">
+                    <div class="match-header">
+                        <span>Ligue 1</span>
+                        <span>21:00</span>
+                    </div>
+                    <div class="match-teams">
+                        <div class="team">
+                            <div class="team-name">PSG</div>
+                        </div>
+                        <div class="vs">VS</div>
+                        <div class="team">
+                            <div class="team-name">Marseille</div>
+                        </div>
+                    </div>
+                    <div class="prediction-info">
+                        <span>Notre prédiction:</span>
+                        <span class="prediction-value">Plus de 2.5 buts</span>
+                    </div>
+                </div>
+            `;
         }
 
         function showTopScore() {
