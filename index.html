@@ -45,18 +45,14 @@
             margin-bottom: 20px;
             text-align: center;
             box-shadow: 0 4px 15px var(--shadow-color);
-        }
-
-        .app-description h2 {
-            font-size: 20px;
-            color: var(--primary-blue);
-            margin-bottom: 10px;
+            border: 2px solid var(--primary-blue);
         }
 
         .app-description p {
             font-size: 14px;
             color: var(--text-dark);
             line-height: 1.5;
+            font-style: italic;
         }
 
         /* Style des cartes de menu */
@@ -110,11 +106,17 @@
             background: var(--white);
             border-radius: 25px;
             padding: 25px;
-            margin-bottom: 30px;
+            margin-top: 30px;
             box-shadow: 0 4px 15px var(--shadow-color);
             display: flex;
-            justify-content: center;
-            gap: 20px;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .divider {
+            width: 1px;
+            background-color: var(--text-light);
+            height: 50px;
         }
 
         .social-logo {
@@ -216,14 +218,7 @@
 
         <!-- Application Description -->
         <div class="app-description">
-            <h2>Bienvenue sur BetSmart Pro</h2>
             <p>Votre application ultime pour des prédictions sportives fiables et optimisées. Profitez d'une intelligence artificielle avancée et d'une analyse en temps réel pour maximiser vos chances de réussite.</p>
-        </div>
-
-        <!-- Stats Section -->
-        <div class="stats-container">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg" class="social-logo" alt="YouTube">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" class="social-logo" alt="Telegram">
         </div>
 
         <!-- Menu Grid -->
@@ -255,6 +250,13 @@
                 </div>
                 <div class="menu-title">Historique</div>
             </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg" class="social-logo" alt="YouTube" onclick="window.open('https://www.youtube.com/channel/UCAlV_YourLinkHere')">
+            <div class="divider"></div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" class="social-logo" alt="Telegram" onclick="window.open('https://t.me/YourTelegramLinkHere')">
         </div>
     </div>
 
