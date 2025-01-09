@@ -8,12 +8,12 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary: #4CAF50;
+            --primary: #2ecc71;
             --secondary: #1a1a2e;
-            --accent: #FFC107;
+            --accent: #ffd700;
+            --dark-bg: #111827;
+            --card-bg: rgba(46, 204, 113, 0.05);
             --text: #ffffff;
-            --success: #4CAF50;
-            --danger: #f44336;
         }
 
         * {
@@ -23,225 +23,188 @@
         }
 
         body {
-            background: linear-gradient(135deg, #1F2937, #111827);
+            background-color: var(--dark-bg);
             color: var(--text);
             font-family: 'Helvetica Neue', Arial, sans-serif;
             min-height: 100vh;
-            max-height: 100vh;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
+            overflow-x: hidden;
         }
 
         .container {
             max-width: 600px;
             margin: 0 auto;
             padding: 20px;
-            height: 100%;
+        }
+
+        .main-title {
+            text-align: center;
+            margin: 20px 0 40px;
+            font-size: 42px;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .main-title .bet-smart {
+            color: var(--primary);
+            text-shadow: 0 0 20px rgba(46, 204, 113, 0.3);
+        }
+
+        .main-title .pro {
+            color: var(--accent);
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .menu-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(46, 204, 113, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(46, 204, 113, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 8px 30px rgba(46, 204, 113, 0.2);
+        }
+
+        .menu-card:hover::before {
+            opacity: 1;
+        }
+
+        .menu-title {
+            font-size: 24px;
+            color: var(--text);
+            margin-bottom: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .menu-title i {
+            color: var(--primary);
+            font-size: 24px;
+        }
+
+        .menu-description {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 16px;
+            line-height: 1.5;
+            font-style: italic;
+            padding-left: 36px;
+        }
+
+        .social-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .social-button {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .social-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .telegram {
+            background: #0088cc;
+        }
+
+        .youtube {
+            background: #ff0000;
+        }
+
+        .tiktok {
+            background: #000000;
         }
 
         .page {
             display: none;
-            height: 100%;
-            overflow-y: auto;
+            min-height: 100vh;
+            padding: 20px;
+            animation: fadeIn 0.3s ease;
         }
 
         .page.active {
             display: block;
         }
 
-        /* Styles du header */
-        .header {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: inherit;
-            padding: 15px 0;
-            margin-bottom: 20px;
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(17, 24, 39, 0.9);
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
         }
 
-        .app-title {
-            text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .bet-smart {
-            color: var(--primary);
-            font-size: 32px;
-            font-weight: 800;
-            text-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
-        }
-
-        .pro {
-            color: var(--accent);
-            font-size: 32px;
-            font-weight: 800;
-        }
-
-        /* Menu principal */
-        .main-menu-option {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(76, 175, 80, 0.3);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .main-menu-option:hover {
-            transform: translateY(-3px);
-            background: rgba(76, 175, 80, 0.1);
-            border-color: var(--primary);
-        }
-
-        /* Catégories de prédictions */
-        .prediction-categories {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            padding: 10px;
-        }
-
-        .prediction-category {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-
-        .prediction-category:hover {
-            background: rgba(76, 175, 80, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .category-icon {
-            font-size: 24px;
-            margin-bottom: 10px;
-            color: var(--primary);
-        }
-
-        .category-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text);
-        }
-
-        /* Matchs */
-        .match-container {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 15px;
-        }
-
-        .match-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .match-teams {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 10px 0;
-        }
-
-        .team {
-            text-align: center;
-            flex: 1;
-        }
-
-        .team-name {
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .vs {
-            margin: 0 15px;
-            color: var(--accent);
-            font-weight: bold;
-        }
-
-        .prediction-info {
-            background: rgba(76, 175, 80, 0.1);
+        .nav-button {
+            background: var(--primary);
+            color: var(--dark-bg);
+            border: none;
             border-radius: 8px;
-            padding: 10px;
-            margin-top: 10px;
-            font-size: 13px;
-        }
-
-        .prediction-value {
-            color: var(--accent);
+            padding: 10px 20px;
             font-weight: 600;
-        }
-
-        /* Boutons sociaux */
-        .social-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            padding: 20px;
-            position: sticky;
-            bottom: 0;
-            background: inherit;
-            backdrop-filter: blur(10px);
-        }
-
-        .social-button {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            border: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            color: white;
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
-        .social-button:hover {
-            transform: translateY(-3px);
-        }
-
-        .telegram { background: #0088cc; }
-        .youtube { background: #ff0000; }
-        .tiktok { background: #000000; }
-
-        /* Back button */
-        .back-button {
-            position: absolute;
-            left: 20px;
-            top: 20px;
-            background: none;
-            border: none;
-            color: var(--primary);
-            font-size: 24px;
-            cursor: pointer;
-            z-index: 101;
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Page principale -->
-        <div id="main-page" class="page active">
-            <div class="header">
-                <h1 class="app-title">
-                    <span class="bet-smart">BetSmart</span> <span class="pro">Pro</span>
-                </h1>
-            </div>
+    <div id="main-page" class="page active">
+        <div class="container">
+            <h1 class="main-title">
+                <span class="bet-smart">BETSMART</span> <span class="pro">PRO</span>
+            </h1>
 
-            <div class="main-menu-option" onclick="showPage('combo-page')">
+            <div class="menu-card" onclick="showPage('combo-page')">
                 <div class="menu-title">
                     <i class="fas fa-chart-line"></i>
                     Combo du Jour
@@ -251,7 +214,7 @@
                 </div>
             </div>
 
-            <div class="main-menu-option" onclick="showTopScore()">
+            <div class="menu-card" onclick="showTopScore()">
                 <div class="menu-title">
                     <i class="fas fa-trophy"></i>
                     Top Score
@@ -260,118 +223,18 @@
                     Meilleurs scores à fort potentiel
                 </div>
             </div>
-        </div>
 
-        <!-- Page Combo du Jour -->
-        <div id="combo-page" class="page">
-            <button class="back-button" onclick="showPage('main-page')">
-                <i class="fas fa-arrow-left"></i>
-            </button>
-            
-            <div class="header">
-                <h1 class="app-title">
-                    <span class="bet-smart">Combo</span> <span class="pro">du Jour</span>
-                </h1>
+            <div class="social-buttons">
+                <button class="social-button telegram" onclick="openTelegram()">
+                    <i class="fab fa-telegram-plane"></i>
+                </button>
+                <button class="social-button youtube" onclick="openYoutube()">
+                    <i class="fab fa-youtube"></i>
+                </button>
+                <button class="social-button tiktok" onclick="openTiktok()">
+                    <i class="fab fa-tiktok"></i>
+                </button>
             </div>
-
-            <div class="prediction-categories">
-                <div class="prediction-category" onclick="showPredictions('victoire')">
-                    <div class="category-icon">
-                        <i class="fas fa-trophy-alt"></i>
-                    </div>
-                    <div class="category-title">Victoire Direct</div>
-                </div>
-
-                <div class="prediction-category" onclick="showPredictions('double-chance')">
-                    <div class="category-icon">
-                        <i class="fas fa-dice"></i>
-                    </div>
-                    <div class="category-title">Double Chance</div>
-                </div>
-
-                <div class="prediction-category" onclick="showPredictions('total-15')">
-                    <div class="category-icon">
-                        <i class="fas fa-futbol"></i>
-                    </div>
-                    <div class="category-title">Total 1.5 But</div>
-                </div>
-
-                <div class="prediction-category" onclick="showPredictions('total-25')">
-                    <div class="category-icon">
-                        <i class="fas fa-futbol"></i>
-                    </div>
-                    <div class="category-title">Total 2.5 Buts</div>
-                </div>
-
-                <div class="prediction-category" onclick="showPredictions('btts')">
-                    <div class="category-icon">
-                        <i class="fas fa-exchange-alt"></i>
-                    </div>
-                    <div class="category-title">Les Deux Équipes Marquent</div>
-                </div>
-
-                <div class="prediction-category" onclick="showPredictions('under-35')">
-                    <div class="category-icon">
-                        <i class="fas fa-arrow-down"></i>
-                    </div>
-                    <div class="category-title">Moins de 3.5 Buts</div>
-                </div>
-            </div>
-
-            <!-- Exemple de matchs -->
-            <div id="predictions-content" style="display: none; margin-top: 20px;">
-                <div class="match-container">
-                    <div class="match-header">
-                        <span>Premier League</span>
-                        <span>20:45</span>
-                    </div>
-                    <div class="match-teams">
-                        <div class="team">
-                            <div class="team-name">Manchester City</div>
-                        </div>
-                        <div class="vs">VS</div>
-                        <div class="team">
-                            <div class="team-name">Liverpool</div>
-                        </div>
-                    </div>
-                    <div class="prediction-info">
-                        <span>Prédiction:</span>
-                        <span class="prediction-value">1X (Double Chance)</span>
-                    </div>
-                </div>
-
-                <div class="match-container">
-                    <div class="match-header">
-                        <span>Ligue 1</span>
-                        <span>21:00</span>
-                    </div>
-                    <div class="match-teams">
-                        <div class="team">
-                            <div class="team-name">PSG</div>
-                        </div>
-                        <div class="vs">VS</div>
-                        <div class="team">
-                            <div class="team-name">Marseille</div>
-                        </div>
-                    </div>
-                    <div class="prediction-info">
-                        <span>Prédiction:</span>
-                        <span class="prediction-value">Plus de 2.5 buts</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="social-buttons">
-            <button class="social-button telegram" onclick="openTelegram()">
-                <i class="fab fa-telegram-plane"></i>
-            </button>
-            <button class="social-button youtube" onclick="openYoutube()">
-                <i class="fab fa-youtube"></i>
-            </button>
-            <button class="social-button tiktok" onclick="openTiktok()">
-                <i class="fab fa-tiktok"></i>
-            </button>
         </div>
     </div>
 
@@ -380,19 +243,10 @@
         tg.expand();
 
         function showPage(pageId) {
-            // Cache toutes les pages
             document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active');
             });
-            // Affiche la page demandée
             document.getElementById(pageId).classList.add('active');
-        }
-
-        function showPredictions(category) {
-            const predictionsContent = document.getElementById('predictions-content');
-            predictionsContent.style.display = 'block';
-            // Faire défiler jusqu'aux prédictions
-            predictionsContent.scrollIntoView({ behavior: 'smooth' });
         }
 
         function showTopScore() {
