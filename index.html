@@ -10,33 +10,14 @@
     <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-database-compat.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyCigxBJ9Ot8-11S062n-PGiSM1uO98wE7g",
-            authDomain: "betsmart-pro-55488.firebaseapp.com",
-            databaseURL: "https://betsmart-pro-55488-default-rtdb.europe-west1.firebasedatabase.app",
-            projectId: "betsmart-pro-55488",
-            storageBucket: "betsmart-pro-55488.firebasestorage.app",
-            messagingSenderId: "215633988518",
-            appId: "1:215633988518:web:6342fa5daa5482a4265d67",
-            measurementId: "G-623SHSQMRL"
-        };
-
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
-    </script>
-
     <style>
         :root {
-            --primary-color: #3B3BF9;
             --telegram-color: #0088cc;
-            --youtube-color: #FF0000;
             --white: #FFFFFF;
             --text-dark: #1A1A1A;
             --text-light: #6B7280;
             --shadow: rgba(0, 0, 0, 0.1);
             --success-color: #4ADE80;
-            --error-color: #EF4444;
         }
 
         * {
@@ -52,122 +33,64 @@
             line-height: 1.6;
         }
 
-        .verification-container {
+        .container {
             max-width: 600px;
             margin: 0 auto;
             padding: 20px;
             text-align: center;
         }
 
-        .verification-header {
-            background: linear-gradient(135deg, var(--primary-color), var(--telegram-color));
-            color: var(--white);
-            padding: 30px;
-            border-radius: 15px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 15px var(--shadow);
-        }
-
-        .verification-title {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .verification-step {
+        .verification-card {
             background: var(--white);
             border-radius: 15px;
             padding: 25px;
-            margin-bottom: 20px;
+            margin: 20px 0;
             box-shadow: 0 4px 15px var(--shadow);
-            transition: transform 0.3s ease;
-        }
-
-        .verification-step:hover {
-            transform: translateY(-2px);
-        }
-
-        .step-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
         }
 
         .telegram-icon {
             background: var(--telegram-color);
             color: var(--white);
-            width: 50px;
-            height: 50px;
-            border-radius: 25px;
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
-            margin-right: 15px;
+            font-size: 30px;
+            margin: 0 auto 20px;
         }
 
-        .youtube-icon {
-            background: var(--youtube-color);
+        .join-button {
+            background: var(--telegram-color);
             color: var(--white);
-            width: 50px;
-            height: 50px;
-            border-radius: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            margin-right: 15px;
-        }
-
-        .step-content h3 {
-            font-size: 18px;
-            margin-bottom: 5px;
-        }
-
-        .step-content p {
-            color: var(--text-light);
-            font-size: 14px;
-        }
-
-        .subscribe-button {
-            display: inline-block;
             padding: 12px 25px;
             border-radius: 25px;
-            color: var(--white);
             text-decoration: none;
             font-weight: 600;
-            margin-top: 15px;
+            display: inline-block;
+            margin: 20px 0;
             transition: transform 0.3s ease;
         }
 
-        .telegram-button {
-            background: var(--telegram-color);
-        }
-
-        .youtube-button {
-            background: var(--youtube-color);
-        }
-
-        .subscribe-button:hover {
+        .join-button:hover {
             transform: translateY(-2px);
         }
 
         .verify-button {
-            background: linear-gradient(45deg, var(--primary-color), var(--telegram-color));
+            background: var(--telegram-color);
             color: var(--white);
             border: none;
-            padding: 15px 40px;
+            padding: 12px 30px;
             border-radius: 25px;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            margin-top: 30px;
             transition: all 0.3s ease;
         }
 
         .verify-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 15px var(--shadow);
         }
 
         .verify-button:disabled {
@@ -175,284 +98,126 @@
             cursor: not-allowed;
         }
 
-        .step-status {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 30px;
-            height: 30px;
-            border-radius: 15px;
-            color: var(--white);
-            margin-left: auto;
-        }
-
-        .status-pending {
-            background: var(--text-light);
-        }
-
-        .status-success {
-            background: var(--success-color);
-        }
-
         .loading-spinner {
-            border: 3px solid var(--white);
+            border: 3px solid var(--telegram-color);
             border-top: 3px solid transparent;
             border-radius: 50%;
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             animation: spin 1s linear infinite;
+            margin: 10px auto;
+            display: none;
         }
 
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-
-        .verification-progress {
-            margin-top: 30px;
-            text-align: center;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 6px;
-            background: var(--text-light);
-            border-radius: 3px;
-            margin: 10px 0;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: var(--success-color);
-            width: 0%;
-            transition: width 0.3s ease;
-        }
     </style>
 </head>
 <body>
-    <div class="verification-container" id="verification-page">
-        <div class="verification-header">
-            <h1 class="verification-title">Accès BetSmart Pro</h1>
-            <p>Rejoignez notre communauté pour accéder à l'application</p>
-        </div>
-
-        <div class="verification-steps">
-            <div class="verification-step" id="telegram-step">
-                <div class="step-header">
-                    <div class="telegram-icon">
-                        <i class="fab fa-telegram-plane"></i>
-                    </div>
-                    <div class="step-content">
-                        <h3>Canal Telegram</h3>
-                        <p>Rejoignez notre canal pour les analyses exclusives</p>
-                    </div>
-                    <div class="step-status status-pending" id="telegram-status">
-                        <i class="fas fa-clock"></i>
-                    </div>
+    <div id="verification-page">
+        <div class="container">
+            <div class="verification-card">
+                <div class="telegram-icon">
+                    <i class="fab fa-telegram-plane"></i>
                 </div>
-                <a href="https://t.me/alvecapital1" target="_blank" class="subscribe-button telegram-button">
-                    <i class="fab fa-telegram-plane"></i> Rejoindre
+                <h2>Bienvenue sur BetSmart Pro</h2>
+                <p style="margin: 15px 0;">Pour accéder à l'application, rejoignez notre canal Telegram :</p>
+                <a href="https://t.me/alvecapital1" target="_blank" class="join-button">
+                    <i class="fab fa-telegram-plane"></i> Rejoindre le canal
                 </a>
-            </div>
-
-            <div class="verification-step" id="youtube1-step">
-                <div class="step-header">
-                    <div class="youtube-icon">
-                        <i class="fab fa-youtube"></i>
-                    </div>
-                    <div class="step-content">
-                        <h3>Chaîne YouTube 1</h3>
-                        <p>Abonnez-vous à notre chaîne principale</p>
-                    </div>
-                    <div class="step-status status-pending" id="youtube1-status">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                </div>
-                <a href="https://youtube.com/@alvecapital" target="_blank" class="subscribe-button youtube-button">
-                    <i class="fab fa-youtube"></i> S'abonner
-                </a>
-            </div>
-
-            <div class="verification-step" id="youtube2-step">
-                <div class="step-header">
-                    <div class="youtube-icon">
-                        <i class="fab fa-youtube"></i>
-                    </div>
-                    <div class="step-content">
-                        <h3>Chaîne YouTube 2</h3>
-                        <p>Abonnez-vous à notre seconde chaîne</p>
-                    </div>
-                    <div class="step-status status-pending" id="youtube2-status">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                </div>
-                <a href="https://youtube.com/@AlexVerol2" target="_blank" class="subscribe-button youtube-button">
-                    <i class="fab fa-youtube"></i> S'abonner
-                </a>
-            </div>
-        </div>
-
-        <div class="verification-progress">
-            <button onclick="verifySubscriptions()" class="verify-button" id="verify-button">
-                Vérifier les abonnements
-            </button>
-            <div class="progress-bar">
-                <div class="progress-fill" id="progress-fill"></div>
+                <div id="spinner" class="loading-spinner"></div>
+                <button onclick="verifySubscription()" class="verify-button" id="verify-button">
+                    Vérifier l'abonnement
+                </button>
             </div>
         </div>
     </div>
 
     <div id="main-app" style="display: none;">
-        <!-- Contenu de l'application principale -->
+        <!-- Contenu principal de l'application -->
     </div>
+
     <script>
-    let tg = window.Telegram.WebApp;
-    tg.expand();
+        let tg = window.Telegram.WebApp;
+        tg.expand();
 
-    // Configuration
-    const CONFIG = {
-        TELEGRAM_CHANNEL: 'alvecapital1',
-        YOUTUBE_CHANNEL1: 'alvecapital',
-        YOUTUBE_CHANNEL2: 'AlexVerol2',
-        CHECK_INTERVAL: 10000 // 10 secondes
-    };
+        const firebaseConfig = {
+            apiKey: "AIzaSyCigxBJ9Ot8-11S062n-PGiSM1uO98wE7g",
+            authDomain: "betsmart-pro-55488.firebaseapp.com",
+            databaseURL: "https://betsmart-pro-55488-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "betsmart-pro-55488",
+            storageBucket: "betsmart-pro-55488.firebasestorage.app",
+            messagingSenderId: "215633988518",
+            appId: "1:215633988518:web:6342fa5daa5482a4265d67",
+            measurementId: "G-623SHSQMRL"
+        };
 
-    let subscriptionStatus = {
-        telegram: false,
-        youtube1: false,
-        youtube2: false
-    };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
 
-    function updateStepStatus(step, status) {
-        const statusElement = document.getElementById(`${step}-status`);
-        switch(status) {
-            case 'loading':
-                statusElement.className = 'step-status status-pending';
-                statusElement.innerHTML = '<div class="loading-spinner"></div>';
-                break;
-            case 'success':
-                statusElement.className = 'step-status status-success';
-                statusElement.innerHTML = '<i class="fas fa-check"></i>';
-                break;
-            default:
-                statusElement.className = 'step-status status-pending';
-                statusElement.innerHTML = '<i class="fas fa-clock"></i>';
-        }
-    }
+        async function verifySubscription() {
+            const verifyButton = document.getElementById('verify-button');
+            const spinner = document.getElementById('spinner');
+            
+            verifyButton.disabled = true;
+            spinner.style.display = 'block';
 
-    function updateProgress() {
-        const total = Object.values(subscriptionStatus).filter(Boolean).length;
-        const percentage = (total / 3) * 100;
-        document.getElementById('progress-fill').style.width = `${percentage}%`;
-        
-        if (total === 3) {
-            document.getElementById('verify-button').innerHTML = 'Accéder à l\'application <i class="fas fa-arrow-right"></i>';
-        }
-    }
+            try {
+                const response = await fetch('https://api.telegram.org/bot6526990595:AAGqyrKD4F0wKpf-_lZgz5Lw23VfTykPTnc/getChatMember', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        chat_id: '@alvecapital1',
+                        user_id: tg.initDataUnsafe.user.id
+                    })
+                });
 
-    async function verifySubscriptions() {
-        const verifyButton = document.getElementById('verify-button');
-        verifyButton.disabled = true;
-        verifyButton.innerHTML = 'Vérification en cours...';
+                const data = await response.json();
+                
+                if (data.ok && ['member', 'administrator', 'creator'].includes(data.result.status)) {
+                    await saveUserAccess();
+                    document.getElementById('verification-page').style.display = 'none';
+                    document.getElementById('main-app').style.display = 'block';
+                } else {
+                    alert('Veuillez vous abonner au canal pour accéder à l\'application');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('Une erreur est survenue, veuillez réessayer');
+            }
 
-        // Vérification Telegram
-        updateStepStatus('telegram', 'loading');
-        try {
-            const chatMember = await tg.telegram.getChatMember(CONFIG.TELEGRAM_CHANNEL, tg.initDataUnsafe.user.id);
-            subscriptionStatus.telegram = ['member', 'administrator', 'creator'].includes(chatMember.status);
-            updateStepStatus('telegram', subscriptionStatus.telegram ? 'success' : 'pending');
-        } catch (error) {
-            subscriptionStatus.telegram = false;
-            updateStepStatus('telegram', 'pending');
+            verifyButton.disabled = false;
+            spinner.style.display = 'none';
         }
 
-        // Simulations des vérifications YouTube (à remplacer par l'API réelle)
-        updateStepStatus('youtube1', 'loading');
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        subscriptionStatus.youtube1 = true;
-        updateStepStatus('youtube1', 'success');
-
-        updateStepStatus('youtube2', 'loading');
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        subscriptionStatus.youtube2 = true;
-        updateStepStatus('youtube2', 'success');
-
-        updateProgress();
-        verifyButton.disabled = false;
-
-        if (Object.values(subscriptionStatus).every(Boolean)) {
-            await saveUserAccess();
-            setTimeout(() => {
-                document.getElementById('verification-page').style.display = 'none';
-                document.getElementById('main-app').style.display = 'block';
-                initMainApp();
-            }, 1000);
-        } else {
-            verifyButton.innerHTML = 'Vérifier les abonnements';
-        }
-    }
-
-    async function saveUserAccess() {
-        try {
-            const userRef = db.ref(`users/${tg.initDataUnsafe.user.id}`);
-            await userRef.set({
+        async function saveUserAccess() {
+            const userId = tg.initDataUnsafe.user.id;
+            await db.ref(`users/${userId}`).set({
                 verified: true,
                 verifiedAt: Date.now(),
                 dailyRequests: 0,
-                requestsLimit: 5,
-                lastReset: Date.now()
+                requestsLimit: 5
             });
-        } catch (error) {
-            console.error('Erreur lors de la sauvegarde:', error);
-        }
-    }
-
-    async function checkUserAccess() {
-        if (!tg.initDataUnsafe?.user?.id) return false;
-        
-        const userRef = db.ref(`users/${tg.initDataUnsafe.user.id}`);
-        const snapshot = await userRef.once('value');
-        const userData = snapshot.val();
-        
-        if (!userData || !userData.verified) {
-            return false;
         }
 
-        document.getElementById('verification-page').style.display = 'none';
-        document.getElementById('main-app').style.display = 'block';
-        return true;
-    }
+        async function checkExistingAccess() {
+            const userId = tg.initDataUnsafe.user.id;
+            const snapshot = await db.ref(`users/${userId}`).once('value');
+            const userData = snapshot.val();
 
-    function initMainApp() {
-        const mainApp = document.getElementById('main-app');
-        // Initialisation de l'application principale ici
-        mainApp.innerHTML = `
-            <div class="container">
-                <!-- Votre contenu d'application principal -->
-            </div>
-        `;
-    }
-
-    // Vérification automatique périodique
-    let checkInterval;
-    function startAutoCheck() {
-        checkInterval = setInterval(() => {
-            if (!Object.values(subscriptionStatus).every(Boolean)) {
-                verifySubscriptions();
+            if (userData && userData.verified) {
+                document.getElementById('verification-page').style.display = 'none';
+                document.getElementById('main-app').style.display = 'block';
             }
-        }, CONFIG.CHECK_INTERVAL);
-    }
-
-    // Initialisation
-    document.addEventListener('DOMContentLoaded', async () => {
-        const hasAccess = await checkUserAccess();
-        if (!hasAccess) {
-            startAutoCheck();
         }
-    });
 
-    tg.ready();
-</script>
+        // Vérification au chargement
+        document.addEventListener('DOMContentLoaded', checkExistingAccess);
+        tg.ready();
+    </script>
 </body>
 </html>
