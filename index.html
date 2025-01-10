@@ -29,6 +29,7 @@
             background: var(--light-bg);
             color: var(--text-dark);
             line-height: 1.6;
+            overflow-y: scroll;
         }
 
         .container {
@@ -122,6 +123,18 @@
         .social-logo {
             width: 50px;
             height: 50px;
+        }
+
+        .back-button {
+            display: inline-block;
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px var(--shadow-color);
         }
 
         /* Features Section */
@@ -296,6 +309,14 @@
                 <div class="prediction-card">
                     <div class="prediction-icon">📊</div>
                     <div>Double Chance</div>
+                </div>
+                <div class="prediction-card">
+                    <div class="prediction-icon">➕</div>
+                    <div>Total +1,5 Buts</div>
+                </div>
+                <div class="prediction-card">
+                    <div class="prediction-icon">➖</div>
+                    <div>Moins de 3,5 Buts</div>
                 </div>
             `;
         }
