@@ -4,13 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>BetSmart Pro</title>
+    
+    <!-- Scripts Telegram et Firebase -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-database-compat.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Configuration Firebase -->
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCigxBJ9Ot8-11S062n-PGiSM1uO98wE7g",
+            authDomain: "betsmart-pro-55488.firebaseapp.com",
+            databaseURL: "https://betsmart-pro-55488-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "betsmart-pro-55488",
+            storageBucket: "betsmart-pro-55488.firebasestorage.app",
+            messagingSenderId: "215633988518",
+            appId: "1:215633988518:web:6342fa5daa5482a4265d67",
+            measurementId: "G-623SHSQMRL"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+    </script>
+
     <style>
         :root {
             --primary-color: #3B3BF9;
             --secondary-color: #1BFFFF;
-            --success-color: #4ADE80;
             --gradient-1: linear-gradient(45deg, #FFD700, #FFA500);
             --gradient-2: linear-gradient(45deg, #4ADE80, #22C55E);
             --gradient-3: linear-gradient(45deg, #6366F1, #4F46E5);
@@ -115,11 +137,33 @@
             font-size: 24px;
             box-shadow: 0 4px 10px var(--shadow);
         }
-
         .menu-title {
             font-size: 16px;
             font-weight: 600;
             color: var(--text-dark);
+        }
+
+        .requests-info {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .requests-count {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .unlock-section {
+            background: var(--gradient-1);
+            color: var(--white);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            text-align: center;
         }
 
         .prediction-section {
@@ -132,6 +176,7 @@
             cursor: pointer;
             box-shadow: 0 4px 15px var(--shadow);
             transition: transform 0.3s ease;
+            position: relative;
         }
 
         .prediction-section:hover {
@@ -187,139 +232,18 @@
             margin-bottom: 10px;
         }
 
-        .match-prediction {
-            background: var(--gradient-1);
-            color: var(--white);
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-weight: 600;
-            display: inline-block;
-            margin-top: 10px;
-        }
-
-        .match-confidence {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: var(--success-color);
-            color: var(--white);
-            padding: 4px 8px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 500;
-        }
-
         .favorite-star {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            color: var(--text-light);
+            top: 15px;
+            right: 15px;
             font-size: 20px;
+            color: var(--text-light);
             cursor: pointer;
             transition: color 0.3s ease;
         }
 
         .favorite-star.active {
             color: #FFD700;
-        }
-        .start-button {
-            background: var(--gradient-1);
-            color: var(--white);
-            padding: 20px 30px;
-            border-radius: 15px;
-            border: none;
-            font-size: 18px;
-            font-weight: 600;
-            width: 100%;
-            cursor: pointer;
-            margin-top: 25px;
-            box-shadow: 0 4px 15px var(--shadow);
-            transition: transform 0.3s ease;
-        }
-
-        .start-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px var(--shadow);
-        }
-
-        .fifa-option {
-            background: var(--white);
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px var(--shadow);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .fifa-option:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 25px var(--shadow);
-        }
-
-        .fifa-option h3 {
-            font-size: 20px;
-            margin-bottom: 10px;
-            color: var(--text-dark);
-        }
-
-        .fifa-option p {
-            color: var(--text-light);
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        .question-container {
-            animation: slideIn 0.5s ease;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .loading-animation {
-            text-align: center;
-            padding: 40px;
-        }
-
-        .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid var(--shadow);
-            border-top: 4px solid var(--primary-color);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .prediction-result {
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .safe-prediction {
-            background: var(--success-color);
-            color: var(--white);
-            padding: 20px;
-            border-radius: 15px;
-            margin-top: 20px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(74, 222, 128, 0.2);
         }
 
         .nav-bottom {
@@ -339,6 +263,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            gap: 5px;
             color: var(--text-light);
             text-decoration: none;
             font-size: 12px;
@@ -347,34 +272,93 @@
 
         .nav-item i {
             font-size: 20px;
-            margin-bottom: 4px;
         }
 
         .nav-item.active {
             color: var(--primary-color);
         }
 
-        .social-logos {
+        /* Styles spécifiques pour le système de parrainage */
+        .referral-container {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px var(--shadow);
+        }
+
+        .referral-progress {
+            margin: 20px 0;
+            background: var(--light-bg);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .referral-bar {
+            height: 20px;
+            background: var(--gradient-1);
+            transition: width 0.3s ease;
+        }
+
+        .referral-count {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 10px 0;
+        }
+
+        .referral-steps {
+            margin-top: 20px;
+        }
+
+        .referral-step {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
             display: flex;
-            justify-content: space-around;
             align-items: center;
-            margin-top: 30px;
-            padding: 20px;
+            gap: 15px;
         }
 
-        .social-logo {
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
-            transition: transform 0.3s ease;
+        .step-number {
+            width: 30px;
+            height: 30px;
+            background: var(--primary-color);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
         }
 
-        .social-logo:hover {
-            transform: scale(1.1);
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
-    </style>
-</head>
-<body>
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease;
+        }
+
+        .slide-in {
+            animation: slideIn 0.3s ease;
+        }
+        <body>
     <div class="container" id="main">
         <div class="header">
             <h1 class="header-title">Tableau de Bord</h1>
@@ -436,387 +420,195 @@
             <span>VIP</span>
         </a>
     </nav>
+
     <script>
         let tg = window.Telegram.WebApp;
         tg.expand();
 
-        // Stockage des favoris
-        let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-
-        function updateNavigation() {
-            const navItems = document.querySelectorAll('.nav-item');
-            navItems.forEach(item => item.classList.remove('active'));
-            const currentPage = window.location.hash.slice(1) || 'home';
-            document.querySelector(`.nav-item[onclick="show${currentPage.charAt(0).toUpperCase() + currentPage.slice(1)}()"]`)?.classList.add('active');
-        }
-
-        function showHome() {
-            window.location.hash = 'home';
-            location.reload();
-            updateNavigation();
-        }
-
-        function toggleFavorite(matchId) {
-            const starIcon = document.querySelector(`#star-${matchId}`);
-            const index = favorites.indexOf(matchId);
-            
-            if (index === -1) {
-                favorites.push(matchId);
-                starIcon.classList.add('active');
-            } else {
-                favorites.splice(index, 1);
-                starIcon.classList.remove('active');
+        // Gestion des utilisateurs Firebase
+        class UserManager {
+            constructor() {
+                this.currentUser = null;
+                this.dailyLimit = 5;
+                this.maxLimit = 20;
             }
-            
-            localStorage.setItem('favorites', JSON.stringify(favorites));
-        }
 
-        function showComboPage() {
-            window.location.hash = 'combo';
-            const predictions = [
-                { type: 'victoire', icon: 'trophy', title: 'Victoire Directe', gradient: 'var(--gradient-1)' },
-                { type: 'btts', icon: 'futbol', title: 'Les 2 Équipes Marquent', gradient: 'var(--gradient-2)' },
-                { type: 'double', icon: 'shield-alt', title: 'Double Chance', gradient: 'var(--gradient-3)' },
-                { type: 'over', icon: 'plus-circle', title: 'Total +1.5 Buts', gradient: 'var(--gradient-4)' },
-                { type: 'under', icon: 'minus-circle', title: 'Moins de 3.5 Buts', gradient: 'var(--gradient-5)' }
-            ];
-
-            let html = `
-                <div class="back-button" onclick="showHome()">
-                    <i class="fas fa-arrow-left"></i> Retour
-                </div>
-                <div class="header">
-                    <h1 class="header-title">Prédictions Disponibles</h1>
-                </div>
-            `;
-
-            predictions.forEach(pred => {
-                html += `
-                    <div class="prediction-section" onclick="showPredictionMatches('${pred.type}')" style="background: ${pred.gradient}">
-                        <div class="prediction-icon">
-                            <i class="fas fa-${pred.icon}"></i>
-                        </div>
-                        <div class="prediction-title" style="color: var(--white)">${pred.title}</div>
-                    </div>
-                `;
-            });
-
-            document.getElementById('main').innerHTML = html;
-            updateNavigation();
-        }
-
-        function showPredictionMatches(type) {
-            const matches = {
-                victoire: [
-                    { id: 'v1', league: 'Premier League', home: "Manchester City", away: "Arsenal", time: "20:45", prediction: "Victoire Manchester City", confidence: "85%" },
-                    { id: 'v2', league: 'Ligue 1', home: "PSG", away: "Marseille", time: "21:00", prediction: "Victoire PSG", confidence: "80%" }
-                ],
-                btts: [
-                    { id: 'b1', league: 'Champions League', home: "Bayern Munich", away: "Real Madrid", time: "20:00", prediction: "Les deux équipes marquent", confidence: "90%" },
-                    { id: 'b2', league: 'Serie A', home: "Inter", away: "Milan", time: "20:45", prediction: "Les deux équipes marquent", confidence: "85%" }
-                ]
-                // Ajoutez d'autres types de matchs ici
-            };
-
-            const selectedMatches = matches[type] || [];
-            let matchesHTML = `
-                <div class="back-button" onclick="showComboPage()">
-                    <i class="fas fa-arrow-left"></i> Retour
-                </div>
-                <div class="header">
-                    <h1 class="header-title">Matchs Sélectionnés</h1>
-                </div>
-            `;
-
-            selectedMatches.forEach(match => {
-                const isFavorite = favorites.includes(match.id);
-                matchesHTML += `
-                    <div class="match-card">
-                        <div class="match-league">${match.league}</div>
-                        <i class="fas fa-star favorite-star ${isFavorite ? 'active' : ''}" 
-                           id="star-${match.id}"
-                           onclick="toggleFavorite('${match.id}')"></i>
-                        <div class="match-teams">
-                            <span>${match.home}</span>
-                            <span>vs</span>
-                            <span>${match.away}</span>
-                        </div>
-                        <div class="match-time">
-                            <i class="far fa-clock"></i> ${match.time}
-                        </div>
-                        <div class="match-prediction">${match.prediction}</div>
-                        <div class="match-confidence">Confiance: ${match.confidence}</div>
-                    </div>
-                `;
-            });
-
-            document.getElementById('main').innerHTML = matchesHTML;
-        }
-
-        function showTopScore() {
-            window.location.hash = 'topscore';
-            const matches = [
-                {
-                    league: 'Champions League',
-                    home: 'PSG',
-                    away: 'Bayern Munich',
-                    time: '20:45',
-                    htScores: ['1-0', '0-0'],
-                    ftScores: ['2-1', '1-1']
-                },
-                {
-                    league: 'Premier League',
-                    home: 'Liverpool',
-                    away: 'Manchester City',
-                    time: '21:00',
-                    htScores: ['0-1', '1-1'],
-                    ftScores: ['2-2', '1-2']
+            async initUser(telegramId) {
+                const userRef = db.ref(`users/${telegramId}`);
+                const snapshot = await userRef.once('value');
+                if (!snapshot.exists()) {
+                    await userRef.set({
+                        dailyRequests: 0,
+                        lastRequestTime: Date.now(),
+                        referrals: {
+                            count: 0,
+                            maxReached: false
+                        },
+                        requestsLimit: this.dailyLimit
+                    });
                 }
-            ];
+                this.currentUser = telegramId;
+                return this.getUserData();
+            }
 
-            let html = `
-                <div class="back-button" onclick="showHome()">
-                    <i class="fas fa-arrow-left"></i> Retour
-                </div>
-                <div class="header">
-                    <h1 class="header-title">Top Scores</h1>
-                </div>
-            `;
+            async getUserData() {
+                if (!this.currentUser) return null;
+                const snapshot = await db.ref(`users/${this.currentUser}`).once('value');
+                return snapshot.val();
+            }
 
-            matches.forEach(match => {
-                html += `
-                    <div class="match-card">
-                        <div class="match-league">${match.league}</div>
-                        <div class="match-teams">
-                            <span>${match.home}</span>
-                            <span>vs</span>
-                            <span>${match.away}</span>
-                        </div>
-                        <div class="match-time">
-                            <i class="far fa-clock"></i> ${match.time}
-                        </div>
-                        <div style="margin-top: 15px;">
-                            <h4>Score Mi-temps:</h4>
-                            <p>${match.htScores.join(' ou ')}</p>
-                        </div>
-                        <div style="margin-top: 10px;">
-                            <h4>Score Final:</h4>
-                            <p>${match.ftScores.join(' ou ')}</p>
-                        </div>
-                    </div>
-                `;
-            });
+            async checkDailyReset() {
+                const userData = await this.getUserData();
+                if (!userData) return;
 
-            document.getElementById('main').innerHTML = html;
-            updateNavigation();
+                const lastRequest = new Date(userData.lastRequestTime);
+                const now = new Date();
+                
+                if (lastRequest.getDate() !== now.getDate() ||
+                    lastRequest.getMonth() !== now.getMonth() ||
+                    lastRequest.getFullYear() !== now.getFullYear()) {
+                    await db.ref(`users/${this.currentUser}`).update({
+                        dailyRequests: 0,
+                        lastRequestTime: Date.now()
+                    });
+                }
+            }
+
+            async canMakeRequest() {
+                await this.checkDailyReset();
+                const userData = await this.getUserData();
+                return userData.dailyRequests < userData.requestsLimit;
+            }
+
+            async incrementRequests() {
+                const userRef = db.ref(`users/${this.currentUser}`);
+                const userData = await this.getUserData();
+                await userRef.update({
+                    dailyRequests: userData.dailyRequests + 1,
+                    lastRequestTime: Date.now()
+                });
+            }
+
+            async getReferralCount() {
+                const userData = await this.getUserData();
+                return userData.referrals.count;
+            }
+
+            async addReferral() {
+                const userData = await this.getUserData();
+                if (userData.referrals.count >= 20) return false;
+
+                const newCount = userData.referrals.count + 1;
+                await db.ref(`users/${this.currentUser}/referrals`).update({
+                    count: newCount,
+                    maxReached: newCount >= 20
+                });
+
+                if (newCount >= 20) {
+                    await db.ref(`users/${this.currentUser}`).update({
+                        requestsLimit: this.maxLimit
+                    });
+                }
+
+                return true;
+            }
         }
 
-        let currentFIFAQuestion = 0;
-        const fifaClassicQuestions = [
-            { question: "Quelle est la cote de l'équipe à domicile ?", type: "number", name: "homeOdds" },
-            { question: "Quelle est la cote du match nul ?", type: "number", name: "drawOdds" },
-            { question: "Quelle est la cote de l'équipe à l'extérieur ?", type: "number", name: "awayOdds" },
-            { question: "Quelle est la cote du Total +1.5 buts ?", type: "number", name: "over1_5" },
-            { question: "Quelle est la cote du Total +2.5 buts ?", type: "number", name: "over2_5" },
-            { question: "Quelle est la cote du Total -3.5 buts ?", type: "number", name: "under3_5" },
-           { question: "Entrez les 3 scores exacts les plus probables (1ère période)", type: "text", name: "ht_scores" },
-           { question: "Entrez les 5 scores exacts les plus probables (temps réglementaire)", type: "text", name: "ft_scores" }
-       ];
+        const userManager = new UserManager();
 
-       const fifaPenaltyQuestions = [
-           { question: "Quelle est la cote de l'équipe à domicile ?", type: "number", name: "homeOdds" },
-           { question: "Quelle est la cote de l'équipe à l'extérieur ?", type: "number", name: "awayOdds" },
-           { question: "Cote pour 'Chaque équipe marque 3 buts ou plus - Oui'", type: "number", name: "bothTeams3GoalsYes" },
-           { question: "Cote pour 'Chaque équipe marque 3 buts ou plus - Non'", type: "number", name: "bothTeams3GoalsNo" },
-           { question: "Entrez les 5 scores exacts avec leurs cotes (format: score=cote, ex: 3-3=12.5)", type: "text", name: "exactScores" },
-           { question: "Cote pour Total +4.5 buts (0 si non disponible)", type: "number", name: "over4_5" },
-           { question: "Cote pour Total +5.5 buts (0 si non disponible)", type: "number", name: "over5_5" },
-           { question: "Cote pour Total +6.5 buts (0 si non disponible)", type: "number", name: "over6_5" }
-       ];
+        // Initialisation avec l'ID Telegram
+        async function initApp() {
+            if (tg.initDataUnsafe?.user?.id) {
+                await userManager.initUser(tg.initDataUnsafe.user.id);
+                updateUI();
+            }
+        }
 
-       let fifaAnswers = {};
+Je continue avec la dernière partie...
 
-       function showFIFA() {
-           window.location.hash = 'fifa';
-           document.getElementById('main').innerHTML = `
-               <div class="header">
-                   <h1 class="header-title">FIFA Prédictions</h1>
-               </div>
-               <div class="form-container" style="padding: 30px;">
-                   <p style="font-size: 16px; line-height: 1.8; margin-bottom: 20px;">
-                       Cette section vous permet d'obtenir des prédictions ultra-précises basées sur une analyse approfondie des cotes. Notre algorithme avancé analysera toutes les informations fournies pour vous donner les meilleures prédictions possibles.
-                   </p>
-                   <button onclick="showFIFAOptions()" class="start-button">
-                       <i class="fas fa-play"></i> Commencer l'Analyse
-                   </button>
-               </div>
-           `;
-           updateNavigation();
-       }
+4/4 - Fin du JavaScript :
 
-       function showFIFAOptions() {
-           document.getElementById('main').innerHTML = `
-               <div class="back-button" onclick="showFIFA()">
-                   <i class="fas fa-arrow-left"></i> Retour
-               </div>
-               <div class="header">
-                   <h1 class="header-title">Choisissez votre type de jeu</h1>
-               </div>
-               <div class="fifa-option" onclick="startFIFAQuestions('classic')">
-                   <h3><i class="fas fa-futbol"></i> FIFA Classique</h3>
-                   <p>Analyse complète pour tous les championnats FIFA. Idéal pour les matchs classiques avec une prédiction détaillée basée sur les statistiques et les cotes.</p>
-               </div>
-               <div class="fifa-option" onclick="startFIFAQuestions('penalty')">
-                   <h3><i class="fas fa-bullseye"></i> FIFA Penalty</h3>
-                   <p>Spécialement conçu pour les matchs de penalties FIFA. Analyse optimisée pour ce format unique avec des prédictions spécifiques.</p>
-               </div>
-           `;
-       }
+```javascript
+        async function updateUI() {
+            const userData = await userManager.getUserData();
+            if (!userData) return;
 
-       function startFIFAQuestions(type) {
-           currentFIFAQuestion = 0;
-           fifaAnswers = {type: type};
-           showNextFIFAQuestion();
-       }
+            const remainingRequests = userData.requestsLimit - userData.dailyRequests;
+            updateRequestsCounter(remainingRequests);
+        }
 
-       function showNextFIFAQuestion() {
-           const questions = fifaAnswers.type === 'classic' ? fifaClassicQuestions : fifaPenaltyQuestions;
-           
-           if (currentFIFAQuestion >= questions.length) {
-               showLoadingAndProcessPrediction();
-               return;
-           }
+        function updateRequestsCounter(remaining) {
+            const counterElement = document.querySelector('.requests-count');
+            if (counterElement) {
+                counterElement.textContent = remaining;
+            }
+        }
 
-           const question = questions[currentFIFAQuestion];
-           document.getElementById('main').innerHTML = `
-               <div class="back-button" onclick="showFIFAOptions()">
-                   <i class="fas fa-arrow-left"></i> Retour
-               </div>
-               <div class="header">
-                   <h1 class="header-title">Question ${currentFIFAQuestion + 1}/${questions.length}</h1>
-               </div>
-               <div class="question-container form-container">
-                   <h3 style="margin-bottom: 20px;">${question.question}</h3>
-                   <input type="${question.type}" 
-                          name="${question.name}"
-                          class="form-control" 
-                          ${question.type === 'number' ? 'step="0.01" min="0"' : ''}
-                          placeholder="${question.type === 'text' ? 'Entrez votre réponse' : ''}"
-                          style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid var(--text-light); margin-bottom: 20px;"
-                          required>
-                   <button onclick="submitFIFAAnswer(this.previousElementSibling.value)" class="start-button">
-                       ${currentFIFAQuestion === questions.length - 1 ? 'Terminer' : 'Suivant'}
-                   </button>
-               </div>
-           `;
-       }
+        async function showFIFA() {
+            const userData = await userManager.getUserData();
+            const canMakeRequest = await userManager.canMakeRequest();
+            const remainingRequests = userData.requestsLimit - userData.dailyRequests;
 
-       function submitFIFAAnswer(answer) {
-           const questions = fifaAnswers.type === 'classic' ? fifaClassicQuestions : fifaPenaltyQuestions;
-           fifaAnswers[questions[currentFIFAQuestion].name] = answer;
-           currentFIFAQuestion++;
-           showNextFIFAQuestion();
-       }
+            document.getElementById('main').innerHTML = `
+                <div class="header">
+                    <h1 class="header-title">FIFA Prédictions</h1>
+                </div>
+                <div class="requests-info">
+                    <h3>Analyses restantes aujourd'hui</h3>
+                    <div class="requests-count">${remainingRequests}</div>
+                    <p>Sur ${userData.requestsLimit} analyses quotidiennes</p>
+                </div>
+                ${canMakeRequest ? `
+                    <div class="form-container">
+                        <button onclick="showFIFAOptions()" class="start-button">
+                            Commencer l'Analyse
+                        </button>
+                    </div>
+                ` : `
+                    <div class="unlock-section">
+                        <h3>Augmentez votre limite quotidienne !</h3>
+                        <p>Parrainez 20 personnes pour obtenir 20 analyses par jour</p>
+                        <button onclick="showReferralProgram()" class="start-button">
+                            Débloquer plus d'analyses
+                        </button>
+                    </div>
+                `}
+            `;
+        }
 
-       function showLoadingAndProcessPrediction() {
-           document.getElementById('main').innerHTML = `
-               <div class="header">
-                   <h1 class="header-title">Analyse en cours</h1>
-               </div>
-               <div class="loading-animation">
-                   <div class="loading-spinner"></div>
-                   <p style="margin-top: 20px;">Analyse des données en cours...</p>
-               </div>
-           `;
+        async function showReferralProgram() {
+            const referralCount = await userManager.getReferralCount();
+            document.getElementById('main').innerHTML = `
+                <div class="referral-container">
+                    <h2>Programme de Parrainage</h2>
+                    <div class="referral-count">
+                        ${referralCount}/20 parrainages
+                    </div>
+                    <div class="referral-progress">
+                        <div class="referral-bar" style="width: ${(referralCount/20)*100}%"></div>
+                    </div>
+                    <div class="referral-steps">
+                        <div class="referral-step">
+                            <div class="step-number">1</div>
+                            <div>Abonnez-vous à nos chaînes</div>
+                        </div>
+                        <div class="referral-step">
+                            <div class="step-number">2</div>
+                            <div>Partagez votre lien unique</div>
+                        </div>
+                        <div class="referral-step">
+                            <div class="step-number">3</div>
+                            <div>Gagnez 20 analyses par jour</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
 
-           setTimeout(() => {
-               if (fifaAnswers.type === 'classic') {
-                   showClassicPrediction();
-               } else {
-                   showPenaltyPrediction();
-               }
-           }, 2000);
-       }
-
-       function showClassicPrediction() {
-           document.getElementById('main').innerHTML = `
-               <div class="back-button" onclick="showFIFAOptions()">
-                   <i class="fas fa-arrow-left"></i> Retour
-               </div>
-               <div class="header">
-                   <h1 class="header-title">Résultats de l'Analyse</h1>
-               </div>
-               <div class="prediction-result form-container">
-                   <h3>Score probable 1ère période</h3>
-                   <p>1-0 ou 0-0</p>
-                   
-                   <h3 style="margin-top: 20px;">Score probable final</h3>
-                   <p>2-1 ou 1-1</p>
-                   
-                   <div class="safe-prediction">
-                       <h3 style="color: white;">Prédiction la plus sûre</h3>
-                       <p style="color: white; margin-top: 10px;">Les deux équipes marquent</p>
-                   </div>
-               </div>
-           `;
-       }
-
-       function showPenaltyPrediction() {
-           document.getElementById('main').innerHTML = `
-               <div class="back-button" onclick="showFIFAOptions()">
-                   <i class="fas fa-arrow-left"></i> Retour
-               </div>
-               <div class="header">
-                   <h1 class="header-title">Résultats de l'Analyse</h1>
-               </div>
-               <div class="prediction-result form-container">
-                   <h3>Scores probables</h3>
-                   <p>3-3, 4-3, 3-4</p>
-                   
-                   <div class="safe-prediction">
-                       <h3 style="color: white;">Prédiction la plus sûre</h3>
-                       <p style="color: white; margin-top: 10px;">Plus de 4.5 buts</p>
-                   </div>
-               </div>
-           `;
-       }
-
-       function showVIP() {
-           window.location.hash = 'vip';
-           document.getElementById('main').innerHTML = `
-               <div class="header">
-                   <h1 class="header-title">Section VIP</h1>
-               </div>
-               <div class="vip-message">
-                   <h3>🌟 Section Premium</h3>
-                   <p style="margin-top: 12px;">Les meilleures prédictions quotidiennes seront bientôt disponibles dans cette section.</p>
-                   <p style="margin-top: 8px;">Restez connecté !</p>
-               </div>
-           `;
-           updateNavigation();
-       }
-
-       function showFavorites() {
-           window.location.hash = 'favorites';
-           // Implement favorites display logic here
-           document.getElementById('main').innerHTML = `
-               <div class="back-button" onclick="showHome()">
-                   <i class="fas fa-arrow-left"></i> Retour
-               </div>
-               <div class="header">
-                   <h1 class="header-title">Vos Favoris</h1>
-               </div>
-               <div class="form-container">
-                   <p>Vos prédictions favorites apparaîtront ici.</p>
-               </div>
-           `;
-           updateNavigation();
-       }
-
-       // Initialize navigation
-       window.addEventListener('hashchange', updateNavigation);
-       updateNavigation();
-       tg.ready();
-   </script>
+        // Initialisation de l'application
+        initApp();
+        tg.ready();
+    </script>
 </body>
 </html>
+            
