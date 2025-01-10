@@ -9,10 +9,15 @@
     <style>
         :root {
             --primary-color: #3B3BF9;
-            --bg-color: #F5F7FF;
-            --text-color: #1A1A1A;
-            --text-light: #6B7280;
+            --secondary-color: #1BFFFF;
+            --gradient-1: linear-gradient(45deg, #FFD700, #FFA500);
+            --gradient-2: linear-gradient(45deg, #4ADE80, #22C55E);
+            --gradient-3: linear-gradient(45deg, #6366F1, #4F46E5);
+            --gradient-4: linear-gradient(45deg, #EC4899, #BE185D);
+            --gradient-5: linear-gradient(45deg, #14B8A6, #0D9488);
             --white: #FFFFFF;
+            --text-dark: #1A1A1A;
+            --text-light: #6B7280;
             --shadow: rgba(0, 0, 0, 0.1);
         }
 
@@ -24,10 +29,10 @@
         }
 
         body {
-            background: var(--bg-color);
-            color: var(--text-color);
+            background: var(--white);
+            color: var(--text-dark);
             line-height: 1.6;
-            padding-bottom: 60px;
+            padding-bottom: 80px;
         }
 
         .container {
@@ -40,21 +45,25 @@
             text-align: center;
             margin-bottom: 20px;
             padding: 10px;
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 2px 8px var(--shadow);
         }
 
         .header-title {
             font-size: 24px;
             font-weight: 700;
-            color: var(--text-color);
+            color: var(--text-dark);
         }
 
         .app-description {
             background: var(--white);
             border-radius: 12px;
-            padding: 16px;
+            padding: 20px;
             margin-bottom: 20px;
             text-align: center;
             box-shadow: 0 2px 8px var(--shadow);
+            border: 2px solid var(--primary-color);
         }
 
         .menu-grid {
@@ -67,10 +76,15 @@
         .menu-card {
             background: var(--white);
             border-radius: 12px;
-            padding: 16px;
+            padding: 20px;
             text-align: center;
             box-shadow: 0 2px 8px var(--shadow);
             cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-2px);
         }
 
         .menu-icon {
@@ -83,12 +97,13 @@
             justify-content: center;
             margin: 0 auto 12px;
             color: var(--white);
+            font-size: 20px;
         }
 
         .menu-title {
             font-size: 14px;
             font-weight: 600;
-            color: var(--text-color);
+            color: var(--text-dark);
         }
 
         .prediction-section {
@@ -111,16 +126,27 @@
             justify-content: center;
             margin-right: 12px;
             color: var(--white);
+            font-size: 18px;
+        }
+
+        .prediction-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-dark);
         }
 
         .back-button {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
             background: var(--primary-color);
             color: var(--white);
             padding: 8px 16px;
             border-radius: 8px;
             margin-bottom: 16px;
             cursor: pointer;
+            border: none;
+            font-size: 14px;
         }
 
         .nav-bottom {
@@ -131,7 +157,7 @@
             background: var(--white);
             display: flex;
             justify-content: space-around;
-            padding: 8px;
+            padding: 12px;
             box-shadow: 0 -2px 8px var(--shadow);
         }
 
@@ -144,13 +170,13 @@
             font-size: 12px;
         }
 
-        .nav-item.active {
-            color: var(--primary-color);
-        }
-
         .nav-item i {
             font-size: 20px;
             margin-bottom: 4px;
+        }
+
+        .nav-item.active {
+            color: var(--primary-color);
         }
 
         .match-card {
@@ -164,13 +190,14 @@
         .match-teams {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             margin-bottom: 8px;
         }
 
         .form-container {
             background: var(--white);
             border-radius: 12px;
-            padding: 16px;
+            padding: 20px;
             margin-bottom: 16px;
             box-shadow: 0 2px 8px var(--shadow);
         }
@@ -182,28 +209,58 @@
         .form-group label {
             display: block;
             margin-bottom: 8px;
-            color: var(--text-color);
+            color: var(--text-dark);
+            font-weight: 500;
         }
 
         .form-group input {
             width: 100%;
-            padding: 8px;
+            padding: 8px 12px;
             border: 1px solid var(--text-light);
-            border-radius: 4px;
+            border-radius: 6px;
             font-size: 14px;
+        }
+
+        .fifa-option {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px var(--shadow);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .fifa-option:hover {
+            transform: translateY(-2px);
+        }
+
+        .vip-message {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 20px;
         }
 
         .social-logos {
             display: flex;
             justify-content: space-around;
+            align-items: center;
             margin-top: 20px;
-            padding: 16px;
+            padding: 20px;
         }
 
         .social-logo {
             width: 40px;
             height: 40px;
             cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .social-logo:hover {
+            transform: scale(1.1);
         }
     </style>
 </head>
@@ -272,6 +329,7 @@
 
     <script>
         let tg = window.Telegram.WebApp;
+        tg.expand();
 
         function showHome() {
             location.reload();
@@ -286,29 +344,39 @@
                     <h1 class="header-title">Prédictions Disponibles</h1>
                 </div>
                 
-                <div class="prediction-section" onclick="showPredictionMatches('victoire')" style="background: linear-gradient(45deg, #FFD700, #FFA500);">
-                    <i class="fas fa-trophy"></i>
-                    <span>Victoire Directe</span>
+                <div class="prediction-section" onclick="showPredictionMatches('victoire')">
+                    <div class="prediction-icon" style="background: var(--gradient-1)">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="prediction-title">Victoire Directe</div>
                 </div>
 
-                <div class="prediction-section" onclick="showPredictionMatches('btts')" style="background: linear-gradient(45deg, #4ADE80, #22C55E);">
-                    <i class="fas fa-futbol"></i>
-                    <span>Les 2 Équipes Marquent</span>
+                <div class="prediction-section" onclick="showPredictionMatches('btts')">
+                    <div class="prediction-icon" style="background: var(--gradient-2)">
+                        <i class="fas fa-futbol"></i>
+                    </div>
+                    <div class="prediction-title">Les 2 Équipes Marquent</div>
                 </div>
 
-                <div class="prediction-section" onclick="showPredictionMatches('double')" style="background: linear-gradient(45deg, #6366F1, #4F46E5);">
-                    <i class="fas fa-shield-alt"></i>
-                    <span>Double Chance</span>
+                <div class="prediction-section" onclick="showPredictionMatches('double')">
+                    <div class="prediction-icon" style="background: var(--gradient-3)">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="prediction-title">Double Chance</div>
                 </div>
 
-                <div class="prediction-section" onclick="showPredictionMatches('over')" style="background: linear-gradient(45deg, #EC4899, #BE185D);">
-                    <i class="fas fa-plus-circle"></i>
-                    <span>Total +1.5 Buts</span>
+                <div class="prediction-section" onclick="showPredictionMatches('over')">
+                    <div class="prediction-icon" style="background: var(--gradient-4)">
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+                    <div class="prediction-title">Total +1.5 Buts</div>
                 </div>
 
-                <div class="prediction-section" onclick="showPredictionMatches('under')" style="background: linear-gradient(45deg, #14B8A6, #0D9488);">
-                    <i class="fas fa-minus-circle"></i>
-                    <span>Moins de 3.5 Buts</span>
+                <div class="prediction-section" onclick="showPredictionMatches('under')">
+                    <div class="prediction-icon" style="background: var(--gradient-5)">
+                        <i class="fas fa-minus-circle"></i>
+                    </div>
+                    <div class="prediction-title">Moins de 3.5 Buts</div>
                 </div>
             `;
         }
@@ -375,7 +443,7 @@
                     <h1 class="header-title">FIFA Prédictions</h1>
                 </div>
                 <div class="form-container">
-                    <p>Cette section vous permet d'obtenir les meilleures prédictions en score exact avec la prédiction la plus sûre basée sur vos informations.</p>
+                    <p>Cette section vous permet d'obtenir les meilleures prédictions en score exact avec la prédiction la plus sûre basée sur les informations que vous allez fournir.</p>
                     <button onclick="showFIFAOptions()" class="back-button" style="width: 100%; margin-top: 16px;">
                         Commencer
                     </button>
@@ -393,16 +461,16 @@
                 </div>
                 <div class="menu-grid">
                     <div class="menu-card" onclick="showFIFAForm('classic')">
-                        <div class="menu-icon">
+                        <div class="menu-icon" style="background: linear-gradient(45deg, #4CAF50, #45a049);">
                             <i class="fas fa-futbol"></i>
                         </div>
                         <div class="menu-title">FIFA Classique</div>
                         <p style="font-size: 12px; color: var(--text-light); margin-top: 8px;">
-                            Championnats FIFA
+                            Tous les championnats FIFA
                         </p>
                     </div>
                     <div class="menu-card" onclick="showFIFAForm('penalty')">
-                        <div class="menu-icon">
+                        <div class="menu-icon" style="background: linear-gradient(45deg, #2196F3, #1976D2);">
                             <i class="fas fa-bullseye"></i>
                         </div>
                         <div class="menu-title">FIFA Penalty</div>
@@ -420,9 +488,10 @@
                     <i class="fas fa-arrow-left"></i> Retour
                 </div>
                 <div class="header">
-                    <h1 class="header-title">Formulaire de Prédiction</h1>
+                    <h1 class="header-title">Formulaire de Prédiction ${type === 'classic' ? 'Classique' : 'Penalty'}</h1>
                 </div>
-                <form onsubmit="handlePredictionSubmit(event)" class="form-container">
+                <form onsubmit="handlePredictionSubmit(event, '${type}')" class="form-container">
+                    <input type="hidden" name="type" value="${type}">
                     <div class="form-group">
                         <label>Cote équipe domicile :</label>
                         <input type="number" step="0.01" required name="homeOdds">
@@ -462,13 +531,13 @@
             `;
         }
 
-        function handlePredictionSubmit(event) {
+        function handlePredictionSubmit(event, type) {
             event.preventDefault();
             const formData = new FormData(event.target);
             const data = Object.fromEntries(formData);
             
             document.getElementById('main').innerHTML = `
-                <div class="back-button" onclick="showFIFAForm('${data.type}')">
+                <div class="back-button" onclick="showFIFAForm('${type}')">
                     <i class="fas fa-arrow-left"></i> Retour
                 </div>
                 <div class="header">
@@ -492,9 +561,10 @@
                 <div class="header">
                     <h1 class="header-title">Section VIP</h1>
                 </div>
-                <div class="form-container">
-                    <p>Les meilleures prédictions quotidiennes seront bientôt disponibles dans cette section.</p>
-                    <p style="margin-top: 16px;">Restez connecté !</p>
+                <div class="vip-message">
+                    <h3>🌟 Section Premium</h3>
+                    <p style="margin-top: 12px;">Les meilleures prédictions quotidiennes seront bientôt disponibles dans cette section.</p>
+                    <p style="margin-top: 8px;">Restez connecté !</p>
                 </div>
             `;
         }
@@ -508,26 +578,28 @@
                     <h1 class="header-title">Top Score</h1>
                 </div>
                 <div class="form-container">
-                    <h3>Score Exact</h3>
+                    <h3>🎯 Score Exact</h3>
                     <p>PSG vs Bayern Munich</p>
-                    <p>Prédiction: 2-1</p>
-                    <p>Cote: 8.50</p>
+                    <p style="color: var(--primary-color);">Prédiction: 2-1</p>
+                    <p style="color: var(--text-light);">Cote: 8.50</p>
                 </div>
                 <div class="form-container">
-                    <h3>Double Chance + BTTS</h3>
+                    <h3>⚽ Double Chance + BTTS</h3>
                     <p>Real Madrid vs Barcelona</p>
-                    <p>Prédiction: 1X + Oui</p>
-                    <p>Cote: 2.75</p>
+                    <p style="color: var(--primary-color);">Prédiction: 1X + Oui</p>
+                    <p style="color: var(--text-light);">Cote: 2.75</p>
                 </div>
                 <div class="form-container">
-                    <h3>Score MT/FT</h3>
+                    <h3>🏆 Score MT/FT</h3>
                     <p>Liverpool vs Chelsea</p>
-                    <p>Prédiction: 1-0/2-1</p>
-                    <p>Cote: 12.00</p>
+                    <p style="color: var(--primary-color);">Prédiction: 1-0/2-1</p>
+                    <p style="color: var(--text-light);">Cote: 12.00</p>
                 </div>
             `;
         }
 
         // Initialisation
-        tg.expand();
         tg.ready();
+    </script>
+</body>
+</html>
