@@ -220,6 +220,41 @@
         .nav-item.active {
             color: var(--primary-blue);
         }
+
+        /* Prediction Cards */
+        .prediction-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .prediction-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px var(--shadow-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .prediction-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px var(--shadow-color);
+        }
+
+        .prediction-icon {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: var(--primary-blue);
+        }
+
+        .prediction-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
     </style>
 </head>
 <body>
@@ -298,25 +333,27 @@
             mainContent.innerHTML = `
                 <div class="back-button" onclick="location.reload()">Retour</div>
                 <h1 class="header-title">Meilleures Prédictions</h1>
-                <div class="prediction-card">
-                    <div class="prediction-icon">💰</div>
-                    <div>Victoire Directe</div>
-                </div>
-                <div class="prediction-card">
-                    <div class="prediction-icon">⚽</div>
-                    <div>Les 2 équipes marquent</div>
-                </div>
-                <div class="prediction-card">
-                    <div class="prediction-icon">📊</div>
-                    <div>Double Chance</div>
-                </div>
-                <div class="prediction-card">
-                    <div class="prediction-icon">➕</div>
-                    <div>Total +1,5 Buts</div>
-                </div>
-                <div class="prediction-card">
-                    <div class="prediction-icon">➖</div>
-                    <div>Moins de 3,5 Buts</div>
+                <div class="prediction-grid">
+                    <div class="prediction-card">
+                        <div class="prediction-icon">💰</div>
+                        <div class="prediction-title">Victoire Directe</div>
+                    </div>
+                    <div class="prediction-card">
+                        <div class="prediction-icon">⚽</div>
+                        <div class="prediction-title">Les 2 équipes marquent</div>
+                    </div>
+                    <div class="prediction-card">
+                        <div class="prediction-icon">📊</div>
+                        <div class="prediction-title">Double Chance</div>
+                    </div>
+                    <div class="prediction-card">
+                        <div class="prediction-icon">➕</div>
+                        <div class="prediction-title">Total +1,5 Buts</div>
+                    </div>
+                    <div class="prediction-card">
+                        <div class="prediction-icon">➖</div>
+                        <div class="prediction-title">Moins de 3,5 Buts</div>
+                    </div>
                 </div>
             `;
         }
