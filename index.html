@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <!-- Configuration de base -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>BetSmart Pro</title>
+
+    <!-- Import des bibliothèques externes -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/telegram-web-app/7.0.0/telegram-web-app.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
     <style>
+        /* Variables de couleurs */
         :root {
             --primary-blue: #3B3BF9;
             --light-bg: #F5F7FF;
@@ -18,6 +23,7 @@
             --risk-orange: #FFA500;
         }
 
+        /* Reset CSS */
         * {
             margin: 0;
             padding: 0;
@@ -25,20 +31,34 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
 
+        /* Style général du body */
         body {
             background: var(--light-bg);
             color: var(--text-dark);
             line-height: 1.6;
-            overflow-y: scroll;
+            padding-bottom: 80px;
         }
 
+        /* Container principal */
         .container {
             max-width: 600px;
             margin: 0 auto;
             padding: 20px;
         }
 
-        /* Description Section */
+        /* En-tête */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        /* Description de l'app */
         .app-description {
             background: var(--white);
             border-radius: 15px;
@@ -49,14 +69,7 @@
             border: 2px solid var(--primary-blue);
         }
 
-        .app-description p {
-            font-size: 14px;
-            color: var(--text-dark);
-            line-height: 1.5;
-            font-style: italic;
-        }
-
-        /* Style des cartes de menu */
+        /* Grille du menu */
         .menu-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -64,23 +77,22 @@
             margin-bottom: 30px;
         }
 
+        /* Cartes du menu */
         .menu-card {
             background: var(--white);
             border-radius: 20px;
             padding: 20px;
             cursor: pointer;
             transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             box-shadow: 0 4px 15px var(--shadow-color);
+            text-align: center;
         }
 
         .menu-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 25px var(--shadow-color);
         }
 
+        /* Icônes du menu */
         .menu-icon {
             width: 60px;
             height: 60px;
@@ -90,7 +102,7 @@
             align-items: center;
             justify-content: center;
             font-size: 24px;
-            margin-bottom: 15px;
+            margin: 0 auto 15px;
             color: var(--primary-blue);
         }
 
@@ -98,97 +110,76 @@
             font-size: 16px;
             font-weight: 600;
             color: var(--text-dark);
-            margin-bottom: 5px;
-            text-align: center;
         }
 
-        /* Stats Section */
+        /* Sections des prédictions */
+        .prediction-section {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px var(--shadow-color);
+            transition: transform 0.3s ease;
+        }
+
+        .prediction-section:hover {
+            transform: translateY(-2px);
+        }
+
+        .prediction-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--light-bg);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-right: 15px;
+            color: var(--primary-blue);
+        }
+
+        .prediction-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        /* Bouton retour */
+        .back-button {
+            display: inline-block;
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+
+        /* Container des réseaux sociaux */
         .stats-container {
             background: var(--white);
             border-radius: 25px;
             padding: 25px;
             margin-top: 30px;
+            margin-bottom: 80px;
             box-shadow: 0 4px 15px var(--shadow-color);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .divider {
-            width: 1px;
-            background-color: var(--text-light);
-            height: 50px;
-        }
-
         .social-logo {
             width: 50px;
             height: 50px;
-        }
-
-        .back-button {
-            display: inline-block;
-            background: var(--primary-blue);
-            color: var(--white);
-            padding: 10px 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            text-align: center;
             cursor: pointer;
-            box-shadow: 0 4px 15px var(--shadow-color);
         }
 
-        /* Features Section */
-        .features-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .feature-item {
-            background: var(--white);
-            border-radius: 20px;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            box-shadow: 0 4px 15px var(--shadow-color);
-        }
-
-        .feature-icon {
-            width: 45px;
-            height: 45px;
-            background: var(--light-bg);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            color: var(--primary-blue);
-            flex-shrink: 0;
-        }
-
-        .feature-text {
-            font-size: 14px;
-            color: var(--text-dark);
-        }
-
-        /* Header */
-        .header {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 30px;
-            padding: 10px 0;
-        }
-
-        .header-title {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--text-dark);
-            text-align: center;
-        }
-
-        /* Navigation Bottom */
+        /* Navigation du bas */
         .nav-bottom {
             position: fixed;
             bottom: 0;
@@ -199,8 +190,6 @@
             justify-content: space-around;
             padding: 15px;
             box-shadow: 0 -4px 15px var(--shadow-color);
-            border-top-left-radius: 25px;
-            border-top-right-radius: 25px;
         }
 
         .nav-item {
@@ -221,56 +210,51 @@
             color: var(--primary-blue);
         }
 
-        /* Prediction Cards */
-        .prediction-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
+        /* Container des matchs */
+        .matches-container {
+            display: none;
             margin-top: 20px;
         }
 
-        .prediction-card {
+        /* Carte des matchs */
+        .match-card {
             background: var(--white);
-            border-radius: 20px;
+            border-radius: 15px;
             padding: 15px;
-            text-align: center;
+            margin-bottom: 15px;
             box-shadow: 0 4px 15px var(--shadow-color);
-            cursor: pointer;
-            transition: all 0.3s ease;
         }
 
-        .prediction-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px var(--shadow-color);
-        }
-
-        .prediction-icon {
-            font-size: 24px;
+        .match-teams {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 10px;
-            color: var(--primary-blue);
         }
 
-        .prediction-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--text-dark);
+        .match-time {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
+    <!-- Container principal -->
     <div class="container main-content">
-        <!-- Header -->
+        <!-- En-tête -->
         <div class="header">
             <h1 class="header-title">Tableau de Bord</h1>
         </div>
 
-        <!-- Application Description -->
+        <!-- Description de l'application -->
         <div class="app-description">
             <p>Votre application ultime pour des prédictions sportives fiables et optimisées. Profitez d'une intelligence artificielle avancée et d'une analyse en temps réel pour maximiser vos chances de réussite.</p>
         </div>
 
-        <!-- Menu Grid -->
+        <!-- Grille du menu principal -->
         <div class="menu-grid">
+            <!-- Carte Combo du Jour -->
             <div class="menu-card" onclick="showComboPage()">
                 <div class="menu-icon">
                     <i class="fas fa-chart-line"></i>
@@ -278,6 +262,7 @@
                 <div class="menu-title">Combo du Jour</div>
             </div>
 
+            <!-- Carte Top Score -->
             <div class="menu-card" onclick="showTopScore()">
                 <div class="menu-icon">
                     <i class="fas fa-trophy"></i>
@@ -285,6 +270,7 @@
                 <div class="menu-title">Top Score</div>
             </div>
 
+            <!-- Carte Favoris -->
             <div class="menu-card">
                 <div class="menu-icon">
                     <i class="fas fa-star"></i>
@@ -292,6 +278,7 @@
                 <div class="menu-title">Favoris</div>
             </div>
 
+            <!-- Carte Historique -->
             <div class="menu-card">
                 <div class="menu-icon">
                     <i class="fas fa-history"></i>
@@ -300,15 +287,14 @@
             </div>
         </div>
 
-        <!-- Stats Section -->
+        <!-- Container des réseaux sociaux -->
         <div class="stats-container">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg" class="social-logo" alt="YouTube" onclick="window.open('https://www.youtube.com/channel/UCAlV_YourLinkHere')">
-            <div class="divider"></div>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" class="social-logo" alt="Telegram" onclick="window.open('https://t.me/YourTelegramLinkHere')">
+            <img src="/api/placeholder/50/50" class="social-logo" alt="YouTube">
+            <img src="/api/placeholder/50/50" class="social-logo" alt="Telegram">
         </div>
     </div>
 
-    <!-- Bottom Navigation -->
+    <!-- Navigation du bas -->
     <div class="nav-bottom">
         <a href="#" class="nav-item active">
             <i class="fas fa-home"></i>
@@ -325,39 +311,117 @@
     </div>
 
     <script>
+        // Initialisation de l'app Telegram
         let tg = window.Telegram.WebApp;
         tg.expand();
 
+        // Fonction pour afficher la page des combos
         function showComboPage() {
             const mainContent = document.querySelector('.main-content');
             mainContent.innerHTML = `
-                <div class="back-button" onclick="location.reload()">Retour</div>
-                <h1 class="header-title">Meilleures Prédictions</h1>
-                <div class="prediction-grid">
-                    <div class="prediction-card">
-                        <div class="prediction-icon">💰</div>
-                        <div class="prediction-title">Victoire Directe</div>
+                <div class="back-button" onclick="location.reload()">
+                    <i class="fas fa-arrow-left"></i> Retour
+                </div>
+                <h1 class="header-title">Prédictions Disponibles</h1>
+                
+                <!-- Section Victoire Directe -->
+                <div class="prediction-section" onclick="showMatches('victoire')">
+                    <div class="prediction-icon">
+                        <i class="fas fa-trophy"></i>
                     </div>
-                    <div class="prediction-card">
-                        <div class="prediction-icon">⚽</div>
-                        <div class="prediction-title">Les 2 équipes marquent</div>
+                    <div class="prediction-title">Victoire Directe</div>
+                </div>
+
+                <!-- Section Les 2 Équipes Marquent -->
+                <div class="prediction-section" onclick="showMatches('btts')">
+                    <div class="prediction-icon">
+                        <i class="fas fa-futbol"></i>
                     </div>
-                    <div class="prediction-card">
-                        <div class="prediction-icon">📊</div>
-                        <div class="prediction-title">Double Chance</div>
+                    <div class="prediction-title">Les 2 Équipes Marquent</div>
+                </div>
+
+                <!-- Section Double Chance -->
+                <div class="prediction-section" onclick="showMatches('double')">
+                    <div class="prediction-icon">
+                        <i class="fas fa-shield-alt"></i>
                     </div>
-                    <div class="prediction-card">
-                        <div class="prediction-icon">➕</div>
-                        <div class="prediction-title">Total +1,5 Buts</div>
+                    <div class="prediction-title">Double Chance</div>
+                </div>
+
+                <!-- Section Total +1.5 Buts -->
+                <div class="prediction-section" onclick="showMatches('over')">
+                    <div class="prediction-icon">
+                        <i class="fas fa-plus-circle"></i>
                     </div>
-                    <div class="prediction-card">
-                        <div class="prediction-icon">➖</div>
-                        <div class="prediction-title">Moins de 3,5 Buts</div>
+                    <div class="prediction-title">Total +1.5 Buts</div>
+                </div>
+
+                <!-- Section Moins de 3.5 Buts -->
+                <div class="prediction-section" onclick="showMatches('under')">
+                    <div class="prediction-icon">
+                        <i class="fas fa-minus-circle"></i>
                     </div>
+                    <div class="prediction-title">Moins de 3.5 Buts</div>
                 </div>
             `;
         }
 
+        // Fonction pour afficher les matchs spécifiques
+        function showMatches(type) {
+            // Données des matchs (à remplacer par vos données réelles)
+            const matches = {
+                victoire: [
+                    { home: "Manchester City", away: "Arsenal", time: "20:45" },
+                    { home: "Liverpool", away: "Chelsea", time: "21:00" }
+                ],
+                btts: [
+                    { home: "PSG", away: "Bayern Munich", time: "20:00" },
+                    { home: "Real Madrid", away: "Barcelona", time: "21:15" }
+                ],
+                double: [
+                    { home: "Juventus", away: "AC Milan", time: "20:45" },
+                    { home: "Inter", away: "Naples", time: "21:00" }
+                ],
+                over: [
+                    { home: "Dortmund", away: "Leipzig", time: "20:30" },
+                    { home: "Ajax", away: "PSV", time: "21:00" }
+                ],
+                under: [
+                    { home: "Atletico Madrid", away: "Séville", time: "20:00" },
+                    { home: "Porto", away: "Benfica", time: "21:15" }
+                ]
+            };
+
+            // Récupération des matchs pour le type sélectionné
+            const selectedMatches = matches[type] || [];
+            
+            // Génération du HTML pour les matchs
+            const matchesHTML = selectedMatches.map(match => `
+                <div class="match-card">
+                    <div class="match-teams">
+                        <span>${match.home}</span>
+                        <span>vs</span>
+                        <span>${match.away}</span>
+                    </div>
+                    <div class="match-time">${match.time}</div>
+                </div>
+            `).join('');
+
+            // Ajout des matchs à la page
+            const mainContent = document.querySelector('.main-content');
+            mainContent.innerHTML += `
+                <div class="matches-container" style="display: block;">
+                    ${matchesHTML}
+                </div>
+            `;
+        }
+
+        // Fonction pour afficher la page Top Score
+        function showTopScore() {
+            showComboPage(); // Pour l'instant, même contenu que Combo du Jour
+        }
+
+        // Indique que l'app est prête
         tg.ready();
     </script>
 </body>
