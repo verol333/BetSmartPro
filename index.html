@@ -521,6 +521,32 @@
         .safe-prediction p {
             font-size: 14px;
         }
+
+        .bottom-back-button {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gradient-1);
+            color: var(--white);
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 10px var(--shadow);
+        }
+
+        .bottom-back-button:hover {
+            transform: translateY(-3px) translateX(-50%);
+            box-shadow: 0 6px 15px var(--shadow-lg);
+        }
+
+        .bottom-back-button:active {
+            transform: translateY(0) translateX(-50%);
+        }
     </style>
 </head>
 <body>
@@ -703,9 +729,6 @@
             ];
 
             let html = `
-                <div class="back-button" onclick="showMainApp()">
-                    <i class="fas fa-arrow-left"></i> Retour
-                </div>
                 <div class="header">
                     <h1 class="header-title">Prédictions Disponibles</h1>
                 </div>
@@ -719,6 +742,13 @@
                     </div>
                 `;
             });
+
+            // Ajouter le bouton retour en bas
+            html += `
+                <button class="bottom-back-button" onclick="showMainApp()">
+                    <i class="fas fa-arrow-left"></i> Retour
+                </button>
+            `;
 
             document.getElementById('main').innerHTML = html;
         }
@@ -738,9 +768,6 @@
 
             const selectedMatches = matches[type] || [];
             let matchesHTML = `
-                <div class="back-button" onclick="showComboPage()">
-                    <i class="fas fa-arrow-left"></i> Retour
-                </div>
                 <div class="header">
                     <h1 class="header-title">Matchs Sélectionnés</h1>
                 </div>
@@ -768,6 +795,13 @@
                 `;
             });
 
+            // Ajouter le bouton retour en bas
+            matchesHTML += `
+                <button class="bottom-back-button" onclick="showComboPage()">
+                    <i class="fas fa-arrow-left"></i> Retour
+                </button>
+            `;
+
             document.getElementById('main').innerHTML = matchesHTML;
         }
 
@@ -793,9 +827,6 @@
             ];
 
             let html = `
-                <div class="back-button" onclick="showMainApp()">
-                    <i class="fas fa-arrow-left"></i> Retour
-                </div>
                 <div class="header">
                     <h1 class="header-title">Top Scores</h1>
                 </div>
@@ -825,6 +856,13 @@
                 `;
             });
 
+            // Ajouter le bouton retour en bas
+            html += `
+                <button class="bottom-back-button" onclick="showMainApp()">
+                    <i class="fas fa-arrow-left"></i> Retour
+                </button>
+            `;
+
             document.getElementById('main').innerHTML = html;
         }
 
@@ -843,14 +881,14 @@
                     </button>
                 </div>
             `;
+
+            // Mettre en surbrillance la section FIFA
+            updateNavigation('fifa');
         }
 
         // Fonction pour afficher les options FIFA
         function showFIFAOptions() {
             document.getElementById('main').innerHTML = `
-                <div class="back-button" onclick="showFIFA()">
-                    <i class="fas fa-arrow-left"></i> Retour
-                </div>
                 <div class="header">
                     <h1 class="header-title">Choisissez votre type de jeu</h1>
                 </div>
@@ -862,7 +900,13 @@
                     <h3><i class="fas fa-bullseye"></i> FIFA Penalty</h3>
                     <p>Spécialement conçu pour les matchs de penalties FIFA. Analyse optimisée pour ce format unique avec des prédictions spécifiques.</p>
                 </div>
+                <button class="bottom-back-button" onclick="showFIFA()">
+                    <i class="fas fa-arrow-left"></i> Retour
+                </button>
             `;
+
+            // Mettre en surbrillance la section FIFA
+            updateNavigation('fifa');
         }
 
         // Fonction pour démarrer les questions FIFA
@@ -883,9 +927,6 @@
 
             const question = questions[currentFIFAQuestion];
             document.getElementById('main').innerHTML = `
-                <div class="back-button" onclick="showFIFAOptions()">
-                    <i class="fas fa-arrow-left"></i> Retour
-                </div>
                 <div class="header">
                     <h1 class="header-title">Question ${currentFIFAQuestion + 1}/${questions.length}</h1>
                 </div>
@@ -902,7 +943,13 @@
                         ${currentFIFAQuestion === questions.length - 1 ? 'Terminer' : 'Suivant'}
                     </button>
                 </div>
+                <button class="bottom-back-button" onclick="showFIFAOptions()">
+                    <i class="fas fa-arrow-left"></i> Retour
+                </button>
             `;
+
+            // Mettre en surbrillance la section FIFA
+            updateNavigation('fifa');
         }
 
         // Fonction pour soumettre une réponse FIFA
@@ -923,6 +970,9 @@
                     <div class="loading-spinner"></div>
                     <p style="margin-top: 20px;">Analyse des données en cours...</p>
                 </div>
+                <button class="bottom-back-button" onclick="showFIFAOptions()">
+                    <i class="fas fa-arrow-left"></i> Retour
+                </button>
             `;
 
             setTimeout(() => {
@@ -937,9 +987,6 @@
         // Fonction pour afficher la prédiction FIFA Classique
         function showClassicPrediction() {
             document.getElementById('main').innerHTML = `
-                <div class="back-button" onclick="showFIFAOptions()">
-                    <i class="fas fa-arrow-left"></i> Retour
-                </div>
                 <div class="header">
                     <h1 class="header-title">Résultats de l'Analyse</h1>
                 </div>
@@ -955,15 +1002,18 @@
                         <p style="color: white; margin-top: 10px;">Les deux équipes marquent</p>
                     </div>
                 </div>
+                <button class="bottom-back-button" onclick="showFIFAOptions()">
+                    <i class="fas fa-arrow-left"></i> Retour
+                </button>
             `;
+
+            // Mettre en surbrillance la section FIFA
+            updateNavigation('fifa');
         }
 
         // Fonction pour afficher la prédiction FIFA Penalty
         function showPenaltyPrediction() {
             document.getElementById('main').innerHTML = `
-                <div class="back-button" onclick="showFIFAOptions()">
-                    <i class="fas fa-arrow-left"></i> Retour
-                </div>
                 <div class="header">
                     <h1 class="header-title">Résultats de l'Analyse</h1>
                 </div>
@@ -976,7 +1026,13 @@
                         <p style="color: white; margin-top: 10px;">Plus de 4.5 buts</p>
                     </div>
                 </div>
+                <button class="bottom-back-button" onclick="showFIFAOptions()">
+                    <i class="fas fa-arrow-left"></i> Retour
+                </button>
             `;
+
+            // Mettre en surbrillance la section FIFA
+            updateNavigation('fifa');
         }
 
         // Fonction pour afficher la page VIP
@@ -990,22 +1046,31 @@
                     <p style="margin-top: 12px;">Les meilleures prédictions quotidiennes seront bientôt disponibles dans cette section.</p>
                     <p style="margin-top: 8px;">Restez connecté !</p>
                 </div>
+                <button class="bottom-back-button" onclick="showMainApp()">
+                    <i class="fas fa-arrow-left"></i> Retour
+                </button>
             `;
+
+            // Mettre en surbrillance la section VIP
+            updateNavigation('vip');
         }
 
         // Fonction pour afficher la page des favoris
         function showFavorites() {
             document.getElementById('main').innerHTML = `
-                <div class="back-button" onclick="showMainApp()">
-                    <i class="fas fa-arrow-left"></i> Retour
-                </div>
                 <div class="header">
                     <h1 class="header-title">Vos Favoris</h1>
                 </div>
                 <div class="form-container">
                     <p>Vos prédictions favorites apparaîtront ici.</p>
                 </div>
+                <button class="bottom-back-button" onclick="showMainApp()">
+                    <i class="fas fa-arrow-left"></i> Retour
+                </button>
             `;
+
+            // Mettre en surbrillance la section Accueil
+            updateNavigation('home');
         }
 
         // Fonction pour basculer un match en favori
@@ -1028,11 +1093,17 @@
         let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
 
         // Mettre à jour la navigation
-        function updateNavigation() {
+        function updateNavigation(activeSection = 'home') {
             const navItems = document.querySelectorAll('.nav-item');
             navItems.forEach(item => item.classList.remove('active'));
-            const currentPage = window.location.hash.slice(1) || 'home';
-            document.querySelector(`.nav-item[onclick="show${currentPage.charAt(0).toUpperCase() + currentPage.slice(1)}()"]`)?.classList.add('active');
+
+            if (activeSection === 'home') {
+                document.querySelector('.nav-item[onclick="showHome()"]').classList.add('active');
+            } else if (activeSection === 'fifa') {
+                document.querySelector('.nav-item[onclick="showFIFA()"]').classList.add('active');
+            } else if (activeSection === 'vip') {
+                document.querySelector('.nav-item[onclick="showVIP()"]').classList.add('active');
+            }
         }
 
         // Écouter les changements de hash (pour la navigation)
