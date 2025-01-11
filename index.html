@@ -344,6 +344,11 @@
             color: var(--primary-color);
         }
 
+        .nav-item.disabled {
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
         .app-description {
             text-align: center;
             padding: 20px;
@@ -552,11 +557,11 @@
             <i class="fas fa-home"></i>
             <span>Accueil</span>
         </a>
-        <a href="#" class="nav-item" onclick="showFIFA()">
+        <a href="#" class="nav-item disabled" id="nav-fifa" onclick="showFIFA()">
             <i class="fas fa-futbol"></i>
             <span>FIFA</span>
         </a>
-        <a href="#" class="nav-item" onclick="showVIP()">
+        <a href="#" class="nav-item disabled" id="nav-vip" onclick="showVIP()">
             <i class="fas fa-crown"></i>
             <span>VIP</span>
         </a>
@@ -681,8 +686,10 @@
                 </div>
             `;
 
-            // Afficher la barre de navigation
+            // Afficher la barre de navigation et activer les boutons
             document.getElementById('nav-bottom').classList.remove('hidden');
+            document.getElementById('nav-fifa').classList.remove('disabled');
+            document.getElementById('nav-vip').classList.remove('disabled');
         }
 
         // Fonction pour afficher la page "Combo du Jour"
