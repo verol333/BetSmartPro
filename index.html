@@ -377,6 +377,144 @@
             font-size: 14px;
             color: var(--text-light);
         }
+
+        .prediction-section {
+            background: var(--gradient-1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            text-align: center;
+            color: var(--white);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .prediction-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px var(--shadow-lg);
+        }
+
+        .prediction-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .prediction-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .fifa-option {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px var(--shadow);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .fifa-option:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px var(--shadow-lg);
+        }
+
+        .fifa-option h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .fifa-option p {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .start-button {
+            background: var(--gradient-1);
+            color: var(--white);
+            padding: 12px 24px;
+            border-radius: 10px;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin: 5px;
+            width: 100%;
+            box-shadow: 0 4px 10px var(--shadow);
+        }
+
+        .start-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px var(--shadow-lg);
+        }
+
+        .start-button:active {
+            transform: translateY(0);
+        }
+
+        .question-container {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px var(--shadow);
+        }
+
+        .question-container h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .question-container input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid var(--text-light);
+            margin-bottom: 20px;
+        }
+
+        .prediction-result {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px var(--shadow);
+        }
+
+        .prediction-result h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .prediction-result p {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .safe-prediction {
+            background: var(--gradient-1);
+            color: var(--white);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        .safe-prediction h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .safe-prediction p {
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
@@ -547,11 +685,11 @@
         // Fonction pour afficher la page "Combo du Jour"
         function showComboPage() {
             const predictions = [
-                { type: 'victoire', icon: 'trophy', title: 'Victoire Directe', gradient: 'var(--gradient-1)' },
-                { type: 'btts', icon: 'futbol', title: 'Les 2 Équipes Marquent', gradient: 'var(--gradient-2)' },
-                { type: 'double', icon: 'shield-alt', title: 'Double Chance', gradient: 'var(--gradient-3)' },
-                { type: 'over', icon: 'plus-circle', title: 'Total +1.5 Buts', gradient: 'var(--gradient-4)' },
-                { type: 'under', icon: 'minus-circle', title: 'Moins de 3.5 Buts', gradient: 'var(--gradient-5)' }
+                { type: 'victoire', icon: '🏆', title: 'Victoire Directe', gradient: 'var(--gradient-1)' },
+                { type: 'btts', icon: '⚽', title: 'Les 2 Équipes Marquent', gradient: 'var(--gradient-2)' },
+                { type: 'double', icon: '🛡️', title: 'Double Chance', gradient: 'var(--gradient-3)' },
+                { type: 'over', icon: '➕', title: 'Total +1.5 Buts', gradient: 'var(--gradient-4)' },
+                { type: 'under', icon: '➖', title: 'Moins de 3.5 Buts', gradient: 'var(--gradient-5)' }
             ];
 
             let html = `
@@ -566,10 +704,8 @@
             predictions.forEach(pred => {
                 html += `
                     <div class="prediction-section" onclick="showPredictionMatches('${pred.type}')" style="background: ${pred.gradient}">
-                        <div class="prediction-icon">
-                            <i class="fas fa-${pred.icon}"></i>
-                        </div>
-                        <div class="prediction-title" style="color: var(--white)">${pred.title}</div>
+                        <div class="prediction-icon">${pred.icon}</div>
+                        <div class="prediction-title">${pred.title}</div>
                     </div>
                 `;
             });
