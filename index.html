@@ -116,14 +116,18 @@
 
         .loading-animation {
             text-align: center;
-            padding: 40px;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
         }
 
         .loading-spinner {
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             border: 4px solid var(--shadow);
-            border-top: 4px solid var(--primary-color);
+            border-top: 4px solid var(--success-color);
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
@@ -273,6 +277,57 @@
         .favorite-star.active {
             color: #FFD700;
         }
+
+        .social-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .social-logo {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .social-logo:hover {
+            transform: scale(1.1);
+        }
+
+        .nav-bottom {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            display: flex;
+            justify-content: space-around;
+            padding: 15px;
+            box-shadow: 0 -4px 15px var(--shadow);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .nav-item.active {
+            color: var(--primary-color);
+        }
     </style>
 </head>
 <body>
@@ -301,6 +356,21 @@
             </div>
         </div>
     </div>
+
+    <nav class="nav-bottom hidden" id="nav-bottom">
+        <a href="#" class="nav-item active" onclick="showHome()">
+            <i class="fas fa-home"></i>
+            <span>Accueil</span>
+        </a>
+        <a href="#" class="nav-item" onclick="showFIFA()">
+            <i class="fas fa-futbol"></i>
+            <span>FIFA</span>
+        </a>
+        <a href="#" class="nav-item" onclick="showVIP()">
+            <i class="fas fa-crown"></i>
+            <span>VIP</span>
+        </a>
+    </nav>
 
     <script>
         const tg = window.Telegram.WebApp;
@@ -411,7 +481,366 @@
                         class="social-logo" alt="Telegram" onclick="window.open('https://t.me')">
                 </div>
             `;
+
+            // Afficher la barre de navigation
+            document.getElementById('nav-bottom').classList.remove('hidden');
         }
+
+        // Fonction pour afficher la page "Combo du Jour"
+        function showComboPage() {
+            window.location.hash = 'combo';
+            const predictions = [
+                { type: 'victoire', icon: 'trophy', title: 'Victoire Directe', gradient: 'var(--gradient-1)' },
+                { type: 'btts', icon: 'futbol', title: 'Les 2 Équipes Marquent', gradient: 'var(--gradient-2)' },
+                { type: 'double', icon: 'shield-alt', title: 'Double Chance', gradient: 'var(--gradient-3)' },
+                { type: 'over', icon: 'plus-circle', title: 'Total +1.5 Buts', gradient: 'var(--gradient-4)' },
+                { type: 'under', icon: 'minus-circle', title: 'Moins de 3.5 Buts', gradient: 'var(--gradient-5)' }
+            ];
+
+            let html = `
+                <div class="back-button" onclick="showMainApp()">
+                    <i class="fas fa-arrow-left"></i> Retour
+                </div>
+                <div class="header">
+                    <h1 class="header-title">Prédictions Disponibles</h1>
+                </div>
+            `;
+
+            predictions.forEach(pred => {
+                html += `
+                    <div class="prediction-section" onclick="showPredictionMatches('${pred.type}')" style="background: ${pred.gradient}">
+                        <div class="prediction-icon">
+                            <i class="fas fa-${pred.icon}"></i>
+                        </div>
+                        <div class="prediction-title" style="color: var(--white)">${pred.title}</div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('main').innerHTML = html;
+        }
+
+        // Fonction pour afficher les matchs d'une prédiction spécifique
+        function showPredictionMatches(type) {
+            const matches = {
+                victoire: [
+                    { id: 'v1', league: 'Premier League', home: "Manchester City", away: "Arsenal", time: "20:45", prediction: "Victoire Manchester City", confidence: "85%" },
+                    { id: 'v2', league: 'Ligue 1', home: "PSG", away: "Marseille", time: "21:00", prediction: "Victoire PSG", confidence: "80%" }
+                ],
+                btts: [
+                    { id: 'b1', league: 'Champions League', home: "Bayern Munich", away: "Real Madrid", time: "20:00", prediction: "Les deux équipes marquent", confidence: "90%" },
+                    { id: 'b2', league: 'Serie A', home: "Inter", away: "Milan", time: "20:45", prediction: "Les deux équipes marquent", confidence: "85%" }
+                ]
+            };
+
+            const selectedMatches = matches[type] || [];
+            let matchesHTML = `
+                <div class="back-button" onclick="showComboPage()">
+                    <i class="fas fa-arrow-left"></i> Retour
+                </div>
+                <div class="header">
+                    <h1 class="header-title">Matchs Sélectionnés</h1>
+                </div>
+            `;
+
+            selectedMatches.forEach(match => {
+                const isFavorite = favorites.includes(match.id);
+                matchesHTML += `
+                    <div class="match-card">
+                        <div class="match-league">${match.league}</div>
+                        <i class="fas fa-star favorite-star ${isFavorite ? 'active' : ''}" 
+                           id="star-${match.id}"
+                           onclick="toggleFavorite('${match.id}')"></i>
+                        <div class="match-teams">
+                            <span>${match.home}</span>
+                            <span>vs</span>
+                            <span>${match.away}</span>
+                        </div>
+                        <div class="match-time">
+                            <i class="far fa-clock"></i> ${match.time}
+                        </div>
+                        <div class="match-prediction">${match.prediction}</div>
+                        <div class="match-confidence">Confiance: ${match.confidence}</div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('main').innerHTML = matchesHTML;
+        }
+
+        // Fonction pour afficher la page "Top Score"
+        function showTopScore() {
+            window.location.hash = 'topscore';
+            const matches = [
+                {
+                    league: 'Champions League',
+                    home: 'PSG',
+                    away: 'Bayern Munich',
+                    time: '20:45',
+                    htScores: ['1-0', '0-0'],
+                    ftScores: ['2-1', '1-1']
+                },
+                {
+                    league: 'Premier League',
+                    home: 'Liverpool',
+                    away: 'Manchester City',
+                    time: '21:00',
+                    htScores: ['0-1', '1-1'],
+                    ftScores: ['2-2', '1-2']
+                }
+            ];
+
+            let html = `
+                <div class="back-button" onclick="showMainApp()">
+                    <i class="fas fa-arrow-left"></i> Retour
+                </div>
+                <div class="header">
+                    <h1 class="header-title">Top Scores</h1>
+                </div>
+            `;
+
+            matches.forEach(match => {
+                html += `
+                    <div class="match-card">
+                        <div class="match-league">${match.league}</div>
+                        <div class="match-teams">
+                            <span>${match.home}</span>
+                            <span>vs</span>
+                            <span>${match.away}</span>
+                        </div>
+                        <div class="match-time">
+                            <i class="far fa-clock"></i> ${match.time}
+                        </div>
+                        <div style="margin-top: 15px;">
+                            <h4>Score Mi-temps:</h4>
+                            <p>${match.htScores.join(' ou ')}</p>
+                        </div>
+                        <div style="margin-top: 10px;">
+                            <h4>Score Final:</h4>
+                            <p>${match.ftScores.join(' ou ')}</p>
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('main').innerHTML = html;
+        }
+
+        // Fonction pour afficher la page "FIFA"
+        function showFIFA() {
+            window.location.hash = 'fifa';
+            document.getElementById('main').innerHTML = `
+                <div class="header">
+                    <h1 class="header-title">FIFA Prédictions</h1>
+                </div>
+                <div class="form-container" style="padding: 30px;">
+                    <p style="font-size: 16px; line-height: 1.8; margin-bottom: 20px;">
+                        Cette section vous permet d'obtenir des prédictions ultra-précises basées sur une analyse approfondie des cotes. Notre algorithme avancé analysera toutes les informations fournies pour vous donner les meilleures prédictions possibles.
+                    </p>
+                    <button onclick="showFIFAOptions()" class="start-button">
+                        <i class="fas fa-play"></i> Commencer l'Analyse
+                    </button>
+                </div>
+            `;
+        }
+
+        // Fonction pour afficher les options FIFA
+        function showFIFAOptions() {
+            document.getElementById('main').innerHTML = `
+                <div class="back-button" onclick="showFIFA()">
+                    <i class="fas fa-arrow-left"></i> Retour
+                </div>
+                <div class="header">
+                    <h1 class="header-title">Choisissez votre type de jeu</h1>
+                </div>
+                <div class="fifa-option" onclick="startFIFAQuestions('classic')">
+                    <h3><i class="fas fa-futbol"></i> FIFA Classique</h3>
+                    <p>Analyse complète pour tous les championnats FIFA. Idéal pour les matchs classiques avec une prédiction détaillée basée sur les statistiques et les cotes.</p>
+                </div>
+                <div class="fifa-option" onclick="startFIFAQuestions('penalty')">
+                    <h3><i class="fas fa-bullseye"></i> FIFA Penalty</h3>
+                    <p>Spécialement conçu pour les matchs de penalties FIFA. Analyse optimisée pour ce format unique avec des prédictions spécifiques.</p>
+                </div>
+            `;
+        }
+
+        // Fonction pour démarrer les questions FIFA
+        function startFIFAQuestions(type) {
+            currentFIFAQuestion = 0;
+            fifaAnswers = { type: type };
+            showNextFIFAQuestion();
+        }
+
+        // Fonction pour afficher la prochaine question FIFA
+        function showNextFIFAQuestion() {
+            const questions = fifaAnswers.type === 'classic' ? fifaClassicQuestions : fifaPenaltyQuestions;
+
+            if (currentFIFAQuestion >= questions.length) {
+                showLoadingAndProcessPrediction();
+                return;
+            }
+
+            const question = questions[currentFIFAQuestion];
+            document.getElementById('main').innerHTML = `
+                <div class="back-button" onclick="showFIFAOptions()">
+                    <i class="fas fa-arrow-left"></i> Retour
+                </div>
+                <div class="header">
+                    <h1 class="header-title">Question ${currentFIFAQuestion + 1}/${questions.length}</h1>
+                </div>
+                <div class="question-container form-container">
+                    <h3 style="margin-bottom: 20px;">${question.question}</h3>
+                    <input type="${question.type}" 
+                           name="${question.name}"
+                           class="form-control" 
+                           ${question.type === 'number' ? 'step="0.01" min="0"' : ''}
+                           placeholder="${question.type === 'text' ? 'Entrez votre réponse' : ''}"
+                           style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid var(--text-light); margin-bottom: 20px;"
+                           required>
+                    <button onclick="submitFIFAAnswer(this.previousElementSibling.value)" class="start-button">
+                        ${currentFIFAQuestion === questions.length - 1 ? 'Terminer' : 'Suivant'}
+                    </button>
+                </div>
+            `;
+        }
+
+        // Fonction pour soumettre une réponse FIFA
+        function submitFIFAAnswer(answer) {
+            const questions = fifaAnswers.type === 'classic' ? fifaClassicQuestions : fifaPenaltyQuestions;
+            fifaAnswers[questions[currentFIFAQuestion].name] = answer;
+            currentFIFAQuestion++;
+            showNextFIFAQuestion();
+        }
+
+        // Fonction pour afficher l'animation de chargement et traiter la prédiction
+        function showLoadingAndProcessPrediction() {
+            document.getElementById('main').innerHTML = `
+                <div class="header">
+                    <h1 class="header-title">Analyse en cours</h1>
+                </div>
+                <div class="loading-animation">
+                    <div class="loading-spinner"></div>
+                    <p style="margin-top: 20px;">Analyse des données en cours...</p>
+                </div>
+            `;
+
+            setTimeout(() => {
+                if (fifaAnswers.type === 'classic') {
+                    showClassicPrediction();
+                } else {
+                    showPenaltyPrediction();
+                }
+            }, 2000);
+        }
+
+        // Fonction pour afficher la prédiction FIFA Classique
+        function showClassicPrediction() {
+            document.getElementById('main').innerHTML = `
+                <div class="back-button" onclick="showFIFAOptions()">
+                    <i class="fas fa-arrow-left"></i> Retour
+                </div>
+                <div class="header">
+                    <h1 class="header-title">Résultats de l'Analyse</h1>
+                </div>
+                <div class="prediction-result form-container">
+                    <h3>Score probable 1ère période</h3>
+                    <p>1-0 ou 0-0</p>
+                    
+                    <h3 style="margin-top: 20px;">Score probable final</h3>
+                    <p>2-1 ou 1-1</p>
+                    
+                    <div class="safe-prediction">
+                        <h3 style="color: white;">Prédiction la plus sûre</h3>
+                        <p style="color: white; margin-top: 10px;">Les deux équipes marquent</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Fonction pour afficher la prédiction FIFA Penalty
+        function showPenaltyPrediction() {
+            document.getElementById('main').innerHTML = `
+                <div class="back-button" onclick="showFIFAOptions()">
+                    <i class="fas fa-arrow-left"></i> Retour
+                </div>
+                <div class="header">
+                    <h1 class="header-title">Résultats de l'Analyse</h1>
+                </div>
+                <div class="prediction-result form-container">
+                    <h3>Scores probables</h3>
+                    <p>3-3, 4-3, 3-4</p>
+                    
+                    <div class="safe-prediction">
+                        <h3 style="color: white;">Prédiction la plus sûre</h3>
+                        <p style="color: white; margin-top: 10px;">Plus de 4.5 buts</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Fonction pour afficher la page VIP
+        function showVIP() {
+            window.location.hash = 'vip';
+            document.getElementById('main').innerHTML = `
+                <div class="header">
+                    <h1 class="header-title">Section VIP</h1>
+                </div>
+                <div class="vip-message">
+                    <h3>🌟 Section Premium</h3>
+                    <p style="margin-top: 12px;">Les meilleures prédictions quotidiennes seront bientôt disponibles dans cette section.</p>
+                    <p style="margin-top: 8px;">Restez connecté !</p>
+                </div>
+            `;
+        }
+
+        // Fonction pour afficher la page des favoris
+        function showFavorites() {
+            window.location.hash = 'favorites';
+            document.getElementById('main').innerHTML = `
+                <div class="back-button" onclick="showMainApp()">
+                    <i class="fas fa-arrow-left"></i> Retour
+                </div>
+                <div class="header">
+                    <h1 class="header-title">Vos Favoris</h1>
+                </div>
+                <div class="form-container">
+                    <p>Vos prédictions favorites apparaîtront ici.</p>
+                </div>
+            `;
+        }
+
+        // Fonction pour basculer un match en favori
+        function toggleFavorite(matchId) {
+            const starIcon = document.querySelector(`#star-${matchId}`);
+            const index = favorites.indexOf(matchId);
+
+            if (index === -1) {
+                favorites.push(matchId);
+                starIcon.classList.add('active');
+            } else {
+                favorites.splice(index, 1);
+                starIcon.classList.remove('active');
+            }
+
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+        }
+
+        // Initialiser les favoris
+        let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+
+        // Mettre à jour la navigation
+        function updateNavigation() {
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => item.classList.remove('active'));
+            const currentPage = window.location.hash.slice(1) || 'home';
+            document.querySelector(`.nav-item[onclick="show${currentPage.charAt(0).toUpperCase() + currentPage.slice(1)}()"]`)?.classList.add('active');
+        }
+
+        // Écouter les changements de hash (pour la navigation)
+        window.addEventListener('hashchange', updateNavigation);
+
+        // Initialiser la navigation au chargement
+        updateNavigation();
 
         // Prêt à utiliser Telegram Web App
         tg.ready();
