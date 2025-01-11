@@ -102,6 +102,8 @@
             font-weight: 600;
             cursor: pointer;
             transition: transform 0.3s ease;
+            margin: 5px;
+            width: 100%;
         }
 
         .subscription-box button:hover {
@@ -146,6 +148,131 @@
         .hidden {
             display: none;
         }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .menu-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 4px 15px var(--shadow);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px var(--shadow);
+        }
+
+        .menu-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-1);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            color: var(--white);
+            font-size: 24px;
+            box-shadow: 0 4px 10px var(--shadow);
+        }
+
+        .menu-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .back-button {
+            background: var(--gradient-1);
+            color: var(--white);
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .back-button:hover {
+            transform: translateY(-3px);
+        }
+
+        .match-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px var(--shadow);
+            position: relative;
+        }
+
+        .match-league {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .match-teams {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .match-time {
+            color: var(--text-light);
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .match-prediction {
+            background: var(--gradient-1);
+            color: var(--white);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .match-confidence {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--success-color);
+            color: var(--white);
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .favorite-star {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: var(--text-light);
+            font-size: 20px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .favorite-star.active {
+            color: #FFD700;
+        }
     </style>
 </head>
 <body>
@@ -157,6 +284,9 @@
         <div class="subscription-box">
             <h2>Accédez à l'application</h2>
             <p>Pour accéder à toutes les fonctionnalités de BetSmart Pro, veuillez vous abonner à notre canal Telegram.</p>
+            <button onclick="joinTelegramChannel()">
+                <i class="fas fa-paper-plane"></i> Rejoindre notre canal
+            </button>
             <button onclick="checkSubscription()">
                 <i class="fas fa-check-circle"></i> Vérifier l'abonnement
             </button>
@@ -178,8 +308,14 @@
 
         // Remplacez ces valeurs par vos informations
         const BOT_TOKEN = '7469991306:AAE3c2AtRQf5qDgVCGVEcl0QAtaI9Wl8NiM'; // Votre token de bot
-        const CHANNEL_USERNAME = '@alvecapital1'; // Votre nom d'utilisateur de canal
+        const CHANNEL_USERNAME = 'alvecapital1'; // Votre nom d'utilisateur de canal (sans le @)
 
+        // Fonction pour rediriger vers le canal Telegram
+        function joinTelegramChannel() {
+            window.open(`https://t.me/${CHANNEL_USERNAME}`, '_blank');
+        }
+
+        // Fonction pour vérifier l'abonnement
         async function checkSubscription() {
             const loading = document.getElementById('loading');
             const errorMessage = document.getElementById('error-message');
@@ -204,7 +340,7 @@
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        chat_id: CHANNEL_USERNAME,
+                        chat_id: `@${CHANNEL_USERNAME}`,
                         user_id: userId,
                     }),
                 });
@@ -227,6 +363,7 @@
             }
         }
 
+        // Fonction pour afficher l'application principale
         function showMainApp() {
             document.getElementById('main').innerHTML = `
                 <div class="header">
@@ -274,203 +411,9 @@
                         class="social-logo" alt="Telegram" onclick="window.open('https://t.me')">
                 </div>
             `;
-
-            // Initialiser la navigation
-            updateNavigation();
         }
 
-        // ... // Fonction pour afficher la page "Combo du Jour"
-function showComboPage() {
-    window.location.hash = 'combo';
-    const predictions = [
-        { type: 'victoire', icon: 'trophy', title: 'Victoire Directe', gradient: 'var(--gradient-1)' },
-        { type: 'btts', icon: 'futbol', title: 'Les 2 Équipes Marquent', gradient: 'var(--gradient-2)' },
-        { type: 'double', icon: 'shield-alt', title: 'Double Chance', gradient: 'var(--gradient-3)' },
-        { type: 'over', icon: 'plus-circle', title: 'Total +1.5 Buts', gradient: 'var(--gradient-4)' },
-        { type: 'under', icon: 'minus-circle', title: 'Moins de 3.5 Buts', gradient: 'var(--gradient-5)' }
-    ];
-
-    let html = `
-        <div class="back-button" onclick="showMainApp()">
-            <i class="fas fa-arrow-left"></i> Retour
-        </div>
-        <div class="header">
-            <h1 class="header-title">Prédictions Disponibles</h1>
-        </div>
-    `;
-
-    predictions.forEach(pred => {
-        html += `
-            <div class="prediction-section" onclick="showPredictionMatches('${pred.type}')" style="background: ${pred.gradient}">
-                <div class="prediction-icon">
-                    <i class="fas fa-${pred.icon}"></i>
-                </div>
-                <div class="prediction-title" style="color: var(--white)">${pred.title}</div>
-            </div>
-        `;
-    });
-
-    document.getElementById('main').innerHTML = html;
-}
-
-// Fonction pour afficher les matchs d'une prédiction spécifique
-function showPredictionMatches(type) {
-    const matches = {
-        victoire: [
-            { id: 'v1', league: 'Premier League', home: "Manchester City", away: "Arsenal", time: "20:45", prediction: "Victoire Manchester City", confidence: "85%" },
-            { id: 'v2', league: 'Ligue 1', home: "PSG", away: "Marseille", time: "21:00", prediction: "Victoire PSG", confidence: "80%" }
-        ],
-        btts: [
-            { id: 'b1', league: 'Champions League', home: "Bayern Munich", away: "Real Madrid", time: "20:00", prediction: "Les deux équipes marquent", confidence: "90%" },
-            { id: 'b2', league: 'Serie A', home: "Inter", away: "Milan", time: "20:45", prediction: "Les deux équipes marquent", confidence: "85%" }
-        ]
-    };
-
-    const selectedMatches = matches[type] || [];
-    let matchesHTML = `
-        <div class="back-button" onclick="showComboPage()">
-            <i class="fas fa-arrow-left"></i> Retour
-        </div>
-        <div class="header">
-            <h1 class="header-title">Matchs Sélectionnés</h1>
-        </div>
-    `;
-
-    selectedMatches.forEach(match => {
-        const isFavorite = favorites.includes(match.id);
-        matchesHTML += `
-            <div class="match-card">
-                <div class="match-league">${match.league}</div>
-                <i class="fas fa-star favorite-star ${isFavorite ? 'active' : ''}" 
-                   id="star-${match.id}"
-                   onclick="toggleFavorite('${match.id}')"></i>
-                <div class="match-teams">
-                    <span>${match.home}</span>
-                    <span>vs</span>
-                    <span>${match.away}</span>
-                </div>
-                <div class="match-time">
-                    <i class="far fa-clock"></i> ${match.time}
-                </div>
-                <div class="match-prediction">${match.prediction}</div>
-                <div class="match-confidence">Confiance: ${match.confidence}</div>
-            </div>
-        `;
-    });
-
-    document.getElementById('main').innerHTML = matchesHTML;
-}
-
-// Fonction pour afficher la page "Top Score"
-function showTopScore() {
-    window.location.hash = 'topscore';
-    const matches = [
-        {
-            league: 'Champions League',
-            home: 'PSG',
-            away: 'Bayern Munich',
-            time: '20:45',
-            htScores: ['1-0', '0-0'],
-            ftScores: ['2-1', '1-1']
-        },
-        {
-            league: 'Premier League',
-            home: 'Liverpool',
-            away: 'Manchester City',
-            time: '21:00',
-            htScores: ['0-1', '1-1'],
-            ftScores: ['2-2', '1-2']
-        }
-    ];
-
-    let html = `
-        <div class="back-button" onclick="showMainApp()">
-            <i class="fas fa-arrow-left"></i> Retour
-        </div>
-        <div class="header">
-            <h1 class="header-title">Top Scores</h1>
-        </div>
-    `;
-
-    matches.forEach(match => {
-        html += `
-            <div class="match-card">
-                <div class="match-league">${match.league}</div>
-                <div class="match-teams">
-                    <span>${match.home}</span>
-                    <span>vs</span>
-                    <span>${match.away}</span>
-                </div>
-                <div class="match-time">
-                    <i class="far fa-clock"></i> ${match.time}
-                </div>
-                <div style="margin-top: 15px;">
-                    <h4>Score Mi-temps:</h4>
-                    <p>${match.htScores.join(' ou ')}</p>
-                </div>
-                <div style="margin-top: 10px;">
-                    <h4>Score Final:</h4>
-                    <p>${match.ftScores.join(' ou ')}</p>
-                </div>
-            </div>
-        `;
-    });
-
-    document.getElementById('main').innerHTML = html;
-}
-
-// Fonction pour afficher la page "Favoris"
-function showFavorites() {
-    window.location.hash = 'favorites';
-    document.getElementById('main').innerHTML = `
-        <div class="back-button" onclick="showMainApp()">
-            <i class="fas fa-arrow-left"></i> Retour
-        </div>
-        <div class="header">
-            <h1 class="header-title">Vos Favoris</h1>
-        </div>
-        <div class="form-container">
-            <p>Vos prédictions favorites apparaîtront ici.</p>
-        </div>
-    `;
-}
-
-// Fonction pour basculer un match en favori
-function toggleFavorite(matchId) {
-    const starIcon = document.querySelector(`#star-${matchId}`);
-    const index = favorites.indexOf(matchId);
-
-    if (index === -1) {
-        favorites.push(matchId);
-        starIcon.classList.add('active');
-    } else {
-        favorites.splice(index, 1);
-        starIcon.classList.remove('active');
-    }
-
-    localStorage.setItem('favorites', JSON.stringify(favorites));
-}
-
-// Initialiser les favoris
-let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-
-// Mettre à jour la navigation
-function updateNavigation() {
-    const navItems = document.querySelectorAll('.nav-item');
-    navItems.forEach(item => item.classList.remove('active'));
-    const currentPage = window.location.hash.slice(1) || 'home';
-    document.querySelector(`.nav-item[onclick="show${currentPage.charAt(0).toUpperCase() + currentPage.slice(1)}()"]`)?.classList.add('active');
-}
-
-// Écouter les changements de hash (pour la navigation)
-window.addEventListener('hashchange', updateNavigation);
-
-// Initialiser la navigation au chargement
-updateNavigation();
-
-// Prêt à utiliser Telegram Web App
-tg.ready(); ...
-
+        // Prêt à utiliser Telegram Web App
         tg.ready();
     </script>
 </body>
