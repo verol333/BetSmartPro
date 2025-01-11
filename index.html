@@ -18,6 +18,8 @@
             --text-light: #677487;
             --success: #34C759;
             --error: #FF3B30;
+            --success-gradient: linear-gradient(135deg, #34C759, #28A745);
+            --primary-gradient: linear-gradient(135deg, #229ED9, #1E96C8);
         }
 
         * {
@@ -33,6 +35,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            padding-bottom: 60px;
         }
 
         .welcome-card {
@@ -46,6 +49,7 @@
             animation: fadeIn 0.5s ease;
         }
 
+        /* Animation de fondu */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -168,9 +172,148 @@
             margin-top: 20px;
             opacity: 0.8;
         }
+        /* Styles pour l'application principale */
+        .main-app {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .menu-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .prediction-container {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .prediction-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .prediction-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .safe-prediction {
+            background: var(--success-gradient);
+            color: var(--white);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(52, 199, 89, 0.2);
+        }
+
+        .match-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .match-teams {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .match-info {
+            color: var(--text-light);
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .fifa-form {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .nav-bottom {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            display: flex;
+            justify-content: space-around;
+            padding: 15px;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-light);
+            font-size: 12px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-item.active {
+            color: var(--telegram-blue);
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
     </style>
 </head>
 <body>
+    <!-- Page de vérification -->
     <div class="welcome-card" id="welcome-card">
         <div class="telegram-logo">
             <i class="fab fa-telegram-plane"></i>
@@ -192,66 +335,212 @@
         <div class="bot-name">@BetSmartPro_bot</div>
     </div>
 
-    <div id="main-app" style="display: none;">
-        <!-- Contenu principal de l'application -->
+    <!-- Application principale -->
+    <div id="main-app" class="main-app" style="display: none;">
+        <!-- Le contenu sera chargé dynamiquement via JavaScript -->
     </div>
 
+    <!-- Navigation du bas -->
+    <nav class="nav-bottom">
+        <a href="#" class="nav-item active" onclick="showHome()">
+            <i class="fas fa-home"></i>
+            <span>Accueil</span>
+        </a>
+        <a href="#" class="nav-item" onclick="showFIFA()">
+            <i class="fas fa-futbol"></i>
+            <span>FIFA</span>
+        </a>
+        <a href="#" class="nav-item" onclick="showVIP()">
+            <i class="fas fa-crown"></i>
+            <span>VIP</span>
+        </a>
+    </nav>
     <script>
-        let tg = window.Telegram.WebApp;
-        tg.expand();
+    let tg = window.Telegram.WebApp;
+    tg.expand();
 
-        async function verifySubscription() {
-            const verifyBtn = document.getElementById('verify-btn');
-            const spinner = document.getElementById('spinner');
-            const statusMsg = document.getElementById('status-message');
+    async function verifySubscription() {
+        const verifyBtn = document.getElementById('verify-btn');
+        const spinner = document.getElementById('spinner');
+        const statusMsg = document.getElementById('status-message');
 
-            verifyBtn.disabled = true;
-            spinner.style.display = 'inline-block';
-            statusMsg.style.display = 'none';
+        verifyBtn.disabled = true;
+        spinner.style.display = 'inline-block';
+        statusMsg.style.display = 'none';
 
-            try {
-                const response = await fetch('https://api.telegram.org/bot7469991306:AAE3c2AtRQf5qDgVCGVEcl0QAtaI9Wl8NiM/getChatMember', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        chat_id: '@alvecapital1',
-                        user_id: tg.initDataUnsafe.user.id
-                    })
-                });
+        try {
+            const response = await fetch('https://api.telegram.org/bot7469991306:AAE3c2AtRQf5qDgVCGVEcl0QAtaI9Wl8NiM/getChatMember', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: '@alvecapital1',
+                    user_id: tg.initDataUnsafe.user.id
+                })
+            });
 
-                const data = await response.json();
+            const data = await response.json();
 
-                if (!data.ok) {
-                    throw new Error(data.description || 'Erreur API Telegram');
-                }
+            if (!data.ok) {
+                throw new Error(data.description || 'Erreur API Telegram');
+            }
 
-                const memberStatus = data.result.status;
-                if (['member', 'administrator', 'creator'].includes(memberStatus)) {
-                    statusMsg.textContent = 'Vérification réussie ! Redirection en cours...';
-                    statusMsg.className = 'status-message success';
-                    statusMsg.style.display = 'block';
+            const memberStatus = data.result.status;
+            if (['member', 'administrator', 'creator'].includes(memberStatus)) {
+                statusMsg.textContent = 'Vérification réussie ! Redirection en cours...';
+                statusMsg.className = 'status-message success';
+                statusMsg.style.display = 'block';
 
-                    setTimeout(() => {
-                        document.getElementById('welcome-card').style.display = 'none';
-                        document.getElementById('main-app').style.display = 'block';
-                    }, 1500);
-                } else {
-                    statusMsg.textContent = 'Veuillez vous abonner au canal pour accéder à l\'application.';
-                    statusMsg.className = 'status-message error';
-                    statusMsg.style.display = 'block';
-                }
-            } catch (error) {
-                console.error('Erreur:', error.message);
-                statusMsg.textContent = 'Une erreur est survenue. Veuillez réessayer.';
+                setTimeout(() => {
+                    document.getElementById('welcome-card').style.display = 'none';
+                    document.getElementById('main-app').style.display = 'block';
+                    showHome();
+                }, 1500);
+            } else {
+                statusMsg.textContent = 'Veuillez vous abonner au canal pour accéder à l\'application.';
                 statusMsg.className = 'status-message error';
                 statusMsg.style.display = 'block';
             }
-
-            verifyBtn.disabled = false;
-            spinner.style.display = 'none';
+        } catch (error) {
+            console.error('Erreur:', error.message);
+            statusMsg.textContent = 'Une erreur est survenue. Veuillez réessayer.';
+            statusMsg.className = 'status-message error';
+            statusMsg.style.display = 'block';
         }
 
-        tg.ready();
-    </script>
+        verifyBtn.disabled = false;
+        spinner.style.display = 'none';
+    }
+
+    function showHome() {
+        document.getElementById('main-app').innerHTML = `
+            <div class="menu-grid">
+                <div class="menu-card" onclick="showPredictions()">
+                    <div class="menu-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="menu-title">Combo du Jour</div>
+                </div>
+
+                <div class="menu-card" onclick="showTopScore()">
+                    <div class="menu-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="menu-title">Top Score</div>
+                </div>
+
+                <div class="menu-card">
+                    <div class="menu-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="menu-title">Favoris</div>
+                </div>
+
+                <div class="menu-card">
+                    <div class="menu-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <div class="menu-title">Historique</div>
+                </div>
+            </div>
+        `;
+    }
+
+    function showPredictions() {
+        document.getElementById('main-app').innerHTML = `
+            <div class="prediction-container">
+                <h2>Prédictions du Jour</h2>
+                <div class="match-card">
+                    <div class="match-teams">
+                        <span>Manchester City</span>
+                        <span>vs</span>
+                        <span>Arsenal</span>
+                    </div>
+                    <div class="match-info">
+                        <span>Premier League</span>
+                        <span>20:45</span>
+                    </div>
+                    <div class="safe-prediction">
+                        <h3>Prédiction Recommandée</h3>
+                        <p>Les deux équipes marquent</p>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    function showTopScore() {
+        document.getElementById('main-app').innerHTML = `
+            <div class="prediction-container">
+                <h2>Meilleures Cotes</h2>
+                <div class="match-card">
+                    <div class="match-teams">
+                        <span>PSG</span>
+                        <span>vs</span>
+                        <span>Bayern Munich</span>
+                    </div>
+                    <div class="match-info">
+                        <span>Champions League</span>
+                        <span>Score MI-TEMPS : 1-0</span>
+                    </div>
+                    <div class="match-info">
+                        <span>Score FINAL : 2-1</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    function showFIFA() {
+        document.getElementById('main-app').innerHTML = `
+            <div class="prediction-container">
+                <h2>Analyse FIFA</h2>
+                <p>Entrez les cotes pour obtenir une prédiction précise</p>
+                <form class="fifa-form" onsubmit="handleFIFASubmit(event)">
+                    <div class="form-group">
+                        <label>Cote équipe domicile</label>
+                        <input type="number" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Cote match nul</label>
+                        <input type="number" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Cote équipe extérieur</label>
+                        <input type="number" step="0.01" required>
+                    </div>
+                    <button type="submit" class="verify-button">
+                        Analyser
+                    </button>
+                </form>
+                <div class="safe-prediction" style="display: none;">
+                    <h3>Prédiction la plus sûre</h3>
+                    <p>Résultat calculé</p>
+                </div>
+            </div>
+        `;
+    }
+
+    function showVIP() {
+        document.getElementById('main-app').innerHTML = `
+            <div class="prediction-container">
+                <h2>Section VIP</h2>
+                <p>Les prédictions premium seront bientôt disponibles.</p>
+                <div class="safe-prediction">
+                    <h3>🌟 Accès Premium</h3>
+                    <p>Restez connecté pour plus d'informations</p>
+                </div>
+            </div>
+        `;
+    }
+
+    function handleFIFASubmit(event) {
+        event.preventDefault();
+        // Logique d'analyse FIFA à implémenter
+        document.querySelector('.safe-prediction').style.display = 'block';
+    }
+
+    // Initialisation
+    tg.ready();
+</script>
 </body>
 </html>
