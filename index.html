@@ -230,6 +230,20 @@
             display: inline-block;
         }
 
+        .match-status {
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .match-status.won {
+            color: var(--success-color);
+        }
+
+        .match-status.lost {
+            color: var(--error-color);
+        }
+
         /* FIFA Section */
         .fifa-options {
             margin: 20px 0;
@@ -378,6 +392,13 @@
 
         .social-icon:hover {
             transform: scale(1.1);
+        }
+
+        .app-description {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: var(--text-light);
         }
 
         .hidden {
@@ -584,6 +605,10 @@
                     <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" 
                         class="social-icon" alt="Telegram" onclick="window.open('https://t.me')">
                 </div>
+
+                <div class="app-description">
+                    Notre application utilise une intelligence artificielle avancée pour fournir des prédictions fiables et précises. Rejoignez-nous pour maximiser vos chances de succès !
+                </div>
             `;
             updateNavigation('home');
         }
@@ -626,7 +651,8 @@
                         away: 'Arsenal',
                         time: '20:45',
                         prediction: 'Victoire Manchester City',
-                        confidence: 85
+                        confidence: 85,
+                        status: 'won'
                     }
                 ],
                 'Les 2 Équipes Marquent': [
@@ -636,7 +662,8 @@
                         away: 'Real Madrid',
                         time: '20:00',
                         prediction: 'Les deux équipes marquent',
-                        confidence: 90
+                        confidence: 90,
+                        status: 'lost'
                     }
                 ]
                 // Ajoutez d'autres types ici
@@ -662,6 +689,9 @@
                         </div>
                         <div class="match-prediction">${match.prediction}</div>
                         <div class="confidence-badge">${match.confidence}% de confiance</div>
+                        <div class="match-status ${match.status}">
+                            ${match.status === 'won' ? 'Gagnant' : 'Perdant'}
+                        </div>
                         <button class="favorite-btn" onclick="toggleFavorite('${match.home}-${match.away}')">
                             <i class="fas ${isFavorite(`${match.home}-${match.away}`) ? 'fa-star' : 'fa-star-o'}"></i>
                         </button>
@@ -715,6 +745,7 @@
                         <p>2-1 ou 1-1</p>
                     </div>
                     <div class="confidence-badge">92% de confiance</div>
+                    <div class="match-status won">Gagnant</div>
                     <button class="favorite-btn" onclick="toggleFavorite('PSG-Bayern')">
                         <i class="fas ${isFavorite('PSG-Bayern') ? 'fa-star' : 'fa-star-o'}"></i>
                     </button>
@@ -758,275 +789,178 @@
                 <div class="header">
                     <h1 class="header-title">Historique</h1>
                 </div>
-                <div class="match-card">
-                    <p>Votre historique des prédictions apparaîtra ici.</p>
+
+                <div class="menu-grid">
+                    <div class="menu-card" onclick="showComboHistory()">
+                        <div class="menu-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="menu-title">Combo du Jour</div>
+                    </div>
+
+                    <div class="menu-card" onclick="showTopScoreHistory()">
+                        <div class="menu-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="menu-title">Top Score</div>
+                    </div>
+
+                    <div class="menu-card" onclick="showVIPHistory()">
+                        <div class="menu-icon">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <div class="menu-title">VIP</div>
+                    </div>
                 </div>
+
                 <button class="bottom-back-button" onclick="showMainApp()">
                     <i class="fas fa-arrow-left"></i> Retour
                 </button>
             `;
         }
 
-        // Section FIFA
-        const fifaClassicQuestions = [
-            {
-                question: "Quelle est la cote de l'équipe qui joue à domicile ?",
-                type: "number",
-                name: "homeOdds"
-            },
-            {
-                question: "Quelle est la cote de l'équipe qui joue à l'extérieur ?",
-                type: "number",
-                name: "awayOdds"
-            },
-            {
-                question: "Quelle est la cote pour le match nul ?",
-                type: "number",
-                name: "drawOdds"
-            },
-            {
-                question: "Veuillez fournir une capture d'écran des options totales (over 1.5 à 3.5)",
-                type: "file",
-                name: "totalOdds",
-                description: "Assurez-vous que les cotes over 1.5 jusqu'à 3.5 sont bien visibles"
-            },
-            {
-                question: "Veuillez fournir une capture d'écran des scores exacts de la première période",
-                type: "file",
-                name: "htScores"
-            },
-            {
-                question: "Veuillez fournir une capture d'écran des scores exacts du temps réglementaire",
-                type: "file",
-                name: "ftScores"
-            }
-        ];
-
-        const fifaPenaltyQuestions = [
-            {
-                question: "Quelle est la cote de l'équipe qui tire en premier ?",
-                type: "number",
-                name: "firstTeamOdds"
-            },
-            {
-                question: "Quelle est la cote de l'équipe qui tire en second ?",
-                type: "number",
-                name: "secondTeamOdds"
-            },
-            {
-                question: "Veuillez fournir une capture d'écran du total des buts",
-                type: "file",
-                name: "totalGoals"
-            },
-            {
-                question: "Veuillez fournir une capture d'écran des scores exacts",
-                type: "file",
-                name: "exactScores"
-            }
-        ];
-
-        function showFIFA() {
-            document.getElementById('main').innerHTML = `
-                <div class="header">
-                    <h1 class="header-title">FIFA Prédictions</h1>
-                </div>
-
-                <div class="fifa-options">
-                    <div class="fifa-option" onclick="startFIFAQuestions('classic')">
-                        <div class="menu-icon">
-                            <i class="fas fa-futbol"></i>
-                        </div>
-                        <h3>FIFA Classique</h3>
-                        <p>Analyse complète pour les matchs classiques avec prédictions détaillées.</p>
-                    </div>
-                    
-                <div class="fifa-option" onclick="startFIFAQuestions('penalty')">
-                        <div class="menu-icon">
-                            <i class="fas fa-bullseye"></i>
-                        </div>
-                        <h3>FIFA Penalty</h3>
-                        <p>Analyse spécialisée pour les séances de tirs au but.</p>
-                    </div>
-                </div>
-            `;
-            updateNavigation('fifa');
-        }
-
-        function startFIFAQuestions(type) {
-            currentFIFAQuestion = 0;
-            fifaAnswers = { type: type };
-            showNextFIFAQuestion();
-        }
-
-        function showNextFIFAQuestion() {
-            const questions = fifaAnswers.type === 'classic' ? fifaClassicQuestions : fifaPenaltyQuestions;
-
-            if (currentFIFAQuestion >= questions.length) {
-                showLoadingAndProcessPrediction();
-                return;
-            }
-
-            const question = questions[currentFIFAQuestion];
-            let inputHtml = '';
-
-            if (question.type === 'file') {
-                inputHtml = `
-                    <div class="file-upload-container" onclick="document.getElementById('fileInput').click()">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <p>Cliquez pour télécharger votre capture d'écran</p>
-                        ${question.description ? `<p style="margin-top: 10px; color: var(--text-light);">${question.description}</p>` : ''}
-                        <input type="file" 
-                               id="fileInput" 
-                               accept="image/*" 
-                               onChange="handleFileUpload(this)" 
-                               style="display: none;">
-                    </div>`;
-            } else {
-                inputHtml = `
-                    <input type="${question.type}" 
-                           class="form-control" 
-                           step="0.01" 
-                           min="0"
-                           placeholder="Entrez votre réponse"
-                           required>`;
-            }
-
-            document.getElementById('main').innerHTML = `
-                <div class="header">
-                    <h1 class="header-title">Question ${currentFIFAQuestion + 1}/${questions.length}</h1>
-                </div>
-                
-                <div class="question-container">
-                    <h3>${question.question}</h3>
-                    ${inputHtml}
-                    <button class="next-button">
-                        ${currentFIFAQuestion === questions.length - 1 ? 'Obtenir la prédiction' : 'Suivant'}
-                    </button>
-                </div>
-
-                <button class="bottom-back-button" onclick="showFIFA()">
-                    <i class="fas fa-arrow-left"></i> Retour
-                </button>
-            `;
-
-            // Ajouter l'événement click après avoir créé le bouton
-            document.querySelector('.next-button').onclick = () => {
-                if (question.type === 'file') {
-                    document.getElementById('fileInput').click();
-                } else {
-                    const input = document.querySelector('.form-control');
-                    if (input.value) {
-                        submitFIFAAnswer(input.value);
-                    }
+        function showComboHistory() {
+            const matches = [
+                {
+                    league: 'Premier League',
+                    home: 'Manchester City',
+                    away: 'Arsenal',
+                    time: '20:45',
+                    prediction: 'Victoire Manchester City',
+                    confidence: 85,
+                    status: 'won'
+                },
+                {
+                    league: 'Champions League',
+                    home: 'Bayern Munich',
+                    away: 'Real Madrid',
+                    time: '20:00',
+                    prediction: 'Les deux équipes marquent',
+                    confidence: 90,
+                    status: 'lost'
                 }
-            };
-        }
+            ];
 
-        function handleFileUpload(input) {
-            if (input.files && input.files[0]) {
-                submitFIFAAnswer(input.files[0]);
-            }
-        }
-
-        function submitFIFAAnswer(answer) {
-            const questions = fifaAnswers.type === 'classic' ? fifaClassicQuestions : fifaPenaltyQuestions;
-            fifaAnswers[questions[currentFIFAQuestion].name] = answer;
-            currentFIFAQuestion++;
-            showNextFIFAQuestion();
-        }
-
-        function showLoadingAndProcessPrediction() {
             document.getElementById('main').innerHTML = `
                 <div class="header">
-                    <h1 class="header-title">Analyse en cours</h1>
-                </div>
-                <div class="loading-animation">
-                    <div class="loading-spinner"></div>
-                    <p style="margin-top: 20px;">Analyse approfondie des données en cours...</p>
-                </div>
-            `;
-
-            setTimeout(() => {
-                if (fifaAnswers.type === 'classic') {
-                    showClassicPrediction();
-                } else {
-                    showPenaltyPrediction();
-                }
-            }, 3000);
-        }
-
-        function showClassicPrediction() {
-            document.getElementById('main').innerHTML = `
-                <div class="header">
-                    <h1 class="header-title">Résultats de l'Analyse</h1>
-                </div>
-                
-                <div class="prediction-section">
-                    <h3>Score probable 1ère mi-temps</h3>
-                    <p class="match-prediction">1-0 ou 0-0</p>
-                    <div class="confidence-badge">85% de confiance</div>
-                    <button class="favorite-btn" onclick="toggleFavorite('ht-score')">
-                        <i class="fas ${isFavorite('ht-score') ? 'fa-star' : 'fa-star-o'}"></i>
-                    </button>
+                    <h1 class="header-title">Historique - Combo du Jour</h1>
                 </div>
 
-                <div class="prediction-section">
-                    <h3>Score probable final</h3>
-                    <p class="match-prediction">2-1 ou 1-1</p>
-                    <div class="confidence-badge">82% de confiance</div>
-                    <button class="favorite-btn" onclick="toggleFavorite('ft-score')">
-                        <i class="fas ${isFavorite('ft-score') ? 'fa-star' : 'fa-star-o'}"></i>
-                    </button>
-                </div>
-
-                <div class="prediction-section" style="background: var(--gradient-2); color: white;">
-                    <h3>Prédiction la plus sûre</h3>
-                    <p class="match-prediction" style="background: rgba(255,255,255,0.2);">
-                        Les deux équipes marquent
-                    </p>
-                    <div class="confidence-badge" style="background: rgba(255,255,255,0.2);">
-                        90% de confiance
+                ${matches.map(match => `
+                    <div class="match-card">
+                        <div class="match-league">${match.league}</div>
+                        <div class="match-teams">
+                            <span>${match.home}</span>
+                            <span>vs</span>
+                            <span>${match.away}</span>
+                        </div>
+                        <div class="match-time">
+                            <i class="far fa-clock"></i> ${match.time}
+                        </div>
+                        <div class="match-prediction">${match.prediction}</div>
+                        <div class="confidence-badge">${match.confidence}% de confiance</div>
+                        <div class="match-status ${match.status}">
+                            ${match.status === 'won' ? 'Gagnant' : 'Perdant'}
+                        </div>
+                        <button class="favorite-btn" onclick="toggleFavorite('${match.home}-${match.away}')">
+                            <i class="fas ${isFavorite(`${match.home}-${match.away}`) ? 'fa-star' : 'fa-star-o'}"></i>
+                        </button>
                     </div>
-                    <button class="favorite-btn" onclick="toggleFavorite('sure-bet')">
-                        <i class="fas ${isFavorite('sure-bet') ? 'fa-star' : 'fa-star-o'}"></i>
-                    </button>
-                </div>
+                `).join('')}
 
-                <button class="bottom-back-button" onclick="showFIFA()">
+                <button class="bottom-back-button" onclick="showHistory()">
                     <i class="fas fa-arrow-left"></i> Retour
                 </button>
             `;
         }
 
-        function showPenaltyPrediction() {
+        function showTopScoreHistory() {
+            const matches = [
+                {
+                    league: 'Champions League',
+                    home: 'PSG',
+                    away: 'Bayern Munich',
+                    time: '20:45',
+                    prediction: '2-1 ou 1-1',
+                    confidence: 92,
+                    status: 'won'
+                }
+            ];
+
             document.getElementById('main').innerHTML = `
                 <div class="header">
-                    <h1 class="header-title">Résultats de l'Analyse</h1>
-                </div>
-                
-                <div class="prediction-section">
-                    <h3>Scores probables</h3>
-                    <p class="match-prediction">3-3, 4-3, 3-4</p>
-                    <div class="confidence-badge">88% de confiance</div>
-                    <button class="favorite-btn" onclick="toggleFavorite('penalty-scores')">
-                        <i class="fas ${isFavorite('penalty-scores') ? 'fa-star' : 'fa-star-o'}"></i>
-                    </button>
+                    <h1 class="header-title">Historique - Top Score</h1>
                 </div>
 
-                <div class="prediction-section" style="background: var(--gradient-2); color: white;">
-                    <h3>Prédiction la plus sûre</h3>
-                    <p class="match-prediction" style="background: rgba(255,255,255,0.2);">
-                        Plus de 4.5 buts
-                    </p>
-                    <div class="confidence-badge" style="background: rgba(255,255,255,0.2);">
-                        92% de confiance
+                ${matches.map(match => `
+                    <div class="match-card">
+                        <div class="match-league">${match.league}</div>
+                        <div class="match-teams">
+                            <span>${match.home}</span>
+                            <span>vs</span>
+                            <span>${match.away}</span>
+                        </div>
+                        <div class="match-time">
+                            <i class="far fa-clock"></i> ${match.time}
+                        </div>
+                        <div class="match-prediction">${match.prediction}</div>
+                        <div class="confidence-badge">${match.confidence}% de confiance</div>
+                        <div class="match-status ${match.status}">
+                            ${match.status === 'won' ? 'Gagnant' : 'Perdant'}
+                        </div>
+                        <button class="favorite-btn" onclick="toggleFavorite('${match.home}-${match.away}')">
+                            <i class="fas ${isFavorite(`${match.home}-${match.away}`) ? 'fa-star' : 'fa-star-o'}"></i>
+                        </button>
                     </div>
-                    <button class="favorite-btn" onclick="toggleFavorite('penalty-sure-bet')">
-                        <i class="fas ${isFavorite('penalty-sure-bet') ? 'fa-star' : 'fa-star-o'}"></i>
-                    </button>
+                `).join('')}
+
+                <button class="bottom-back-button" onclick="showHistory()">
+                    <i class="fas fa-arrow-left"></i> Retour
+                </button>
+            `;
+        }
+
+        function showVIPHistory() {
+            const matches = [
+                {
+                    league: 'Ligue 1',
+                    home: 'Paris Saint-Germain',
+                    away: 'Lyon',
+                    time: '21:00',
+                    prediction: 'Victoire Paris Saint-Germain',
+                    confidence: 95,
+                    status: 'won'
+                }
+            ];
+
+            document.getElementById('main').innerHTML = `
+                <div class="header">
+                    <h1 class="header-title">Historique - VIP</h1>
                 </div>
 
-                <button class="bottom-back-button" onclick="showFIFA()">
+                ${matches.map(match => `
+                    <div class="match-card">
+                        <div class="match-league">${match.league}</div>
+                        <div class="match-teams">
+                            <span>${match.home}</span>
+                            <span>vs</span>
+                            <span>${match.away}</span>
+                        </div>
+                        <div class="match-time">
+                            <i class="far fa-clock"></i> ${match.time}
+                        </div>
+                        <div class="match-prediction">${match.prediction}</div>
+                        <div class="confidence-badge">${match.confidence}% de confiance</div>
+                        <div class="match-status ${match.status}">
+                            ${match.status === 'won' ? 'Gagnant' : 'Perdant'}
+                        </div>
+                        <button class="favorite-btn" onclick="toggleFavorite('${match.home}-${match.away}')">
+                            <i class="fas ${isFavorite(`${match.home}-${match.away}`) ? 'fa-star' : 'fa-star-o'}"></i>
+                        </button>
+                    </div>
+                `).join('')}
+
+                <button class="bottom-back-button" onclick="showHistory()">
                     <i class="fas fa-arrow-left"></i> Retour
                 </button>
             `;
@@ -1037,7 +971,7 @@
                 <div class="header">
                     <h1 class="header-title">Section VIP</h1>
                 </div>
-                
+
                 <div class="prediction-section">
                     <h3>🌟 Accès Premium</h3>
                     <p style="margin-top: 15px;">Cette fonctionnalité sera bientôt disponible.</p>
