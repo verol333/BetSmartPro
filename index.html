@@ -13,10 +13,14 @@
             --success-color: #4ADE80;
             --gradient-1: linear-gradient(45deg, #0088cc, #34b7f1);
             --gradient-2: linear-gradient(45deg, #4ADE80, #22C55E);
+            --gradient-3: linear-gradient(45deg, #6366F1, #4F46E5);
+            --gradient-4: linear-gradient(45deg, #EC4899, #BE185D);
+            --gradient-5: linear-gradient(45deg, #14B8A6, #0D9488);
             --white: #FFFFFF;
             --text-dark: #1A1A1A;
             --text-light: #6B7280;
             --shadow: rgba(0, 0, 0, 0.1);
+            --shadow-lg: rgba(0, 0, 0, 0.2);
         }
 
         * {
@@ -52,9 +56,10 @@
             font-size: 24px;
             font-weight: 700;
             color: var(--text-dark);
+            text-shadow: 0 2px 4px var(--shadow);
         }
 
-        /* Section de vérification d'abonnement */
+        /* Styles pour la section de vérification */
         .subscription-box {
             background: var(--white);
             border-radius: 15px;
@@ -63,16 +68,6 @@
             text-align: center;
             box-shadow: 0 4px 15px var(--shadow);
             border: 2px solid var(--primary-color);
-        }
-
-        .subscription-box h2 {
-            margin-bottom: 15px;
-            font-size: 20px;
-        }
-
-        .subscription-box p {
-            margin-bottom: 20px;
-            color: var(--text-light);
         }
 
         .subscription-box button {
@@ -84,8 +79,8 @@
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
+            margin: 5px;
             width: 100%;
-            margin-bottom: 10px;
             transition: transform 0.3s ease;
         }
 
@@ -93,79 +88,7 @@
             transform: translateY(-2px);
         }
 
-        /* Loading animation */
-        .loading-animation {
-            text-align: center;
-            padding: 20px;
-        }
-
-        .loading-spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid var(--primary-color);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Messages d'erreur et de succès */
-        .error-message {
-            color: #dc3545;
-            font-size: 14px;
-            margin-top: 10px;
-            display: none;
-        }
-
-        .success-message {
-            color: var(--success-color);
-            font-size: 14px;
-            margin-top: 10px;
-            display: none;
-        }
-
-        /* Navigation */
-        .nav-bottom {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--white);
-            display: flex;
-            justify-content: space-around;
-            padding: 15px;
-            box-shadow: 0 -4px 15px var(--shadow);
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            color: var(--text-light);
-            font-size: 12px;
-        }
-
-        .nav-item.active {
-            color: var(--primary-color);
-        }
-
-        .nav-item i {
-            font-size: 20px;
-            margin-bottom: 4px;
-        }
-
-        .nav-item.disabled {
-            opacity: 0.5;
-            pointer-events: none;
-        }
-
-        /* Menu Grid */
+        /* Styles pour le tableau de bord */
         .menu-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -176,7 +99,7 @@
         .menu-card {
             background: var(--white);
             border-radius: 15px;
-            padding: 20px;
+            padding: 25px;
             text-align: center;
             box-shadow: 0 4px 15px var(--shadow);
             cursor: pointer;
@@ -205,7 +128,125 @@
             font-weight: 600;
         }
 
-        /* FIFA Section Styles */
+        /* Styles pour les matches et prédictions */
+        .match-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px var(--shadow);
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .match-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .match-league {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .match-teams {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .match-time {
+            color: var(--text-light);
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .match-prediction {
+            background: var(--gradient-1);
+            color: var(--white);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        /* Styles pour la navigation */
+        .nav-bottom {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            display: flex;
+            justify-content: space-around;
+            padding: 15px;
+            box-shadow: 0 -4px 15px var(--shadow);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .nav-item.active {
+            color: var(--primary-color);
+        }
+
+        .nav-item.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        /* Styles pour le chargement et les messages */
+        .loading-animation {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .success-message {
+            color: var(--success-color);
+            font-size: 14px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        /* Styles pour les questions FIFA */
         .fifa-options {
             margin: 20px 0;
         }
@@ -230,12 +271,6 @@
             font-size: 18px;
         }
 
-        .fifa-option p {
-            color: var(--text-light);
-            font-size: 14px;
-        }
-
-        /* Question Styles */
         .question-container {
             background: var(--white);
             border-radius: 15px;
@@ -244,33 +279,14 @@
             box-shadow: 0 4px 15px var(--shadow);
         }
 
-        .question-container h3 {
-            margin-bottom: 20px;
-            font-size: 18px;
-        }
-
         .question-container input {
             width: 100%;
             padding: 15px;
             border: 1px solid #ddd;
             border-radius: 10px;
-            font-size: 16px;
-            margin-bottom: 20px;
+            margin: 10px 0;
         }
 
-        .question-container button {
-            background: var(--gradient-1);
-            color: var(--white);
-            padding: 12px 24px;
-            border-radius: 10px;
-            border: none;
-            font-size: 16px;
-            font-weight: 600;
-            width: 100%;
-            cursor: pointer;
-        }
-
-        /* File Upload Styles */
         .file-upload-container {
             border: 2px dashed #ddd;
             border-radius: 15px;
@@ -278,20 +294,20 @@
             text-align: center;
             margin: 15px 0;
             cursor: pointer;
-            transition: border-color 0.3s ease;
         }
 
         .file-upload-container:hover {
             border-color: var(--primary-color);
         }
 
-        .file-upload-container i {
-            font-size: 32px;
-            color: var(--primary-color);
-            margin-bottom: 10px;
+        .prediction-result {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
         }
 
-        /* Bottom Back Button */
         .bottom-back-button {
             position: fixed;
             bottom: 80px;
@@ -306,12 +322,7 @@
             font-weight: 600;
             cursor: pointer;
             box-shadow: 0 4px 15px var(--shadow);
-            transition: transform 0.3s ease;
             z-index: 100;
-        }
-
-        .bottom-back-button:hover {
-            transform: translateX(-50%) translateY(-3px);
         }
 
         .hidden {
@@ -327,7 +338,7 @@
 
         <div class="subscription-box">
             <h2>Accédez à l'application</h2>
-            <p>Pour accéder à toutes les fonctionnalités de BetSmart Pro, veuillez vous abonner à notre canal Telegram.</p>
+            <p style="margin: 15px 0;">Pour accéder à toutes les fonctionnalités de BetSmart Pro, veuillez vous abonner à notre canal Telegram.</p>
             <button onclick="joinTelegramChannel()">
                 <i class="fas fa-paper-plane"></i> Rejoindre notre canal
             </button>
@@ -429,25 +440,24 @@ const fifaPenaltyQuestions = [
         name: "totalGoals"
     },
     {
-        question: "Veuillez fournir une capture d'écran des scores exacts possibles",
+        question: "Veuillez fournir une capture d'écran des scores exacts",
         type: "file",
         name: "exactScores"
     }
 ];
 
-// Fonction pour rejoindre le canal Telegram
+// Redirection vers le canal Telegram
 function joinTelegramChannel() {
     window.open(`https://t.me/${CHANNEL_USERNAME}`, '_blank');
 }
 
-// Fonction de vérification de l'abonnement
+// Vérification de l'abonnement
 async function checkSubscription() {
     const loading = document.getElementById('loading');
     const errorMessage = document.getElementById('error-message');
     const successMessage = document.getElementById('success-message');
     const checkButton = document.getElementById('check-subscription-button');
 
-    // Reset des messages
     errorMessage.style.display = 'none';
     successMessage.style.display = 'none';
     loading.classList.remove('hidden');
@@ -455,15 +465,11 @@ async function checkSubscription() {
 
     try {
         const userId = tg.initDataUnsafe?.user?.id;
-        if (!userId) {
-            throw new Error('ID utilisateur non trouvé');
-        }
+        if (!userId) throw new Error('ID utilisateur non trouvé');
 
         const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/getChatMember`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
                 chat_id: `@${CHANNEL_USERNAME}`,
                 user_id: userId
@@ -471,17 +477,16 @@ async function checkSubscription() {
         });
 
         const data = await response.json();
+
         if (!data.ok || !data.result || data.result.status === 'left') {
             throw new Error('Non abonné');
         }
 
-        // Succès
         loading.classList.add('hidden');
         successMessage.style.display = 'block';
         checkButton.innerHTML = '<i class="fas fa-check-circle"></i> Vérifié';
         checkButton.style.backgroundColor = '#4ADE80';
 
-        // Activer les fonctionnalités après 2 secondes
         setTimeout(() => {
             showMainApp();
             activateNavigation();
@@ -495,7 +500,7 @@ async function checkSubscription() {
     }
 }
 
-// Fonction d'activation de la navigation
+// Activation de la navigation
 function activateNavigation() {
     const navBottom = document.getElementById('nav-bottom');
     navBottom.classList.remove('hidden');
@@ -509,33 +514,142 @@ function activateNavigation() {
     document.getElementById('nav-vip').onclick = showVIP;
 }
 
-// Fonction d'affichage du tableau de bord principal
+// Affichage du tableau de bord principal
 function showMainApp() {
     document.getElementById('main').innerHTML = `
         <div class="header">
             <h1 class="header-title">Tableau de Bord</h1>
         </div>
-        
+
         <div class="menu-grid">
-            <div class="menu-card" onclick="showFIFA()">
+            <div class="menu-card" onclick="showComboPage()">
                 <div class="menu-icon">
-                    <i class="fas fa-futbol"></i>
+                    <i class="fas fa-chart-line"></i>
                 </div>
-                <div class="menu-title">FIFA Prédictions</div>
+                <div class="menu-title">Combo du Jour</div>
             </div>
 
-            <div class="menu-card" onclick="showVIP()">
+            <div class="menu-card" onclick="showTopScore()">
                 <div class="menu-icon">
-                    <i class="fas fa-crown"></i>
+                    <i class="fas fa-trophy"></i>
                 </div>
-                <div class="menu-title">Section VIP</div>
+                <div class="menu-title">Top Score</div>
+            </div>
+
+            <div class="menu-card" onclick="showFavorites()">
+                <div class="menu-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="menu-title">Favoris</div>
+            </div>
+
+            <div class="menu-card" onclick="showHistory()">
+                <div class="menu-icon">
+                    <i class="fas fa-history"></i>
+                </div>
+                <div class="menu-title">Historique</div>
             </div>
         </div>
     `;
     updateNavigation('home');
 }
 
-// Fonction d'affichage de la section FIFA
+// Fonctions du tableau de bord
+function showComboPage() {
+    document.getElementById('main').innerHTML = `
+        <div class="header">
+            <h1 class="header-title">Combo du Jour</h1>
+        </div>
+
+        <div class="match-card">
+            <div class="match-league">Premier League</div>
+            <div class="match-teams">
+                <span>Manchester City</span>
+                <span>vs</span>
+                <span>Arsenal</span>
+            </div>
+            <div class="match-time">
+                <i class="far fa-clock"></i> 20:45
+            </div>
+            <div class="match-prediction">Victoire Manchester City</div>
+        </div>
+
+        <div class="match-card">
+            <div class="match-league">Ligue 1</div>
+            <div class="match-teams">
+                <span>PSG</span>
+                <span>vs</span>
+                <span>Marseille</span>
+            </div>
+            <div class="match-time">
+                <i class="far fa-clock"></i> 21:00
+            </div>
+            <div class="match-prediction">Les deux équipes marquent</div>
+        </div>
+
+        <button class="bottom-back-button" onclick="showMainApp()">
+            <i class="fas fa-arrow-left"></i> Retour
+        </button>
+    `;
+}
+
+function showTopScore() {
+    document.getElementById('main').innerHTML = `
+        <div class="header">
+            <h1 class="header-title">Top Score</h1>
+        </div>
+
+        <div class="match-card">
+            <div class="match-league">Champions League</div>
+            <div class="match-teams">
+                <span>PSG</span>
+                <span>vs</span>
+                <span>Bayern Munich</span>
+            </div>
+            <div class="match-time">20:45</div>
+            <div style="margin-top: 15px;">
+                <h4>Score Mi-temps:</h4>
+                <p>1-0 ou 0-0</p>
+                <h4 style="margin-top: 10px;">Score Final:</h4>
+                <p>2-1 ou 1-1</p>
+            </div>
+        </div>
+
+        <button class="bottom-back-button" onclick="showMainApp()">
+            <i class="fas fa-arrow-left"></i> Retour
+        </button>
+    `;
+}
+
+function showFavorites() {
+    document.getElementById('main').innerHTML = `
+        <div class="header">
+            <h1 class="header-title">Vos Favoris</h1>
+        </div>
+        <div class="match-card">
+            <p>Vos prédictions favorites apparaîtront ici.</p>
+        </div>
+        <button class="bottom-back-button" onclick="showMainApp()">
+            <i class="fas fa-arrow-left"></i> Retour
+        </button>
+    `;
+}
+
+function showHistory() {
+    document.getElementById('main').innerHTML = `
+        <div class="header">
+            <h1 class="header-title">Historique</h1>
+        </div>
+        <div class="match-card">
+            <p>Votre historique des prédictions apparaîtra ici.</p>
+        </div>
+        <button class="bottom-back-button" onclick="showMainApp()">
+            <i class="fas fa-arrow-left"></i> Retour
+        </button>
+    `;
+}
+
+// Section FIFA
 function showFIFA() {
     document.getElementById('main').innerHTML = `
         <div class="header">
@@ -559,7 +673,7 @@ function showFIFA() {
                 <p>Analyse spécialisée pour les séances de tirs au but.</p>
             </div>
         </div>
-
+        
         <button class="bottom-back-button" onclick="showMainApp()">
             <i class="fas fa-arrow-left"></i> Retour
         </button>
@@ -567,14 +681,12 @@ function showFIFA() {
     updateNavigation('fifa');
 }
 
-// Fonction de démarrage des questions FIFA
 function startFIFAQuestions(type) {
     currentFIFAQuestion = 0;
     fifaAnswers = { type: type };
     showNextFIFAQuestion();
 }
 
-// Fonction d'affichage des questions FIFA
 function showNextFIFAQuestion() {
     const questions = fifaAnswers.type === 'classic' ? fifaClassicQuestions : fifaPenaltyQuestions;
 
@@ -596,6 +708,7 @@ function showNextFIFAQuestion() {
                        accept="image/*" 
                        onChange="handleFileUpload(this)" 
                        style="display: none;">
+                ${question.description ? `<p style="margin-top: 10px; font-size: 14px;">${question.description}</p>` : ''}
             </div>`;
     } else {
         inputHtml = `
@@ -626,14 +739,12 @@ function showNextFIFAQuestion() {
     `;
 }
 
-// Fonction de gestion des fichiers uploadés
 function handleFileUpload(input) {
     if (input.files && input.files[0]) {
         submitFIFAAnswer(input.files[0]);
     }
 }
 
-// Fonction de soumission des réponses
 function submitFIFAAnswer(answer) {
     const questions = fifaAnswers.type === 'classic' ? fifaClassicQuestions : fifaPenaltyQuestions;
     fifaAnswers[questions[currentFIFAQuestion].name] = answer;
@@ -641,7 +752,6 @@ function submitFIFAAnswer(answer) {
     showNextFIFAQuestion();
 }
 
-// Fonction d'affichage du chargement
 function showLoadingAndProcessPrediction() {
     document.getElementById('main').innerHTML = `
         <div class="header">
@@ -662,24 +772,25 @@ function showLoadingAndProcessPrediction() {
     }, 3000);
 }
 
-// Fonction d'affichage des prédictions classiques
 function showClassicPrediction() {
     document.getElementById('main').innerHTML = `
         <div class="header">
             <h1 class="header-title">Résultats de l'Analyse</h1>
         </div>
         
-        <div class="question-container">
-            <h3>Score probable 1ère mi-temps</h3>
-            <p style="margin: 15px 0;">1-0 ou 0-0</p>
-            
-            <h3 style="margin-top: 20px;">Score probable final</h3>
-            <p style="margin: 15px 0;">2-1 ou 1-1</p>
-            
-            <div style="margin-top: 30px; padding: 20px; background: var(--gradient-2); color: white; border-radius: 10px;">
-                <h3>Prédiction la plus sûre</h3>
-                <p style="margin-top: 10px;">Les deux équipes marquent</p>
-                <p style="margin-top: 10px; font-size: 14px;">Confiance: 85%</p>
+      <div class="prediction-result">
+            <div class="match-card">
+                <h3>Score probable 1ère mi-temps</h3>
+                <p style="margin: 15px 0;">1-0 ou 0-0</p>
+                
+                <h3 style="margin-top: 20px;">Score probable final</h3>
+                <p style="margin: 15px 0;">2-1 ou 1-1</p>
+                
+                <div style="margin-top: 30px; padding: 20px; background: var(--gradient-2); color: white; border-radius: 10px;">
+                    <h3>Prédiction la plus sûre</h3>
+                    <p style="margin-top: 10px;">Les deux équipes marquent</p>
+                    <p style="margin-top: 10px; font-size: 14px;">Confiance: 85%</p>
+                </div>
             </div>
         </div>
 
@@ -689,21 +800,22 @@ function showClassicPrediction() {
     `;
 }
 
-// Fonction d'affichage des prédictions penalty
 function showPenaltyPrediction() {
     document.getElementById('main').innerHTML = `
         <div class="header">
             <h1 class="header-title">Résultats de l'Analyse</h1>
         </div>
         
-        <div class="question-container">
-            <h3>Scores probables</h3>
-            <p style="margin: 15px 0;">3-3, 4-3, 3-4</p>
-            
-            <div style="margin-top: 30px; padding: 20px; background: var(--gradient-2); color: white; border-radius: 10px;">
-                <h3>Prédiction la plus sûre</h3>
-                <p style="margin-top: 10px;">Plus de 4.5 buts</p>
-                <p style="margin-top: 10px; font-size: 14px;">Confiance: 90%</p>
+        <div class="prediction-result">
+            <div class="match-card">
+                <h3>Scores probables</h3>
+                <p style="margin: 15px 0;">3-3, 4-3, 3-4</p>
+                
+                <div style="margin-top: 30px; padding: 20px; background: var(--gradient-2); color: white; border-radius: 10px;">
+                    <h3>Prédiction la plus sûre</h3>
+                    <p style="margin-top: 10px;">Plus de 4.5 buts</p>
+                    <p style="margin-top: 10px; font-size: 14px;">Confiance: 90%</p>
+                </div>
             </div>
         </div>
 
@@ -713,14 +825,14 @@ function showPenaltyPrediction() {
     `;
 }
 
-// Fonction d'affichage de la section VIP
+// Section VIP
 function showVIP() {
     document.getElementById('main').innerHTML = `
         <div class="header">
             <h1 class="header-title">Section VIP</h1>
         </div>
         
-        <div class="question-container">
+        <div class="match-card">
             <h3>🌟 Accès Premium</h3>
             <p style="margin-top: 15px;">Cette fonctionnalité sera bientôt disponible.</p>
         </div>
@@ -732,7 +844,7 @@ function showVIP() {
     updateNavigation('vip');
 }
 
-// Fonction de mise à jour de la navigation
+// Mise à jour de la navigation
 function updateNavigation(activeSection) {
     const navItems = document.querySelectorAll('.nav-item');
     navItems.forEach(item => item.classList.remove('active'));
@@ -753,7 +865,3 @@ function updateNavigation(activeSection) {
 // Initialisation
 tg.ready();
 </script>
-
-
-
-
