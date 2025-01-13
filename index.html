@@ -367,56 +367,68 @@ const tg = window.Telegram.WebApp;
 tg.expand();
 
 // Configuration
+// Configuration
 const BOT_TOKEN = '7469991306:AAE3c2AtRQf5qDgVCGVEcl0QAtaI9Wl8NiM';
 const CHANNEL_USERNAME = 'alvecapital1';
-
-// Variables globales
-let currentFIFAQuestion = 0;
-let fifaAnswers = {};
-let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-let currentHistoryTab = 'combo';
-let currentDate = new Date();
 
 // Redirection vers le canal Telegram
 function joinTelegramChannel() {
     window.open(`https://t.me/${CHANNEL_USERNAME}`, '_blank');
 }
 
-// Vérification de l'abonnement corrigée
+// Vérification de l'abonnement
 async function checkSubscription() {
     const loading = document.getElementById('loading');
     const errorMessage = document.getElementById('error-message');
     const successMessage = document.getElementById('success-message');
     const checkButton = document.getElementById('check-subscription-button');
 
-    errorMessage.style.display = 'none';
-    successMessage.style.display = 'none';
-    loading.classList.remove('hidden');
-    checkButton.disabled = true;
-
     try {
-        const userId = tg.initDataUnsafe?.user?.id;
-        if (!userId) throw new Error('ID utilisateur non trouvé');
+        // On commence par cacher les messages d'erreur/succès
+        errorMessage.style.display = 'none';
+        successMessage.style.display = 'none';
+        loading.classList.remove('hidden');
+        checkButton.disabled = true;
 
-        const url = `https://api.telegram.org/bot${BOT_TOKEN}/getChatMember?chat_id=@${CHANNEL_USERNAME}&user_id=${userId}`;
-        const response = await fetch(url);
+        // Récupération de l'ID utilisateur Telegram
+        const userId = tg.initDataUnsafe?.user?.id;
+        if (!userId) {
+            throw new Error('ID utilisateur non trouvé');
+        }
+
+        // Construction et exécution de la requête vers l'API Telegram
+        const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/getChatMember`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                chat_id: `@${CHANNEL_USERNAME}`,
+                user_id: userId
+            })
+        });
+
         const data = await response.json();
 
-        if (!data.ok || !data.result || !['creator', 'administrator', 'member'].includes(data.result.status)) {
+        // Vérification du statut
+        if (data.ok && data.result && ['creator', 'administrator', 'member'].includes(data.result.status)) {
+            // Succès
+            loading.classList.add('hidden');
+            successMessage.style.display = 'block';
+            checkButton.innerHTML = '<i class="fas fa-check-circle"></i> Vérifié';
+            checkButton.style.backgroundColor = '#4ADE80';
+
+            // Activation de l'application
+            setTimeout(() => {
+                showMainApp();
+                activateNavigation();
+            }, 2000);
+        } else {
             throw new Error('Non abonné');
         }
 
-        loading.classList.add('hidden');
-        successMessage.style.display = 'block';
-        checkButton.innerHTML = '<i class="fas fa-check-circle"></i> Vérifié';
-        checkButton.style.backgroundColor = '#4ADE80';
-
-        setTimeout(() => {
-            showMainApp();
-            activateNavigation();
-        }, 2000);
-
     } catch (error) {
+        // En cas d'erreur
         console.error('Erreur:', error);
         loading.classList.add('hidden');
         errorMessage.style.display = 'block';
