@@ -589,12 +589,12 @@
         }
 
         function showComboPage() {
-            const predictions = [
-                { type: 'Victoire Directe', icon: '🏆', confidence: 85 },
-                { type: 'Les 2 Équipes Marquent', icon: '⚽', confidence: 90 },
-                { type: 'Double Chance', icon: '🛡️', confidence: 88 },
-                { type: 'Total +1.5 Buts', icon: '➕', confidence: 92 },
-                { type: 'Moins de 3.5 Buts', icon: '➖', confidence: 87 }
+            const sections = [
+                { type: 'Victoire Directe', icon: '🏆' },
+                { type: 'Les 2 Équipes Marquent', icon: '⚽' },
+                { type: 'Double Chance', icon: '🛡️' },
+                { type: 'Total +1.5 Buts', icon: '➕' },
+                { type: 'Moins de 3.5 Buts', icon: '➖' }
             ];
 
             document.getElementById('main').innerHTML = `
@@ -602,16 +602,12 @@
                     <h1 class="header-title">Combo du Jour</h1>
                 </div>
 
-                ${predictions.map(pred => `
-                    <div class="prediction-section" onclick="showPredictionDetails('${pred.type}')">
+                ${sections.map(section => `
+                    <div class="prediction-section" onclick="showPredictionDetails('${section.type}')">
                         <div class="prediction-type">
-                            <div class="prediction-icon">${pred.icon}</div>
-                            <span>${pred.type}</span>
+                            <div class="prediction-icon">${section.icon}</div>
+                            <span>${section.type}</span>
                         </div>
-                        <div class="confidence-badge">${pred.confidence}% de confiance</div>
-                        <button class="favorite-btn" onclick="event.stopPropagation(); toggleFavorite('${pred.type}')">
-                            <i class="fas ${isFavorite(pred.type) ? 'fa-star' : 'fa-star-o'}"></i>
-                        </button>
                     </div>
                 `).join('')}
 
@@ -751,21 +747,10 @@
                     </div>
                 `}
 
-                ${favorites.length > 0 ? `
-                    <button class="next-button" onclick="createSuperCoupon()">
-                        Créer un Super Coupon
-                    </button>
-                ` : ''}
-
                 <button class="bottom-back-button" onclick="showMainApp()">
                     <i class="fas fa-arrow-left"></i> Retour
                 </button>
             `;
-        }
-
-        function createSuperCoupon() {
-            // Logique pour créer un super coupon à partir des favoris
-            // À implémenter selon vos besoins
         }
 
         function showHistory() {
