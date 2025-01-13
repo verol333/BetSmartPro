@@ -11,6 +11,9 @@
             --primary-color: #0088cc;
             --secondary-color: #34b7f1;
             --success-color: #4ADE80;
+            --danger-color: #EF4444;
+            --warning-color: #F59E0B;
+            --info-color: #3B82F6;
             --gradient-1: linear-gradient(45deg, #0088cc, #34b7f1);
             --gradient-2: linear-gradient(45deg, #4ADE80, #22C55E);
             --gradient-3: linear-gradient(45deg, #6366F1, #4F46E5);
@@ -21,6 +24,7 @@
             --text-light: #6B7280;
             --shadow: rgba(0, 0, 0, 0.1);
             --shadow-lg: rgba(0, 0, 0, 0.2);
+            --favorite-color: #FFD700;
         }
 
         * {
@@ -31,7 +35,7 @@
         }
 
         body {
-            background: var(--white);
+            background: #f5f7fa;
             color: var(--text-dark);
             line-height: 1.6;
             padding-bottom: 80px;
@@ -43,24 +47,39 @@
             padding: 16px;
         }
 
-        /* Header */
+        /* En-tête amélioré */
         .header {
             text-align: center;
             margin-bottom: 20px;
-            padding: 15px;
+            padding: 20px;
             background: var(--white);
             border-radius: 15px;
             box-shadow: 0 4px 15px var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100%;
+            background: var(--gradient-1);
+            opacity: 0.1;
+            transform: skewX(-15deg);
         }
 
         .header-title {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 700;
             color: var(--text-dark);
             text-shadow: 0 2px 4px var(--shadow);
+            margin-bottom: 5px;
         }
 
-        /* Subscription Box */
+        /* Boîte d'abonnement améliorée */
         .subscription-box {
             background: var(--white);
             border-radius: 15px;
@@ -69,6 +88,18 @@
             text-align: center;
             box-shadow: 0 4px 15px var(--shadow);
             border: 2px solid var(--primary-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .subscription-box::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-1);
         }
 
         .subscription-box button {
@@ -82,7 +113,11 @@
             cursor: pointer;
             margin: 5px;
             width: 100%;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
         .subscription-box button:hover {
@@ -90,7 +125,12 @@
             box-shadow: 0 6px 15px var(--shadow-lg);
         }
 
-        /* Menu Grid */
+        .subscription-box button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        /* Menu Grid amélioré */
         .menu-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -105,7 +145,25 @@
             text-align: center;
             box-shadow: 0 4px 15px var(--shadow);
             cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-1);
+            transform: scaleX(0);
             transition: transform 0.3s ease;
+        }
+
+        .menu-card:hover::before {
+            transform: scaleX(1);
         }
 
         .menu-card:hover {
@@ -123,187 +181,158 @@
             margin: 0 auto 15px;
             color: var(--white);
             font-size: 24px;
+            position: relative;
         }
 
-        .menu-title {
-            font-size: 16px;
-            font-weight: 600;
+        .menu-icon::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            border-radius: inherit;
+            z-index: -1;
+            opacity: 0.4;
+            transform: scale(1.2);
+            transition: transform 0.3s ease;
         }
 
-        /* Prediction Sections */
+        .menu-card:hover .menu-icon::after {
+            transform: scale(1.4);
+        }
+
+        /* Sections de prédiction améliorées */
         .prediction-section {
             background: var(--white);
             border-radius: 15px;
             padding: 20px;
             margin-bottom: 15px;
             box-shadow: 0 4px 15px var(--shadow);
-            cursor: pointer;
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
             position: relative;
+            overflow: hidden;
         }
 
         .prediction-section:hover {
             transform: translateY(-3px);
+            box-shadow: 0 8px 25px var(--shadow-lg);
         }
 
-        .prediction-type {
+        .prediction-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .prediction-title {
             font-size: 18px;
             font-weight: 600;
-            margin-bottom: 10px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .prediction-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--gradient-1);
-            border-radius: 10px;
+        .match-details {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
+            flex-direction: column;
+            gap: 10px;
+            margin: 15px 0;
         }
 
-        .confidence-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
+        .team-vs-team {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .vs-badge {
+            background: var(--gradient-1);
+            color: var(--white);
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .match-time {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        .prediction-result {
             background: var(--gradient-2);
             color: var(--white);
-            padding: 5px 10px;
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+            font-weight: 500;
+        }
+
+        /* Badges et boutons améliorés */
+        .confidence-badge {
+            background: var(--gradient-2);
+            color: var(--white);
+            padding: 6px 12px;
             border-radius: 20px;
             font-size: 14px;
             font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .status-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .status-badge.win {
+            background: var(--gradient-2);
+            color: var(--white);
+        }
+
+        .status-badge.loss {
+            background: var(--gradient-4);
+            color: var(--white);
         }
 
         .favorite-btn {
             position: absolute;
-            bottom: 15px;
+            top: 15px;
             right: 15px;
             background: none;
             border: none;
             font-size: 24px;
-            color: #FFD700;
+            color: var(--favorite-color);
             cursor: pointer;
             padding: 5px;
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
+            z-index: 2;
         }
 
         .favorite-btn:hover {
             transform: scale(1.2);
         }
 
-        /* Match Card */
-        .match-card {
-            background: var(--white);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 15px var(--shadow);
-            position: relative;
+        .favorite-btn i {
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
         }
 
-        .match-league {
-            font-size: 12px;
-            color: var(--text-light);
-            margin-bottom: 10px;
-        }
-
-        .match-teams {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 15px 0;
-            font-size: 16px;
-            font-weight: 600;
-        }
-
-        .match-prediction {
-            background: var(--gradient-1);
-            color: var(--white);
-            padding: 10px 15px;
-            border-radius: 8px;
-            margin-top: 10px;
-            display: inline-block;
-        }
-
-        /* FIFA Section */
-        .fifa-options {
-            margin: 20px 0;
-        }
-
-        .fifa-option {
-            background: var(--white);
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 15px;
-            text-align: center;
-            box-shadow: 0 4px 15px var(--shadow);
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .fifa-option:hover {
-            transform: translateY(-3px);
-        }
-
-        /* Question Container */
-        .question-container {
-            background: var(--white);
-            border-radius: 15px;
-            padding: 25px;
-            margin: 20px 0;
-            box-shadow: 0 4px 15px var(--shadow);
-        }
-
-        .question-container input {
-            width: 100%;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            font-size: 16px;
-            margin: 15px 0;
-        }
-
-        .next-button {
-            background: var(--gradient-1);
-            color: var(--white);
-            padding: 15px 30px;
-            border-radius: 10px;
-            border: none;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            max-width: 300px;
-            margin: 20px auto;
-            display: block;
-            transition: transform 0.3s ease;
-        }
-
-        .next-button:hover {
-            transform: translateY(-2px);
-        }
-
-        /* File Upload */
-        .file-upload-container {
-            border: 2px dashed #ddd;
-            border-radius: 15px;
-            padding: 25px;
-            text-align: center;
-            margin: 15px 0;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .file-upload-container:hover {
-            border-color: var(--primary-color);
-            background: #f8fafc;
-        }
-
-        /* Navigation */
+        /* Navigation en bas améliorée */
         .nav-bottom {
             position: fixed;
             bottom: 0;
@@ -315,6 +344,7 @@
             padding: 15px;
             box-shadow: 0 -4px 15px var(--shadow);
             z-index: 1000;
+            backdrop-filter: blur(10px);
         }
 
         .nav-item {
@@ -324,48 +354,127 @@
             color: var(--text-light);
             text-decoration: none;
             font-size: 12px;
+            transition: all 0.3s ease;
         }
 
         .nav-item i {
             font-size: 20px;
             margin-bottom: 4px;
+            transition: all 0.3s ease;
         }
 
         .nav-item.active {
             color: var(--primary-color);
         }
 
-        .nav-item.disabled {
-            opacity: 0.5;
-            pointer-events: none;
+        .nav-item:hover i {
+            transform: translateY(-2px);
         }
 
-        /* Back Button */
-        .bottom-back-button {
-            position: fixed;
-            bottom: 80px;
-            left: 50%;
-            transform: translateX(-50%);
+        /* Histoire et navigation temporelle */
+        .history-tabs {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            background: var(--white);
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .history-tab {
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .history-tab.active {
             background: var(--gradient-1);
             color: var(--white);
-            padding: 12px 30px;
-            border-radius: 10px;
-            border: none;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 4px 15px var(--shadow);
-            z-index: 100;
         }
 
-        /* Social Media Footer */
+        .history-tab:not(.active):hover {
+            background: rgba(0,0,0,0.05);
+        }
+
+        .date-navigator {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 15px 0;
+            background: var(--white);
+            border-radius: 10px;
+            padding: 10px 20px;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .date-navigator button {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            padding: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .date-navigator button:hover {
+            transform: scale(1.2);
+        }
+
+        /* Indicateurs de statut pour l'historique */
+        .status-indicators {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .status-btn {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .status-btn.win {
+            background: var(--success-color);
+            color: var(--white);
+        }
+
+        .status-btn.loss {
+            background: var(--danger-color);
+            color: var(--white);
+        }
+
+        .status-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px var(--shadow);
+        }
+
+        /* Footer social amélioré */
         .social-footer {
+            margin-top: 30px;
+            padding: 20px;
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px var(--shadow);
+            text-align: center;
+        }
+
+        .social-icons {
             display: flex;
             justify-content: center;
             gap: 20px;
-            margin: 30px 0;
-            padding-top: 20px;
-            border-top: 1px solid var(--text-light);
+            margin-bottom: 15px;
         }
 
         .social-icon {
@@ -373,29 +482,33 @@
             height: 40px;
             cursor: pointer;
             transition: transform 0.3s ease;
+            filter: drop-shadow(0 2px 4px var(--shadow));
         }
 
         .social-icon:hover {
             transform: scale(1.1);
         }
 
-        .hidden {
-            display: none !important;
+        .app-description {
+            font-size: 14px;
+            color: var(--text-light);
+            line-height: 1.6;
+            max-width: 400px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 0 20px;
         }
 
-        /* Utilities */
-        .error-message {
-            color: #dc3545;
-            font-size: 14px;
-            margin-top: 10px;
-            display: none;
+        /* Animations et états supplémentaires */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
-        .success-message {
-            color: var(--success-color);
-            font-size: 14px;
-            margin-top: 10px;
-            display: none;
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
 
         .loading-animation {
@@ -413,10 +526,80 @@
             margin: 0 auto;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .pulse-animation {
+            animation: pulse 2s infinite;
         }
+
+        /* Messages d'état */
+        .message {
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .error-message {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger-color);
+            display: none;
+        }
+
+        .success-message {
+            background: rgba(74, 222, 128, 0.1);
+            color: var(--success-color);
+            display: none;
+        }
+
+        /* Classes utilitaires */
+        .hidden {
+            display: none !important;
+        }
+
+        .disabled {
+            opacity: 0.5;
+            pointer-events: none;
+            cursor: not-allowed;
+        }
+
+        .highlight {
+            position: relative;
+            z-index: 1;
+        }
+
+        .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-1);
+            border-radius: 2px;
+            opacity: 0.3;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .team-vs-team {
+                font-size: 14px;
+            }
+
+            .prediction-title {
+                font-size: 16px;
+            }
+
+            .header-title {
+                font-size: 24px;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -438,9 +621,11 @@
                 <div class="loading-spinner"></div>
             </div>
             <div class="error-message" id="error-message">
+                <i class="fas fa-exclamation-circle"></i>
                 Vous devez d'abord vous abonner à notre canal Telegram.
             </div>
             <div class="success-message" id="success-message">
+                <i class="fas fa-check-circle"></i>
                 ✅ Abonnement vérifié avec succès! Redirection en cours...
             </div>
         </div>
@@ -460,7 +645,6 @@
             <span>VIP</span>
         </a>
     </nav>
-
 </body>
 </html>
 <script>
@@ -476,6 +660,117 @@ const CHANNEL_USERNAME = 'alvecapital1';
 let currentFIFAQuestion = 0;
 let fifaAnswers = {};
 let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+let currentHistoryTab = 'combo';
+let currentDate = new Date();
+
+// Données simulées des matchs
+const matchDatabase = {
+    victoryPicks: [
+        {
+            id: 'vd1',
+            league: 'Ligue des Champions',
+            home: 'PSG',
+            away: 'Manchester City',
+            date: '2024-01-13',
+            time: '20:45',
+            prediction: 'PSG Victoire',
+            confidence: 88,
+            odds: 2.10
+        },
+        {
+            id: 'vd2',
+            league: 'Premier League',
+            home: 'Arsenal',
+            away: 'Liverpool',
+            date: '2024-01-13',
+            time: '18:30',
+            prediction: 'Liverpool Victoire',
+            confidence: 85,
+            odds: 1.95
+        },
+        {
+            id: 'vd3',
+            league: 'Liga',
+            home: 'Real Madrid',
+            away: 'Barcelona',
+            date: '2024-01-13',
+            time: '21:00',
+            prediction: 'Real Madrid Victoire',
+            confidence: 87,
+            odds: 1.85
+        }
+    ],
+    bothTeamsScore: [
+        {
+            id: 'bts1',
+            league: 'Serie A',
+            home: 'Inter Milan',
+            away: 'Juventus',
+            date: '2024-01-13',
+            time: '20:45',
+            prediction: 'Oui',
+            confidence: 90,
+            odds: 1.75
+        },
+        {
+            id: 'bts2',
+            league: 'Bundesliga',
+            home: 'Bayern Munich',
+            away: 'Dortmund',
+            date: '2024-01-13',
+            time: '18:30',
+            prediction: 'Oui',
+            confidence: 92,
+            odds: 1.65
+        },
+        {
+            id: 'bts3',
+            league: 'Ligue 1',
+            home: 'Marseille',
+            away: 'Lyon',
+            date: '2024-01-13',
+            time: '21:00',
+            prediction: 'Oui',
+            confidence: 88,
+            odds: 1.80
+        }
+    ],
+    totalGoals: [
+        {
+            id: 'tg1',
+            league: 'Premier League',
+            home: 'Manchester United',
+            away: 'Chelsea',
+            date: '2024-01-13',
+            time: '17:30',
+            prediction: 'Plus de 2.5 buts',
+            confidence: 89,
+            odds: 1.90
+        },
+        {
+            id: 'tg2',
+            league: 'Liga',
+            home: 'Atletico Madrid',
+            away: 'Sevilla',
+            date: '2024-01-13',
+            time: '19:00',
+            prediction: 'Plus de 1.5 buts',
+            confidence: 93,
+            odds: 1.55
+        },
+        {
+            id: 'tg3',
+            league: 'Serie A',
+            home: 'AC Milan',
+            away: 'Napoli',
+            date: '2024-01-13',
+            time: '20:45',
+            prediction: 'Plus de 2.5 buts',
+            confidence: 87,
+            odds: 1.95
+        }
+    ]
+};
 
 // Redirection vers le canal Telegram
 function joinTelegramChannel() {
@@ -534,9 +829,9 @@ function activateNavigation() {
     const navBottom = document.getElementById('nav-bottom');
     navBottom.classList.remove('hidden');
     
-    document.getElementById('nav-home').classList.remove('disabled');
-    document.getElementById('nav-fifa').classList.remove('disabled');
-    document.getElementById('nav-vip').classList.remove('disabled');
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('disabled');
+    });
     
     document.getElementById('nav-home').onclick = showMainApp;
     document.getElementById('nav-fifa').onclick = showFIFA;
@@ -547,6 +842,9 @@ function showMainApp() {
     document.getElementById('main').innerHTML = `
         <div class="header">
             <h1 class="header-title">Tableau de Bord</h1>
+            <p class="app-description highlight">
+                Intelligence artificielle & prédictions sportives de haute précision
+            </p>
         </div>
 
         <div class="menu-grid">
@@ -569,6 +867,7 @@ function showMainApp() {
                     <i class="fas fa-star"></i>
                 </div>
                 <div class="menu-title">Favoris</div>
+                ${favorites.length > 0 ? `<span class="badge">${favorites.length}</span>` : ''}
             </div>
 
             <div class="menu-card" onclick="showHistory()">
@@ -580,22 +879,28 @@ function showMainApp() {
         </div>
 
         <div class="social-footer">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg" 
-                class="social-icon" alt="YouTube" onclick="window.open('https://www.youtube.com')">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" 
-                class="social-icon" alt="Telegram" onclick="window.open('https://t.me')">
+            <div class="social-icons">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg" 
+                    class="social-icon" alt="YouTube" onclick="window.open('https://www.youtube.com')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" 
+                    class="social-icon" alt="Telegram" onclick="window.open('https://t.me')">
+            </div>
+            <p class="app-description">
+                Notre application utilise une intelligence artificielle avancée pour fournir des prédictions fiables et précises. 
+                Rejoignez-nous pour maximiser vos chances de succès !
+            </p>
         </div>
     `;
     updateNavigation('home');
 }
 
 function showComboPage() {
-    const predictions = [
-        { type: 'Victoire Directe', icon: '🏆', confidence: 85 },
-        { type: 'Les 2 Équipes Marquent', icon: '⚽', confidence: 90 },
-        { type: 'Double Chance', icon: '🛡️', confidence: 88 },
-        { type: 'Total +1.5 Buts', icon: '➕', confidence: 92 },
-        { type: 'Moins de 3.5 Buts', icon: '➖', confidence: 87 }
+    const categories = [
+        { type: 'Victoires Directes', icon: '🏆', data: matchDatabase.victoryPicks },
+        { type: 'Les Deux Équipes Marquent', icon: '⚽', data: matchDatabase.bothTeamsScore },
+        { type: 'Puissance Totale', icon: '📈', data: matchDatabase.totalGoals },
+        { type: 'Double Chance', icon: '🎲' },
+        { type: 'Under/Over', icon: '📊' }
     ];
 
     document.getElementById('main').innerHTML = `
@@ -603,15 +908,38 @@ function showComboPage() {
             <h1 class="header-title">Combo du Jour</h1>
         </div>
 
-        ${predictions.map(pred => `
-            <div class="prediction-section" onclick="showPredictionDetails('${pred.type}')">
-                <div class="prediction-type">
-                    <div class="prediction-icon">${pred.icon}</div>
-                    <span>${pred.type}</span>
+        ${categories.map(cat => `
+            <div class="prediction-section" onclick="showCategoryPredictions('${cat.type}')">
+                <div class="prediction-header">
+                    <div class="prediction-title">
+                        <span>${cat.icon}</span>
+                        <span>${cat.type}</span>
+                    </div>
+                    ${cat.data ? `
+                        <div class="confidence-badge">
+                            <i class="fas fa-chart-line"></i>
+                            ${Math.max(...cat.data.map(m => m.confidence))}% de confiance
+                        </div>
+                    ` : ''}
                 </div>
-                <div class="confidence-badge">${pred.confidence}% de confiance</div>
-                <button class="favorite-btn" onclick="event.stopPropagation(); toggleFavorite('${pred.type}')">
-                    <i class="fas ${isFavorite(pred.type) ? 'fa-star' : 'fa-star-o'}"></i>
+                ${cat.data ? `
+                    <div class="match-details">
+                        <div class="team-vs-team">
+                            <span>${cat.data[0].home}</span>
+                            <span class="vs-badge">VS</span>
+                            <span>${cat.data[0].away}</span>
+                        </div>
+                        <div class="match-time">
+                            <i class="far fa-clock"></i>
+                            ${cat.data[0].time}
+                        </div>
+                        <div class="prediction-result">
+                            ${cat.data[0].prediction}
+                        </div>
+                    </div>
+                ` : ''}
+                <button class="favorite-btn" onclick="event.stopPropagation(); toggleFavorite('${cat.type}')">
+                    <i class="fas ${isFavorite(cat.type) ? 'fa-star' : 'fa-star-o'}"></i>
                 </button>
             </div>
         `).join('')}
@@ -622,53 +950,53 @@ function showComboPage() {
     `;
 }
 
-function showPredictionDetails(type) {
-    const matches = {
-        'Victoire Directe': [
-            {
-                league: 'Premier League',
-                home: 'Manchester City',
-                away: 'Arsenal',
-                time: '20:45',
-                prediction: 'Victoire Manchester City',
-                confidence: 85
-            }
-        ],
-        'Les 2 Équipes Marquent': [
-            {
-                league: 'Champions League',
-                home: 'Bayern Munich',
-                away: 'Real Madrid',
-                time: '20:00',
-                prediction: 'Les deux équipes marquent',
-                confidence: 90
-            }
-        ]
-        // Ajoutez d'autres types ici
-    };
+function showCategoryPredictions(category) {
+    let matches;
+    switch(category) {
+        case 'Victoires Directes':
+            matches = matchDatabase.victoryPicks;
+            break;
+        case 'Les Deux Équipes Marquent':
+            matches = matchDatabase.bothTeamsScore;
+            break;
+        case 'Puissance Totale':
+            matches = matchDatabase.totalGoals;
+            break;
+        default:
+            matches = [];
+    }
 
-    const matchesForType = matches[type] || [];
-    
     document.getElementById('main').innerHTML = `
         <div class="header">
-            <h1 class="header-title">${type}</h1>
+            <h1 class="header-title">${category}</h1>
         </div>
 
-        ${matchesForType.map(match => `
-            <div class="match-card">
-                <div class="match-league">${match.league}</div>
-                <div class="match-teams">
-                    <span>${match.home}</span>
-                    <span>vs</span>
-                    <span>${match.away}</span>
+        ${matches.map(match => `
+            <div class="prediction-section">
+                <div class="prediction-header">
+                    <div class="prediction-title">${match.league}</div>
+                    <div class="confidence-badge">
+                        <i class="fas fa-percentage"></i>
+                        ${match.confidence}% de confiance
+                    </div>
                 </div>
-                <div class="match-time">
-                    <i class="far fa-clock"></i> ${match.time}
+                <div class="match-details">
+                    <div class="team-vs-team">
+                        <span>${match.home}</span>
+                        <span class="vs-badge">VS</span>
+                        <span>${match.away}</span>
+                    </div>
+                    <div class="match-time">
+                        <i class="far fa-clock"></i>
+                        ${match.time}
+                    </div>
+                    <div class="prediction-result">
+                        ${match.prediction}
+                        ${match.odds ? `<span style="margin-left: 10px;">@ ${match.odds}</span>` : ''}
+                    </div>
                 </div>
-                <div class="match-prediction">${match.prediction}</div>
-                <div class="confidence-badge">${match.confidence}% de confiance</div>
-                <button class="favorite-btn" onclick="toggleFavorite('${match.home}-${match.away}')">
-                    <i class="fas ${isFavorite(`${match.home}-${match.away}`) ? 'fa-star' : 'fa-star-o'}"></i>
+                <button class="favorite-btn" onclick="toggleFavorite('${match.id}')">
+                    <i class="fas ${isFavorite(match.id) ? 'fa-star' : 'fa-star-o'}"></i>
                 </button>
             </div>
         `).join('')}
@@ -680,6 +1008,7 @@ function showPredictionDetails(type) {
 }
 
 function toggleFavorite(id) {
+    event.stopPropagation();
     const index = favorites.indexOf(id);
     if (index === -1) {
         favorites.push(id);
@@ -688,8 +1017,7 @@ function toggleFavorite(id) {
     }
     localStorage.setItem('favorites', JSON.stringify(favorites));
     
-    // Mettre à jour l'icône
-    const button = event.currentTarget;
+    const button = event.target.closest('.favorite-btn');
     const icon = button.querySelector('i');
     icon.classList.toggle('fa-star');
     icon.classList.toggle('fa-star-o');
@@ -699,64 +1027,50 @@ function isFavorite(id) {
     return favorites.includes(id);
 }
 
-function showTopScore() {
-    document.getElementById('main').innerHTML = `
-        <div class="header">
-            <h1 class="header-title">Top Score</h1>
-        </div>
-
-        <div class="match-card">
-            <div class="match-league">Champions League</div>
-            <div class="match-teams">
-                <span>PSG</span>
-                <span>vs</span>
-                <span>Bayern Munich</span>
-            </div>
-            <div class="match-time">20:45</div>
-            <div style="margin-top: 15px;">
-                <h4>Score Mi-temps:</h4>
-                <p>1-0 ou 0-0</p>
-                <h4 style="margin-top: 10px;">Score Final:</h4>
-                <p>2-1 ou 1-1</p>
-            </div>
-            <div class="confidence-badge">92% de confiance</div>
-            <button class="favorite-btn" onclick="toggleFavorite('PSG-Bayern')">
-                <i class="fas ${isFavorite('PSG-Bayern') ? 'fa-star' : 'fa-star-o'}"></i>
-            </button>
-        </div>
-
-        <button class="bottom-back-button" onclick="showMainApp()">
-            <i class="fas fa-arrow-left"></i> Retour
-        </button>
-    `;
-}
-
 function showFavorites() {
+    const favoriteMatches = getAllFavoriteMatches();
+
     document.getElementById('main').innerHTML = `
         <div class="header">
-            <h1 class="header-title">Vos Favoris</h1>
+            <h1 class="header-title">Mes Favoris</h1>
         </div>
 
-        ${favorites.length > 0 ? favorites.map(id => `
+        ${favoriteMatches.length > 0 ? favoriteMatches.map(match => `
             <div class="prediction-section">
-                <div class="prediction-type">
-                    <span>${id}</span>
+                <div class="prediction-header">
+                    <div class="prediction-title">${match.league}</div>
+                    <div class="confidence-badge">
+                        <i class="fas fa-percentage"></i>
+                        ${match.confidence}% de confiance
+                    </div>
                 </div>
-                <button class="favorite-btn" onclick="toggleFavorite('${id}')">
+                <div class="match-details">
+                    <div class="team-vs-team">
+                        <span>${match.home}</span>
+                        <span class="vs-badge">VS</span>
+                        <span>${match.away}</span>
+                    </div>
+                    <div class="match-time">
+                        <i class="far fa-clock"></i>
+                        ${match.time}
+                    </div>
+                    <div class="prediction-result">
+                        ${match.prediction}
+                        ${match.odds ? `<span style="margin-left: 10px;">@ ${match.odds}</span>` : ''}
+                    </div>
+                </div>
+                <button class="favorite-btn" onclick="toggleFavorite('${match.id}')">
                     <i class="fas fa-star"></i>
                 </button>
             </div>
         `).join('') : `
-            <div class="match-card">
-                <p>Vous n'avez pas encore de favoris.</p>
+            <div class="prediction-section">
+                <p style="text-align: center; padding: 20px;">
+                    <i class="fas fa-star" style="color: var(--favorite-color); font-size: 24px; margin-bottom: 10px;"></i>
+                    <br>Vous n'avez pas encore de favoris
+                </p>
             </div>
         `}
-
-        ${favorites.length > 0 ? `
-            <button class="next-button" onclick="createSuperCoupon()">
-                Créer un Super Coupon
-            </button>
-        ` : ''}
 
         <button class="bottom-back-button" onclick="showMainApp()">
             <i class="fas fa-arrow-left"></i> Retour
@@ -764,41 +1078,303 @@ function showFavorites() {
     `;
 }
 
-function createSuperCoupon() {
-    // Logique pour créer un super coupon à partir des favoris
-    // À implémenter selon vos besoins
+function getAllFavoriteMatches() {
+    const allMatches = [
+        ...matchDatabase.victoryPicks,
+        ...matchDatabase.bothTeamsScore,
+        ...matchDatabase.totalGoals
+    ];
+    return allMatches.filter(match => favorites.includes(match.id));
 }
 
+function createSuperCoupon() {
+    const matches = getAllFavoriteMatches();
+    let totalOdds = matches.reduce((acc, match) => acc * (match.odds || 1), 1);
+    
+    document.getElementById('main').innerHTML = `
+        <div class="header">
+            <h1 class="header-title">Super Coupon</h1>
+        </div>
+
+        <div class="prediction-section">
+            <div class="prediction-header">
+                <div class="prediction-title">
+                    <i class="fas fa-ticket-alt"></i>
+                    Combiné ${matches.length} sélections
+                </div>
+                <div class="confidence-badge">
+                    Cote totale: ${totalOdds.toFixed(2)}
+                </div>
+            </div>
+
+            ${matches.map(match => `
+                <div class="match-details" style="border-bottom: 1px solid #eee; padding: 10px 0;">
+                    <div class="team-vs-team">
+                        <span>${match.home}</span>
+                        <span class="vs-badge">VS</span>
+                        <span>${match.away}</span>
+                    </div>
+                    <div class="prediction-result">
+                        ${match.prediction} @ ${match.odds}
+                    </div>
+                </div>
+            `).join('')}
+        </div>
+
+        <button class="bottom-back-button" onclick="showFavorites()">
+            <i class="fas fa-arrow-left"></i> Retour
+        </button>
+    `;
+}
+    // Gestion de l'historique
 function showHistory() {
     document.getElementById('main').innerHTML = `
         <div class="header">
             <h1 class="header-title">Historique</h1>
         </div>
-        <div class="match-card">
-            <p>Votre historique des prédictions apparaîtra ici.</p>
+
+        <div class="history-tabs">
+            <div class="history-tab ${currentHistoryTab === 'combo' ? 'active' : ''}" 
+                 onclick="changeHistoryTab('combo')">
+                 <i class="fas fa-chart-line"></i> Combo du Jour
+            </div>
+            <div class="history-tab ${currentHistoryTab === 'top' ? 'active' : ''}"
+                 onclick="changeHistoryTab('top')">
+                 <i class="fas fa-trophy"></i> Top Score
+            </div>
+            <div class="history-tab ${currentHistoryTab === 'vip' ? 'active' : ''}"
+                 onclick="changeHistoryTab('vip')">
+                 <i class="fas fa-crown"></i> VIP
+            </div>
         </div>
+
+        <div class="date-navigator">
+            <button onclick="navigateHistory(-1)">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <span>${formatDate(currentDate)}</span>
+            <button onclick="navigateHistory(1)">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+
+        ${getHistoryContent()}
+
         <button class="bottom-back-button" onclick="showMainApp()">
             <i class="fas fa-arrow-left"></i> Retour
         </button>
     `;
 }
 
+function changeHistoryTab(tab) {
+    currentHistoryTab = tab;
+    showHistory();
+}
+
+function navigateHistory(direction) {
+    currentDate.setDate(currentDate.getDate() + direction);
+    showHistory();
+}
+
+function formatDate(date) {
+    return date.toLocaleDateString('fr-FR', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+}
+
+function getHistoryContent() {
+    const historyData = {
+        combo: [
+            {
+                category: 'Victoires Directes',
+                matches: [
+                    {
+                        id: 'hist1',
+                        league: 'Premier League',
+                        home: 'Chelsea',
+                        away: 'Tottenham',
+                        prediction: 'Chelsea Victoire',
+                        result: 'win',
+                        confidence: 85,
+                        date: '2024-01-12'
+                    },
+                    {
+                        id: 'hist2',
+                        league: 'Ligue 1',
+                        home: 'PSG',
+                        away: 'Monaco',
+                        prediction: 'PSG Victoire',
+                        result: 'loss',
+                        confidence: 88,
+                        date: '2024-01-12'
+                    }
+                ]
+            },
+            {
+                category: 'Les Deux Équipes Marquent',
+                matches: [
+                    {
+                        id: 'hist3',
+                        league: 'Serie A',
+                        home: 'AC Milan',
+                        away: 'Inter Milan',
+                        prediction: 'Oui',
+                        result: 'win',
+                        confidence: 90,
+                        date: '2024-01-12'
+                    }
+                ]
+            }
+        ],
+        top: [
+            {
+                id: 'top1',
+                league: 'Champions League',
+                home: 'Bayern Munich',
+                away: 'Real Madrid',
+                prediction: 'Score exact 2-1',
+                result: 'win',
+                confidence: 82,
+                date: '2024-01-12'
+            }
+        ],
+        vip: [
+            {
+                id: 'vip1',
+                league: 'Europa League',
+                home: 'Manchester United',
+                away: 'Benfica',
+                prediction: 'Les deux équipes marquent + Plus de 2.5 buts',
+                result: 'pending',
+                confidence: 95,
+                date: '2024-01-13'
+            }
+        ]
+    };
+
+    const data = historyData[currentHistoryTab] || [];
+
+    if (currentHistoryTab === 'combo') {
+        return data.map(category => `
+            <div class="prediction-section" style="margin-bottom: 25px;">
+                <h3 class="prediction-title" style="margin-bottom: 15px;">
+                    ${category.category}
+                </h3>
+                ${category.matches.map(match => getHistoryMatchCard(match)).join('')}
+            </div>
+        `).join('');
+    } else {
+        return data.map(match => getHistoryMatchCard(match)).join('');
+    }
+}
+
+function getHistoryMatchCard(match) {
+    return `
+        <div class="prediction-section">
+            <div class="prediction-header">
+                <div class="prediction-title">${match.league}</div>
+                <div class="confidence-badge">
+                    <i class="fas fa-percentage"></i>
+                    ${match.confidence}% confiance
+                </div>
+            </div>
+            <div class="match-details">
+                <div class="team-vs-team">
+                    <span>${match.home}</span>
+                    <span class="vs-badge">VS</span>
+                    <span>${match.away}</span>
+                </div>
+                <div class="prediction-result">
+                    ${match.prediction}
+                </div>
+            </div>
+            <div class="status-indicators">
+                <button class="status-btn win ${match.result === 'win' ? 'active' : ''}" 
+                        onclick="updateMatchResult('${match.id}', 'win')">
+                    <i class="fas fa-check"></i> Validé
+                </button>
+                <button class="status-btn loss ${match.result === 'loss' ? 'active' : ''}"
+                        onclick="updateMatchResult('${match.id}', 'loss')">
+                    <i class="fas fa-times"></i> Perdu
+                </button>
+            </div>
+            <button class="favorite-btn" onclick="toggleFavorite('${match.id}')">
+                <i class="fas ${isFavorite(match.id) ? 'fa-star' : 'fa-star-o'}"></i>
+            </button>
+        </div>
+    `;
+}
+
+function updateMatchResult(matchId, result) {
+    // Dans une vraie application, ceci mettrait à jour une base de données
+    // Pour cette démo, on refresh simplement l'affichage
+    showHistory();
+}
+
 // Section FIFA
+function showFIFA() {
+    document.getElementById('main').innerHTML = `
+        <div class="header">
+            <h1 class="header-title">FIFA Prédictions</h1>
+        </div>
+
+        <div class="menu-grid">
+            <div class="menu-card" onclick="startFIFAQuestions('classic')">
+                <div class="menu-icon">
+                    <i class="fas fa-futbol"></i>
+                </div>
+                <h3>FIFA Classique</h3>
+                <p>Analyse complète des matchs classiques avec prédictions détaillées.</p>
+            </div>
+            
+            <div class="menu-card" onclick="startFIFAQuestions('penalty')">
+                <div class="menu-icon">
+                    <i class="fas fa-bullseye"></i>
+                </div>
+                <h3>FIFA Penalty</h3>
+                <p>Analyse spécialisée pour les séances de tirs au but.</p>
+            </div>
+        </div>
+
+        <div class="prediction-section" style="margin-top: 20px;">
+            <div class="prediction-header">
+                <div class="prediction-title">
+                    <i class="fas fa-info-circle"></i>
+                    Guide rapide
+                </div>
+            </div>
+            <div style="padding: 15px;">
+                <p>1. Choisissez le type d'analyse souhaité</p>
+                <p>2. Répondez aux questions sur le match</p>
+                <p>3. Recevez une analyse détaillée basée sur l'IA</p>
+                <p>4. Ajoutez vos prédictions favorites</p>
+            </div>
+        </div>
+    `;
+    updateNavigation('fifa');
+}
+
 const fifaClassicQuestions = [
     {
         question: "Quelle est la cote de l'équipe qui joue à domicile ?",
         type: "number",
-        name: "homeOdds"
+        name: "homeOdds",
+        placeholder: "Ex: 1.85"
     },
     {
         question: "Quelle est la cote de l'équipe qui joue à l'extérieur ?",
         type: "number",
-        name: "awayOdds"
+        name: "awayOdds",
+        placeholder: "Ex: 2.10"
     },
     {
         question: "Quelle est la cote pour le match nul ?",
         type: "number",
-        name: "drawOdds"
+        name: "drawOdds",
+        placeholder: "Ex: 3.40"
     },
     {
         question: "Veuillez fournir une capture d'écran des options totales (over 1.5 à 3.5)",
@@ -809,12 +1385,14 @@ const fifaClassicQuestions = [
     {
         question: "Veuillez fournir une capture d'écran des scores exacts de la première période",
         type: "file",
-        name: "htScores"
+        name: "htScores",
+        description: "Capturez tous les scores possibles de la MI-temps"
     },
     {
         question: "Veuillez fournir une capture d'écran des scores exacts du temps réglementaire",
         type: "file",
-        name: "ftScores"
+        name: "ftScores",
+        description: "Capturez tous les scores possibles du temps réglementaire"
     }
 ];
 
@@ -822,51 +1400,28 @@ const fifaPenaltyQuestions = [
     {
         question: "Quelle est la cote de l'équipe qui tire en premier ?",
         type: "number",
-        name: "firstTeamOdds"
+        name: "firstTeamOdds",
+        placeholder: "Ex: 1.90"
     },
     {
         question: "Quelle est la cote de l'équipe qui tire en second ?",
         type: "number",
-        name: "secondTeamOdds"
+        name: "secondTeamOdds",
+        placeholder: "Ex: 1.90"
     },
     {
         question: "Veuillez fournir une capture d'écran du total des buts",
         type: "file",
-        name: "totalGoals"
+        name: "totalGoals",
+        description: "Capturez toutes les options de totaux disponibles"
     },
     {
         question: "Veuillez fournir une capture d'écran des scores exacts",
         type: "file",
-        name: "exactScores"
+        name: "exactScores",
+        description: "Capturez tous les scores possibles pour la séance"
     }
 ];
-
-function showFIFA() {
-    document.getElementById('main').innerHTML = `
-        <div class="header">
-            <h1 class="header-title">FIFA Prédictions</h1>
-        </div>
-
-        <div class="fifa-options">
-            <div class="fifa-option" onclick="startFIFAQuestions('classic')">
-                <div class="menu-icon">
-                    <i class="fas fa-futbol"></i>
-                </div>
-                <h3>FIFA Classique</h3>
-                <p>Analyse complète pour les matchs classiques avec prédictions détaillées.</p>
-            </div>
-            
-        <div class="fifa-option" onclick="startFIFAQuestions('penalty')">
-                <div class="menu-icon">
-                    <i class="fas fa-bullseye"></i>
-                </div>
-                <h3>FIFA Penalty</h3>
-                <p>Analyse spécialisée pour les séances de tirs au but.</p>
-            </div>
-        </div>
-    `;
-    updateNavigation('fifa');
-}
 
 function startFIFAQuestions(type) {
     currentFIFAQuestion = 0;
@@ -890,7 +1445,11 @@ function showNextFIFAQuestion() {
             <div class="file-upload-container" onclick="document.getElementById('fileInput').click()">
                 <i class="fas fa-cloud-upload-alt"></i>
                 <p>Cliquez pour télécharger votre capture d'écran</p>
-                ${question.description ? `<p style="margin-top: 10px; color: var(--text-light);">${question.description}</p>` : ''}
+                ${question.description ? `
+                    <p style="margin-top: 10px; color: var(--text-light);">
+                        ${question.description}
+                    </p>
+                ` : ''}
                 <input type="file" 
                        id="fileInput" 
                        accept="image/*" 
@@ -903,7 +1462,7 @@ function showNextFIFAQuestion() {
                    class="form-control" 
                    step="0.01" 
                    min="0"
-                   placeholder="Entrez votre réponse"
+                   placeholder="${question.placeholder}"
                    required>`;
     }
 
@@ -915,7 +1474,7 @@ function showNextFIFAQuestion() {
         <div class="question-container">
             <h3>${question.question}</h3>
             ${inputHtml}
-            <button class="next-button">
+            <button class="next-button" onclick="handleNextQuestion()">
                 ${currentFIFAQuestion === questions.length - 1 ? 'Obtenir la prédiction' : 'Suivant'}
             </button>
         </div>
@@ -924,23 +1483,18 @@ function showNextFIFAQuestion() {
             <i class="fas fa-arrow-left"></i> Retour
         </button>
     `;
-
-    // Ajouter l'événement click après avoir créé le bouton
-    document.querySelector('.next-button').onclick = () => {
-        if (question.type === 'file') {
-            document.getElementById('fileInput').click();
-        } else {
-            const input = document.querySelector('.form-control');
-            if (input.value) {
-                submitFIFAAnswer(input.value);
-            }
-        }
-    };
 }
 
 function handleFileUpload(input) {
     if (input.files && input.files[0]) {
         submitFIFAAnswer(input.files[0]);
+    }
+}
+
+function handleNextQuestion() {
+    const input = document.querySelector('.form-control');
+    if (input && input.value) {
+        submitFIFAAnswer(input.value);
     }
 }
 
@@ -958,7 +1512,13 @@ function showLoadingAndProcessPrediction() {
         </div>
         <div class="loading-animation">
             <div class="loading-spinner"></div>
-            <p style="margin-top: 20px;">Analyse approfondie des données en cours...</p>
+            <p style="margin-top: 20px;">
+                <i class="fas fa-robot"></i>
+                Intelligence artificielle en action...
+            </p>
+            <p style="color: var(--text-light); margin-top: 10px;">
+                Analyse approfondie des données et génération des prédictions
+            </p>
         </div>
     `;
 
@@ -978,34 +1538,56 @@ function showClassicPrediction() {
         </div>
         
         <div class="prediction-section">
-            <h3>Score probable 1ère mi-temps</h3>
-            <p class="match-prediction">1-0 ou 0-0</p>
-            <div class="confidence-badge">85% de confiance</div>
-            <button class="favorite-btn" onclick="toggleFavorite('ht-score')">
-                <i class="fas ${isFavorite('ht-score') ? 'fa-star' : 'fa-star-o'}"></i>
+            <div class="prediction-header">
+                <div class="prediction-title">Score Mi-temps</div>
+                <div class="confidence-badge">
+                    <i class="fas fa-percentage"></i>
+                    85% confiance
+                </div>
+            </div>
+            <div class="prediction-result">1-0 ou 0-0</div>
+            <button class="favorite-btn" onclick="toggleFavorite('fifa-ht')">
+                <i class="fas ${isFavorite('fifa-ht') ? 'fa-star' : 'fa-star-o'}"></i>
             </button>
         </div>
 
         <div class="prediction-section">
-            <h3>Score probable final</h3>
-            <p class="match-prediction">2-1 ou 1-1</p>
-            <div class="confidence-badge">82% de confiance</div>
-            <button class="favorite-btn" onclick="toggleFavorite('ft-score')">
-                <i class="fas ${isFavorite('ft-score') ? 'fa-star' : 'fa-star-o'}"></i>
+            <div class="prediction-header">
+                <div class="prediction-title">Score Final</div>
+                <div class="confidence-badge">
+                    <i class="fas fa-percentage"></i>
+                    82% confiance
+                </div>
+            </div>
+            <div class="prediction-result">2-1 ou 1-1</div>
+            <button class="favorite-btn" onclick="toggleFavorite('fifa-ft')">
+                <i class="fas ${isFavorite('fifa-ft') ? 'fa-star' : 'fa-star-o'}"></i>
             </button>
         </div>
 
         <div class="prediction-section" style="background: var(--gradient-2); color: white;">
-            <h3>Prédiction la plus sûre</h3>
-            <p class="match-prediction" style="background: rgba(255,255,255,0.2);">
-                Les deux équipes marquent
-            </p>
-            <div class="confidence-badge" style="background: rgba(255,255,255,0.2);">
-                90% de confiance
+            <div class="prediction-header">
+                <div class="prediction-title">Prédiction la plus sûre</div>
+                <div class="confidence-badge" style="background: rgba(255,255,255,0.2);">
+                    <i class="fas fa-percentage"></i>
+                    90% confiance
+                </div>
             </div>
-            <button class="favorite-btn" onclick="toggleFavorite('sure-bet')">
-                <i class="fas ${isFavorite('sure-bet') ? 'fa-star' : 'fa-star-o'}"></i>
+            <div class="prediction-result">Les deux équipes marquent</div>
+            <button class="favorite-btn" onclick="toggleFavorite('fifa-sure')">
+                <i class="fas ${isFavorite('fifa-sure') ? 'fa-star' : 'fa-star-o'}"></i>
             </button>
+        </div>
+
+        <div class="prediction-section">
+            <div class="prediction-header">
+                <div class="prediction-title">Statistiques détaillées</div>
+            </div>
+            <div style="padding: 15px;">
+                <p><i class="fas fa-chart-line"></i> Tendance: Forte pour l'équipe à domicile</p>
+                <p><i class="fas fa-history"></i> Historique: 70% de réussite sur les 10 derniers matchs</p>
+                <p><i class="fas fa-bullseye"></i> Précision: Niveau de confiance élevé</p>
+            </div>
         </div>
 
         <button class="bottom-back-button" onclick="showFIFA()">
@@ -1021,25 +1603,42 @@ function showPenaltyPrediction() {
         </div>
         
         <div class="prediction-section">
-            <h3>Scores probables</h3>
-            <p class="match-prediction">3-3, 4-3, 3-4</p>
-            <div class="confidence-badge">88% de confiance</div>
+            <div class="prediction-header">
+                <div class="prediction-title">Scores probables</div>
+                <div class="confidence-badge">
+                    <i class="fas fa-percentage"></i>
+                    88% confiance
+                </div>
+            </div>
+            <div class="prediction-result">3-3, 4-3, 3-4</div>
             <button class="favorite-btn" onclick="toggleFavorite('penalty-scores')">
                 <i class="fas ${isFavorite('penalty-scores') ? 'fa-star' : 'fa-star-o'}"></i>
             </button>
         </div>
 
         <div class="prediction-section" style="background: var(--gradient-2); color: white;">
-            <h3>Prédiction la plus sûre</h3>
-            <p class="match-prediction" style="background: rgba(255,255,255,0.2);">
-                Plus de 4.5 buts
-            </p>
-            <div class="confidence-badge" style="background: rgba(255,255,255,0.2);">
-                92% de confiance
+            <div class="prediction-header">
+                <div class="prediction-title">Prédiction la plus sûre</div>
+                <div class="confidence-badge" style="background: rgba(255,255,255,0.2);">
+                    <i class="fas fa-percentage"></i>
+                    92% confiance
+                </div>
             </div>
-            <button class="favorite-btn" onclick="toggleFavorite('penalty-sure-bet')">
-                <i class="fas ${isFavorite('penalty-sure-bet') ? 'fa-star' : 'fa-star-o'}"></i>
+            <div class="prediction-result">Plus de 4.5 buts</div>
+            <button class="favorite-btn" onclick="toggleFavorite('penalty-sure')">
+                <i class="fas ${isFavorite('penalty-sure') ? 'fa-star' : 'fa-star-o'}"></i>
             </button>
+        </div>
+
+        <div class="prediction-section">
+            <div class="prediction-header">
+                <div class="prediction-title">Analyse des tireurs</div>
+            </div>
+            <div style="padding: 15px;">
+                <p><i class="fas fa-user"></i> Premier tireur: Excellente statistique (85% réussite)</p>
+                <p><i class="fas fa-chart-bar"></i> Série en cours: 3 penalties réussis</p>
+                <p><i class="fas fa-bullseye"></i> Zone préférentielle: Côté droit</p>
+            </div>
         </div>
 
         <button class="bottom-back-button" onclick="showFIFA()">
@@ -1054,9 +1653,100 @@ function showVIP() {
             <h1 class="header-title">Section VIP</h1>
         </div>
         
+        <div class="prediction-section" style="background: var(--gradient-3); color: white;">
+            <div class="prediction-header">
+                <div class="prediction-title">
+                    <i class="fas fa-crown"></i>
+                    Prédiction Premium #1
+                </div>
+                <div class="confidence-badge" style="background: rgba(255,255,255,0.2);">
+                    95% confiance
+                </div>
+            </div>
+            <div class="match-details">
+                <div class="team-vs-team">
+                    <span>Real Madrid</span>
+                    <span class="vs-badge">VS</span>
+                    <span>Manchester City</span>
+                </div>
+                <div class="match-time">
+                    <i class="far fa-clock"></i>
+                    20:45
+                </div>
+                <div class="prediction-result">
+                    Les deux équipes marquent + Plus de 2.5 buts @ 1.95
+                </div>
+            </div>
+            <button class="favorite-btn" onclick="toggleFavorite('vip-1')">
+                <i class="fas ${isFavorite('vip-1') ? 'fa-star' : 'fa-star-o'}"></i>
+            </button>
+        </div>
+
+        <div class="prediction-section" style="background: var(--gradient-4); color: white;">
+            <div class="prediction-header">
+                <div class="prediction-title">
+                    <i class="fas fa-crown"></i>
+                    Prédiction Premium #2
+                </div>
+                <div class="confidence-badge" style="background: rgba(255,255,255,0.2);">
+                    93% confiance
+                </div>
+            </div>
+            <div class="match-details">
+                <div class="team-vs-team">
+                    <span>PSG</span>
+                    <span class="vs-badge">VS</span>
+                    <span>Bayern Munich</span>
+                </div>
+                <div class="match-time">
+                    <i class="far fa-clock"></i>
+                    21:00
+                </div>
+                <div class="prediction-result">
+                    Score exact 2-1 ou 3-1 @ 2.10
+                </div>
+            </div>
+            <button class="favorite-btn" onclick="toggleFavorite('vip-2')">
+                <i class="fas ${isFavorite('vip-2') ? 'fa-star' : 'fa-star-o'}"></i>
+            </button>
+        </div>
+
+        <div class="prediction-section" style="background: var(--gradient-5); color: white;">
+            <div class="prediction-header">
+                <div class="prediction-title">
+                    <i class="fas fa-crown"></i>
+                    Combi VIP du Jour
+                </div>
+                <div class="confidence-badge" style="background: rgba(255,255,255,0.2);">
+                    90% confiance
+                </div>
+            </div>
+            <div style="padding: 15px;">
+                <p>1. Real Madrid vs Man City (Les deux marquent)</p>
+                <p>2. PSG vs Bayern (2-1 ou 3-1)</p>
+                <p>3. Liverpool vs Arsenal (Plus de 2.5 buts)</p>
+                <div style="margin-top: 10px; font-weight: bold;">
+                    Cote totale: 4.85
+                </div>
+            </div>
+            <button class="favorite-btn" onclick="toggleFavorite('vip-combi')">
+                <i class="fas ${isFavorite('vip-combi') ? 'fa-star' : 'fa-star-o'}"></i>
+            </button>
+        </div>
+
         <div class="prediction-section">
-            <h3>🌟 Accès Premium</h3>
-            <p style="margin-top: 15px;">Cette fonctionnalité sera bientôt disponible.</p>
+            <div class="prediction-header">
+                <div class="prediction-title">
+                    <i class="fas fa-info-circle"></i>
+                    Informations VIP
+                </div>
+            </div>
+            <div style="padding: 15px;">
+                <p>• Prédictions générées par IA avancée</p>
+                <p>• Analyse approfondie des statistiques</p>
+                <p>• Mise à jour quotidienne</p>
+                <p>• Taux de réussite > 90%</p>
+            </div>
         </div>
 
         <button class="bottom-back-button" onclick="showMainApp()">
@@ -1085,4 +1775,3 @@ function updateNavigation(activeSection) {
 
 // Initialisation
 tg.ready();
-</script>
