@@ -513,6 +513,20 @@
     <div class="container" id="main">
         <div class="header">
             <h1 class="header-title">BetSmart Pro</h1>
+            <p style="margin-top: 10px; color: var(--text-light);">
+                Votre partenaire de confiance pour des prédictions sportives intelligentes.
+            </p>
+            <div style="margin-top: 20px;">
+                <a href="https://t.me/alvecapital1" target="_blank" style="margin: 0 10px;">
+                    <i class="fab fa-telegram" style="font-size: 24px; color: var(--primary-color);"></i>
+                </a>
+                <a href="https://twitter.com/alvecapital1" target="_blank" style="margin: 0 10px;">
+                    <i class="fab fa-twitter" style="font-size: 24px; color: var(--primary-color);"></i>
+                </a>
+                <a href="https://facebook.com/alvecapital1" target="_blank" style="margin: 0 10px;">
+                    <i class="fab fa-facebook" style="font-size: 24px; color: var(--primary-color);"></i>
+                </a>
+            </div>
         </div>
 
         <div class="subscription-box">
@@ -531,15 +545,15 @@
     </div>
 
     <nav class="nav-bottom hidden" id="nav-bottom">
-        <a class="nav-item" id="nav-home">
+        <a class="nav-item" id="nav-home" onclick="showMainApp()">
             <i class="fas fa-home"></i>
             <span>Accueil</span>
         </a>
-        <a class="nav-item" id="nav-fifa">
+        <a class="nav-item" id="nav-fifa" onclick="showFIFA()">
             <i class="fas fa-futbol"></i>
             <span>FIFA</span>
         </a>
-        <a class="nav-item" id="nav-vip">
+        <a class="nav-item" id="nav-vip" onclick="showVIP()">
             <i class="fas fa-crown"></i>
             <span>VIP</span>
         </a>
@@ -906,6 +920,7 @@
                 description: "Capturez les cotes pour les scores exacts au temps réglementaire"
             }
         ];
+
         const fifaPenaltyQuestions = [
             {
                 name: "penaltyStats",
@@ -1078,32 +1093,32 @@
                         </div>
                         <div class="section-details">
                             <div class="section-title">Combo du jour</div>
+                        </div>
+                    </div>
+
+                    <div class="section-item" onclick="showHistoryCategories('topScore')">
+                        <div class="section-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="section-details">
+                            <div class="section-title">Top Scores</div>
+                        </div>
+                    </div>
+
+                    <div class="section-item" onclick="showHistoryCategories('vip')">
+                        <div class="section-icon">
+                            <i class="fas fa-crown" style="color: var(--vip-color);"></i>
+                        </div>
+                        <div class="section-details">
+                            <div class="section-title">VIP</div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="section-item" onclick="showHistoryCategories('topScore')">
-                    <div class="section-icon">
-                        <i class="fas fa-trophy"></i>
-                    </div>
-                    <div class="section-details">
-                        <div class="section-title">Top Scores</div>
-                    </div>
-                </div>
-
-                <div class="section-item" onclick="showHistoryCategories('vip')">
-                    <div class="section-icon">
-                        <i class="fas fa-crown" style="color: var(--vip-color);"></i>
-                    </div>
-                    <div class="section-details">
-                        <div class="section-title">VIP</div>
-                    </div>
-                </div>
-            </div>
-
-            <button class="bottom-back-button" onclick="showMainApp()">
-                <i class="fas fa-arrow-left"></i> Retour
-            </button>
-        `;
+                <button class="bottom-back-button" onclick="showMainApp()">
+                    <i class="fas fa-arrow-left"></i> Retour
+                </button>
+            `;
         }
 
         function showHistoryCategories(type) {
