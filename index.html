@@ -12,15 +12,16 @@
         :root {
             --primary-color: #0088cc;
             --secondary-color: #34b7f1;
-            --success-color: #4ADE80;
+            --success-color: #28a745; /* Vert pour les succès */
+            --error-color: #dc3545; /* Rouge pour les erreurs */
             --vip-color: #FFD700;
             --youtube-color: #FF0000;
             --gradient-1: linear-gradient(45deg, #0088cc, #34b7f1);
-            --gradient-2: linear-gradient(45deg, #4ADE80, #22C55E);
+            --gradient-2: linear-gradient(45deg, #28a745, #218838);
             --white: #FFFFFF;
             --text-dark: #1A1A1A;
             --text-light: #6B7280;
-            --shadow: rgba(0, 0, 0, 0.1);
+            --shadow: rgba(0, 0, 0, 0.2); /* Ombre plus dense */
         }
 
         * {
@@ -52,7 +53,7 @@
             padding: 15px;
             background: var(--white);
             border-radius: 15px;
-            box-shadow: 0 4px 15px var(--shadow);
+            box-shadow: 0 4px 20px var(--shadow); /* Ombre plus dense */
         }
 
         .header-title {
@@ -67,7 +68,7 @@
             padding: 25px;
             margin-bottom: 25px;
             text-align: center;
-            box-shadow: 0 4px 15px var(--shadow);
+            box-shadow: 0 4px 20px var(--shadow); /* Ombre plus dense */
             border: 2px solid var(--primary-color);
             position: relative;
         }
@@ -135,7 +136,7 @@
             border-radius: 15px;
             padding: 20px;
             text-align: center;
-            box-shadow: 0 4px 15px var(--shadow);
+            box-shadow: 0 4px 20px var(--shadow); /* Ombre plus dense */
             cursor: pointer;
             transition: transform 0.3s ease;
         }
@@ -196,7 +197,7 @@
             border-radius: 15px;
             padding: 20px;
             margin-bottom: 15px;
-            box-shadow: 0 4px 15px var(--shadow);
+            box-shadow: 0 4px 20px var(--shadow); /* Ombre plus dense */
             position: relative;
         }
 
@@ -260,7 +261,7 @@
             border-radius: 15px;
             padding: 20px;
             margin-bottom: 20px;
-            box-shadow: 0 4px 15px var(--shadow);
+            box-shadow: 0 4px 20px var(--shadow); /* Ombre plus dense */
         }
 
         .fifa-option {
@@ -269,7 +270,7 @@
             padding: 20px;
             margin-bottom: 15px;
             text-align: center;
-            box-shadow: 0 4px 15px var(--shadow);
+            box-shadow: 0 4px 20px var(--shadow); /* Ombre plus dense */
             cursor: pointer;
             transition: transform 0.3s ease;
         }
@@ -283,7 +284,7 @@
             border-radius: 15px;
             padding: 25px;
             margin-top: 20px;
-            box-shadow: 0 4px 15px var(--shadow);
+            box-shadow: 0 4px 20px var(--shadow); /* Ombre plus dense */
         }
 
         .form-control {
@@ -325,7 +326,7 @@
             padding: 15px;
             background: var(--white);
             border-radius: 15px;
-            box-shadow: 0 4px 15px var(--shadow);
+            box-shadow: 0 4px 20px var(--shadow); /* Ombre plus dense */
             margin-bottom: 20px;
         }
 
@@ -353,11 +354,11 @@
         }
 
         .status-loss {
-            color: #EF4444;
+            color: var(--error-color);
         }
 
         .reliability-badge {
-            background: var(--primary-color);
+            background: var(--success-color); /* Vert pour la confiance */
             color: var(--white);
             padding: 4px 8px;
             border-radius: 20px;
@@ -377,7 +378,7 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            box-shadow: 0 4px 15px var(--shadow);
+            box-shadow: 0 4px 20px var(--shadow); /* Ombre plus dense */
             cursor: pointer;
             transition: transform 0.3s ease;
         }
@@ -421,7 +422,7 @@
             border-radius: 15px;
             padding: 20px;
             margin-bottom: 20px;
-            box-shadow: 0 4px 15px var(--shadow);
+            box-shadow: 0 4px 20px var(--shadow); /* Ombre plus dense */
         }
 
         .vip-combo-header {
@@ -453,7 +454,7 @@
             border-radius: 15px;
             padding: 20px;
             margin-bottom: 15px;
-            box-shadow: 0 4px 15px var(--shadow);
+            box-shadow: 0 4px 20px var(--shadow); /* Ombre plus dense */
         }
 
         .score-prediction {
@@ -482,7 +483,7 @@
             border-radius: 15px;
             padding: 15px;
             text-align: center;
-            box-shadow: 0 4px 15px var(--shadow);
+            box-shadow: 0 4px 20px var(--shadow); /* Ombre plus dense */
             cursor: pointer;
             transition: transform 0.3s ease;
         }
@@ -902,7 +903,7 @@
                         <div class="menu-icon">
                             <i class="fas fa-futbol"></i>
                         </div>
-                        <h3>Match Classique</h3>
+                        <h3>FIFA Classique</h3>
                         <p>Analyse complète pour match régulier</p>
                     </div>
                     
@@ -910,7 +911,7 @@
                         <div class="menu-icon">
                             <i class="fas fa-bullseye"></i>
                         </div>
-                        <h3>Séance de Tirs au But</h3>
+                        <h3>FIFA Penalty</h3>
                         <p>Analyse spécialisée pour les penaltys</p>
                     </div>
                 </div>
@@ -956,16 +957,34 @@
 
         const fifaPenaltyQuestions = [
             {
-                name: "penaltyStats",
-                question: "Taux de réussite des penalties de l'équipe (%)",
+                name: "homeOdds",
+                question: "Cote de l'équipe à domicile",
                 type: "number",
-                description: "Le taux de réussite des penalties nous permet de prédire les chances de succès."
+                description: "La cote de l'équipe à domicile nous permet de déterminer son taux de victoire."
             },
             {
-                name: "goalieStats",
-                question: "Taux d'arrêts du gardien (%)",
+                name: "awayOdds",
+                question: "Cote de l'équipe à l'extérieur",
                 type: "number",
-                description: "Le taux d'arrêts du gardien nous permet de prédire les chances de succès."
+                description: "La cote de l'équipe à l'extérieur nous permet de déterminer son taux de victoire."
+            },
+            {
+                name: "bttsScreenshot",
+                question: "Capture d'écran des cotes 'Les deux équipes marquent'",
+                type: "file",
+                description: "Capturez les cotes pour les options 'Les deux équipes marquent'."
+            },
+            {
+                name: "exactScoresScreenshot",
+                question: "Capture d'écran des scores exacts",
+                type: "file",
+                description: "Capturez les cotes pour tous les scores exacts."
+            },
+            {
+                name: "penaltyScreenshot",
+                question: "Capture d'écran des cotes pour les penalties",
+                type: "file",
+                description: "Capturez les cotes pour les penalties."
             }
         ];
 
