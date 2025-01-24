@@ -749,7 +749,7 @@
                             </div>
                             <div class="prediction-value">
                                 ${match.prediction}
-                                <span class="reliability-badge">${match.confidence}% confiance</span>
+                                <span class="reliability-badge">${match.confidence}%</span>
                                 <button class="favorite-btn ${isFavorite(match.id) ? 'active' : ''}" 
                                         onclick="toggleFavorite('${match.id}')">
                                     <i class="fas fa-star"></i>
@@ -801,7 +801,7 @@
                         </div>
                         <div class="score-prediction">
                             ${match.predictions.join(' ou ')}
-                            <span class="reliability-badge">${match.confidence}% confiance</span>
+                            <span class="reliability-badge">${match.confidence}%</span>
                             <button class="favorite-btn ${isFavorite(match.id) ? 'active' : ''}" 
                                     onclick="toggleFavorite('${match.id}')">
                                 <i class="fas fa-star"></i>
@@ -827,31 +827,36 @@
                             league: 'Champions League',
                             teams: 'PSG vs Bayern Munich',
                             prediction: 'Les deux équipes marquent',
-                            confidence: 95
+                            confidence: 95,
+                            time: '20:45'
                         },
                         {
                             league: 'Premier League',
                             teams: 'Manchester City vs Liverpool',
                             prediction: 'Plus de 1.5 buts',
-                            confidence: 93
+                            confidence: 93,
+                            time: '21:00'
                         },
                         {
                             league: 'Liga',
                             teams: 'Real Madrid vs Barcelona',
                             prediction: 'Double Chance 1X',
-                            confidence: 92
+                            confidence: 92,
+                            time: '20:00'
                         },
                         {
                             league: 'Serie A',
                             teams: 'Inter vs Milan',
                             prediction: 'Victoire Inter',
-                            confidence: 90
+                            confidence: 90,
+                            time: '19:45'
                         },
                         {
                             league: 'Ligue 1',
                             teams: 'Lyon vs Marseille',
                             prediction: 'Plus de 2.5 buts',
-                            confidence: 89
+                            confidence: 89,
+                            time: '18:30'
                         }
                     ]
                 }
@@ -871,9 +876,12 @@
                             <div class="vip-match">
                                 <div class="match-league">${match.league}</div>
                                 <div class="match-teams">${match.teams}</div>
+                                <div class="match-time">
+                                    <i class="far fa-clock"></i> ${match.time}
+                                </div>
                                 <div class="prediction-value">
                                     ${match.prediction}
-                                    <span class="reliability-badge">${match.confidence}% confiance</span>
+                                    <span class="reliability-badge">${match.confidence}%</span>
                                 </div>
                             </div>
                         `).join('')}
@@ -1114,7 +1122,7 @@
                     <h3>Score MI-Temps</h3>
                     <div class="prediction-value">
                         ${prediction.scoreHT.join(' ou ')}
-                        <span class="reliability-badge">${prediction.bestBet.confidence}% confiance</span>
+                        <span class="reliability-badge">${prediction.bestBet.confidence}%</span>
                     </div>
                 </div>
 
@@ -1122,7 +1130,7 @@
                     <h3>Score Final</h3>
                     <div class="prediction-value">
                         ${prediction.scoreFT.join(' ou ')}
-                        <span class="reliability-badge">${prediction.bestBet.confidence}% confiance</span>
+                        <span class="reliability-badge">${prediction.bestBet.confidence}%</span>
                     </div>
                 </div>
 
@@ -1130,7 +1138,7 @@
                     <h3>Meilleur Pari</h3>
                     <div class="prediction-value">
                         ${prediction.bestBet.type}: ${prediction.bestBet.prediction}
-                        <span class="reliability-badge">${prediction.bestBet.confidence}% confiance</span>
+                        <span class="reliability-badge">${prediction.bestBet.confidence}%</span>
                     </div>
                 </div>
 
@@ -1246,12 +1254,15 @@
                         <div class="match-league">${pred.league}</div>
                         <div class="match-details">
                             <div class="match-teams">${pred.teams}</div>
+                            <div class="match-time">
+                                <i class="far fa-clock"></i> ${pred.time}
+                            </div>
                             <div class="prediction-value">
                                 ${pred.prediction}
                                 <span class="history-status status-${pred.status}">
                                     ${pred.status === 'win' ? '✅ Gagné' : '❌ Perdu'}
                                 </span>
-                                <span class="reliability-badge">${pred.confidence}% confiance</span>
+                                <span class="reliability-badge">${pred.confidence}%</span>
                             </div>
                         </div>
                     </div>
@@ -1279,7 +1290,7 @@
                                 <div class="match-teams">${pred.teams}</div>
                                 <div class="prediction-value">
                                     ${pred.prediction}
-                                    <span class="reliability-badge">${pred.confidence}% confiance</span>
+                                    <span class="reliability-badge">${pred.confidence}%</span>
                                     <button class="favorite-btn active" 
                                             onclick="toggleFavorite('${pred.id}')">
                                         <i class="fas fa-star"></i>
@@ -1388,21 +1399,24 @@
                     teams: 'PSG vs Bayern Munich',
                     prediction: 'Victoire PSG',
                     status: 'win',
-                    confidence: 85
+                    confidence: 85,
+                    time: '20:45'
                 },
                 {
                     league: 'Premier League',
                     teams: 'Manchester City vs Liverpool',
                     prediction: 'Plus de 1.5 buts',
                     status: 'win',
-                    confidence: 90
+                    confidence: 90,
+                    time: '21:00'
                 },
                 {
                     league: 'Liga',
                     teams: 'Real Madrid vs Barcelona',
                     prediction: 'Les deux équipes marquent',
                     status: 'loss',
-                    confidence: 80
+                    confidence: 80,
+                    time: '20:00'
                 }
             ];
         }
