@@ -8,12 +8,12 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* Styles CSS */
+        /* Styles CSS (inchangés) */
         :root {
             --primary-color: #0088cc;
             --secondary-color: #34b7f1;
-            --success-color: #28a745; /* Vert pour les succès */
-            --error-color: #dc3545; /* Rouge pour les erreurs */
+            --success-color: #28a745;
+            --error-color: #dc3545;
             --vip-color: #FFD700;
             --youtube-color: #FF0000;
             --gradient-1: linear-gradient(45deg, #0088cc, #34b7f1);
@@ -21,7 +21,7 @@
             --white: #FFFFFF;
             --text-dark: #1A1A1A;
             --text-light: #6B7280;
-            --shadow: rgba(0, 0, 0, 0.2); /* Ombre plus dense */
+            --shadow: rgba(0, 0, 0, 0.2);
         }
 
         * {
@@ -53,7 +53,7 @@
             padding: 15px;
             background: var(--white);
             border-radius: 15px;
-            box-shadow: 0 4px 20px var(--shadow); /* Ombre plus dense */
+            box-shadow: 0 4px 20px var(--shadow);
         }
 
         .header-title {
@@ -68,7 +68,7 @@
             padding: 25px;
             margin-bottom: 25px;
             text-align: center;
-            box-shadow: 0 4px 20px var(--shadow); /* Ombre plus dense */
+            box-shadow: 0 4px 20px var(--shadow);
             border: 2px solid var(--primary-color);
             position: relative;
         }
@@ -136,7 +136,7 @@
             border-radius: 15px;
             padding: 20px;
             text-align: center;
-            box-shadow: 0 4px 20px var(--shadow); /* Ombre plus dense */
+            box-shadow: 0 4px 20px var(--shadow);
             cursor: pointer;
             transition: transform 0.3s ease;
         }
@@ -197,7 +197,7 @@
             border-radius: 15px;
             padding: 20px;
             margin-bottom: 15px;
-            box-shadow: 0 4px 20px var(--shadow); /* Ombre plus dense */
+            box-shadow: 0 4px 20px var(--shadow);
             position: relative;
         }
 
@@ -261,7 +261,7 @@
             border-radius: 15px;
             padding: 20px;
             margin-bottom: 20px;
-            box-shadow: 0 4px 20px var(--shadow); /* Ombre plus dense */
+            box-shadow: 0 4px 20px var(--shadow);
         }
 
         .fifa-option {
@@ -270,7 +270,7 @@
             padding: 20px;
             margin-bottom: 15px;
             text-align: center;
-            box-shadow: 0 4px 20px var(--shadow); /* Ombre plus dense */
+            box-shadow: 0 4px 20px var(--shadow);
             cursor: pointer;
             transition: transform 0.3s ease;
         }
@@ -284,7 +284,7 @@
             border-radius: 15px;
             padding: 25px;
             margin-top: 20px;
-            box-shadow: 0 4px 20px var(--shadow); /* Ombre plus dense */
+            box-shadow: 0 4px 20px var(--shadow);
         }
 
         .form-control {
@@ -326,7 +326,7 @@
             padding: 15px;
             background: var(--white);
             border-radius: 15px;
-            box-shadow: 0 4px 20px var(--shadow); /* Ombre plus dense */
+            box-shadow: 0 4px 20px var(--shadow);
             margin-bottom: 20px;
         }
 
@@ -358,7 +358,7 @@
         }
 
         .reliability-badge {
-            background: var(--success-color); /* Vert pour la confiance */
+            background: var(--success-color);
             color: var(--white);
             padding: 4px 8px;
             border-radius: 20px;
@@ -378,7 +378,7 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            box-shadow: 0 4px 20px var(--shadow); /* Ombre plus dense */
+            box-shadow: 0 4px 20px var(--shadow);
             cursor: pointer;
             transition: transform 0.3s ease;
         }
@@ -422,7 +422,7 @@
             border-radius: 15px;
             padding: 20px;
             margin-bottom: 20px;
-            box-shadow: 0 4px 20px var(--shadow); /* Ombre plus dense */
+            box-shadow: 0 4px 20px var(--shadow);
         }
 
         .vip-combo-header {
@@ -454,7 +454,7 @@
             border-radius: 15px;
             padding: 20px;
             margin-bottom: 15px;
-            box-shadow: 0 4px 20px var(--shadow); /* Ombre plus dense */
+            box-shadow: 0 4px 20px var(--shadow);
         }
 
         .score-prediction {
@@ -483,7 +483,7 @@
             border-radius: 15px;
             padding: 15px;
             text-align: center;
-            box-shadow: 0 4px 20px var(--shadow); /* Ombre plus dense */
+            box-shadow: 0 4px 20px var(--shadow);
             cursor: pointer;
             transition: transform 0.3s ease;
         }
@@ -1198,7 +1198,7 @@
                 </div>
 
                 <div class="section-list">
-                    <div class="section-item" onclick="showHistoryCategories('combo')">
+                    <div class="section-item" onclick="showHistorySection('combo')">
                         <div class="section-icon">
                             <i class="fas fa-chart-line"></i>
                         </div>
@@ -1207,7 +1207,7 @@
                         </div>
                     </div>
 
-                    <div class="section-item" onclick="showHistoryCategories('topScore')">
+                    <div class="section-item" onclick="showHistorySection('topScore')">
                         <div class="section-icon">
                             <i class="fas fa-trophy"></i>
                         </div>
@@ -1216,7 +1216,7 @@
                         </div>
                     </div>
 
-                    <div class="section-item" onclick="showHistoryCategories('vip')">
+                    <div class="section-item" onclick="showHistorySection('vip')">
                         <div class="section-icon">
                             <i class="fas fa-crown" style="color: var(--vip-color);"></i>
                         </div>
@@ -1232,53 +1232,13 @@
             `;
         }
 
-        function showHistoryCategories(type) {
-            let categories = [];
-            if (type === 'combo') {
-                categories = [
-                    { id: 'victoire', icon: '🏆', title: 'Victoire Directe' },
-                    { id: 'btts', icon: '⚽', title: 'Les 2 Équipes Marquent' },
-                    { id: 'double', icon: '🛡️', title: 'Double Chance' },
-                    { id: 'over', icon: '➕', title: 'Plus de 1.5 Buts' },
-                    { id: 'under', icon: '➖', title: 'Moins de 3.5 Buts' }
-                ];
-            } else if (type === 'topScore') {
-                categories = [
-                    { id: 'exact', icon: '🎯', title: 'Scores Exacts' }
-                ];
-            } else if (type === 'vip') {
-                categories = [
-                    { id: 'premium', icon: '👑', title: 'Combos Premium' }
-                ];
-            }
-
-            document.getElementById('main').innerHTML = `
-                <div class="header">
-                    <h1 class="header-title">Historique ${type.toUpperCase()}</h1>
-                </div>
-
-                <div class="history-section-grid">
-                    ${categories.map(cat => `
-                        <div class="history-section-card" onclick="showHistorySection('${type}', '${cat.id}')">
-                            <div class="section-icon">${cat.icon}</div>
-                            <div class="section-title">${cat.title}</div>
-                        </div>
-                    `).join('')}
-                </div>
-
-                <button class="bottom-back-button" onclick="showHistory()">
-                    <i class="fas fa-arrow-left"></i> Retour
-                </button>
-            `;
-        }
-
-        function showHistorySection(type, category) {
+        function showHistorySection(type) {
             const dateStr = formatDate(currentHistoryDate);
-            const predictions = getHistoryPredictions(type, category);
+            const predictions = getHistoryPredictions(type);
 
             document.getElementById('main').innerHTML = `
                 <div class="header">
-                    <h1 class="header-title">Historique ${category}</h1>
+                    <h1 class="header-title">Historique ${type === 'vip' ? 'VIP' : type === 'topScore' ? 'Top Scores' : 'Combo du Jour'}</h1>
                 </div>
 
                 <div class="history-navigation">
@@ -1311,7 +1271,7 @@
                     </div>
                 `).join('')}
 
-                <button class="bottom-back-button" onclick="showHistoryCategories('${type}')">
+                <button class="bottom-back-button" onclick="showHistory()">
                     <i class="fas fa-arrow-left"></i> Retour
                 </button>
             `;
@@ -1434,7 +1394,7 @@
             return matchesByType[type] || [];
         }
 
-        function getHistoryPredictions(type, category) {
+        function getHistoryPredictions(type) {
             // Simulation de données historiques
             return [
                 {
