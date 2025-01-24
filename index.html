@@ -8,7 +8,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* Styles CSS inchangés */
+        /* Styles CSS */
         :root {
             --primary-color: #0088cc;
             --secondary-color: #34b7f1;
@@ -517,14 +517,11 @@
                 Votre partenaire de confiance pour des prédictions sportives intelligentes.
             </p>
             <div style="margin-top: 20px;">
-                <a href="https://t.me/alvecapital1" target="_blank" style="margin: 0 10px;">
-                    <i class="fab fa-telegram" style="font-size: 24px; color: var(--primary-color);"></i>
+                <a href="https://www.youtube.com/channel/CHAINE_YOUTUBE_1" target="_blank" style="margin: 0 10px;">
+                    <i class="fab fa-youtube" style="font-size: 24px; color: var(--primary-color);"></i>
                 </a>
-                <a href="https://twitter.com/alvecapital1" target="_blank" style="margin: 0 10px;">
-                    <i class="fab fa-twitter" style="font-size: 24px; color: var(--primary-color);"></i>
-                </a>
-                <a href="https://facebook.com/alvecapital1" target="_blank" style="margin: 0 10px;">
-                    <i class="fab fa-facebook" style="font-size: 24px; color: var(--primary-color);"></i>
+                <a href="https://www.youtube.com/channel/CHAINE_YOUTUBE_2" target="_blank" style="margin: 0 10px;">
+                    <i class="fab fa-youtube" style="font-size: 24px; color: var(--primary-color);"></i>
                 </a>
             </div>
         </div>
@@ -682,10 +679,6 @@
                             <div class="prediction-icon">${section.icon}</div>
                             <span>${section.title}</span>
                         </div>
-                        <button class="favorite-btn ${isFavorite(section.id) ? 'active' : ''}" 
-                                onclick="event.stopPropagation(); toggleFavorite('${section.id}')">
-                            <i class="fas fa-star"></i>
-                        </button>
                     </div>
                 `).join('')}
 
@@ -826,10 +819,6 @@
                     <div class="vip-combo">
                         <div class="vip-combo-header">
                             <div class="vip-combo-title">${combo.title}</div>
-                            <button class="favorite-btn ${isFavorite(combo.id) ? 'active' : ''}" 
-                                    onclick="toggleFavorite('${combo.id}')">
-                                <i class="fas fa-star"></i>
-                            </button>
                         </div>
                         ${combo.matches.map(match => `
                             <div class="vip-match">
