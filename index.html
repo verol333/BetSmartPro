@@ -549,6 +549,37 @@
             margin: 10px 0;
             text-align: center;
         }
+
+        .arguments-container {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 20px var(--shadow);
+        }
+
+        .arguments-container h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+        }
+
+        .arguments-container ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .arguments-container li {
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: var(--text-dark);
+        }
+
+        .arguments-container li i {
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
     </style>
 </head>
 <body>
@@ -569,6 +600,17 @@
             <div class="loading-animation hidden" id="loading">
                 <div class="loading-spinner"></div>
             </div>
+        </div>
+
+        <div class="arguments-container">
+            <h3>Pourquoi choisir BetSmart Pro ?</h3>
+            <ul>
+                <li><i class="fas fa-brain"></i> Utilisation de l'intelligence artificielle pour des prédictions précises.</li>
+                <li><i class="fas fa-calculator"></i> Modèles de calcul avancés basés sur les côtes en temps réel.</li>
+                <li><i class="fas fa-clock"></i> Prédictions générées automatiquement à partir de 9h chaque jour.</li>
+                <li><i class="fas fa-trophy"></i> Des résultats fiables pour maximiser vos gains.</li>
+                <li><i class="fas fa-star"></i> Une application intuitive et facile à utiliser.</li>
+            </ul>
         </div>
     </div>
 
@@ -637,6 +679,7 @@
                     
                     setTimeout(() => {
                         document.querySelector('.subscription-box').remove();
+                        document.querySelector('.arguments-container').remove();
                         navBottom.classList.remove('hidden');
                         showMainApp();
                     }, 1000);
