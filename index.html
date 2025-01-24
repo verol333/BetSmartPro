@@ -8,6 +8,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
     <style>
+        /* Styles CSS inchangés */
         :root {
             --primary-color: #0088cc;
             --secondary-color: #34b7f1;
@@ -905,7 +906,6 @@
                 description: "Capturez les cotes pour les scores exacts au temps réglementaire"
             }
         ];
-
         const fifaPenaltyQuestions = [
             {
                 name: "penaltyStats",
@@ -916,7 +916,7 @@
                 name: "goalieStats",
                 question: "Taux d'arrêts du gardien (%)",
                 type: "number"
-            } ```javascript
+            }
         ];
 
         function startFIFAQuestions(type) {
@@ -1078,32 +1078,32 @@
                         </div>
                         <div class="section-details">
                             <div class="section-title">Combo du jour</div>
-                        </div>
-                    </div>
-
-                    <div class="section-item" onclick="showHistoryCategories('topScore')">
-                        <div class="section-icon">
-                            <i class="fas fa-trophy"></i>
-                        </div>
-                        <div class="section-details">
-                            <div class="section-title">Top Scores</div>
-                        </div>
-                    </div>
-
-                    <div class="section-item" onclick="showHistoryCategories('vip')">
-                        <div class="section-icon">
-                            <i class="fas fa-crown" style="color: var(--vip-color);"></i>
-                        </div>
-                        <div class="section-details">
-                            <div class="section-title">VIP</div>
-                        </div>
                     </div>
                 </div>
 
-                <button class="bottom-back-button" onclick="showMainApp()">
-                    <i class="fas fa-arrow-left"></i> Retour
-                </button>
-            `;
+                <div class="section-item" onclick="showHistoryCategories('topScore')">
+                    <div class="section-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="section-details">
+                        <div class="section-title">Top Scores</div>
+                    </div>
+                </div>
+
+                <div class="section-item" onclick="showHistoryCategories('vip')">
+                    <div class="section-icon">
+                        <i class="fas fa-crown" style="color: var(--vip-color);"></i>
+                    </div>
+                    <div class="section-details">
+                        <div class="section-title">VIP</div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="bottom-back-button" onclick="showMainApp()">
+                <i class="fas fa-arrow-left"></i> Retour
+            </button>
+        `;
         }
 
         function showHistoryCategories(type) {
