@@ -9,9 +9,8 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    
     <style>
-        /* Styles CSS (identique à celui que tu as fourni) */
+        /* Styles CSS */
         :root {
             --primary-color: #0088cc;
             --secondary-color: #34b7f1;
@@ -120,11 +119,11 @@
             border: 4px solid #f3f3f3;
             border-top: 4px solid var(--primary-color);
             border-radius: 50%;
-            animation: spin 1s linear infinite;
+            animation: rotation 1s linear infinite;
             margin: 0 auto;
         }
 
-        @keyframes spin {
+        @keyframes rotation {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
@@ -601,7 +600,6 @@
         <div class="header">
             <h1 class="header-title">BetSmart <span class="pro-text">PRO</span></h1>
         </div>
-
         <div class="subscription-box">
             <h2>Accédez à l'application</h2>
             <p style="margin: 15px 0;">Pour accéder à toutes les fonctionnalités de BetSmart Pro, veuillez vous abonner à notre canal Telegram.</p>
@@ -615,19 +613,17 @@
                 <div class="loading-spinner"></div>
             </div>
         </div>
-
         <div class="arguments-container">
             <h3>Pourquoi choisir BetSmart <span class="pro-text">PRO</span> ?</h3>
             <ul>
-                <li><i class="fas fa-brain"></i> Utilisation de l'intelligence artificielle pour des prédictions précises.</li>
-                <li><i class="fas fa-calculator"></i> Modèles de calcul avancés basés sur les côtes en temps réel.</li>
+                <li><i class="fas fa-brain"></i> Utilisation de l'intelligence artificielle pour des prédictions explicites.</li>
+                <li><i class="fas fa-calculator"></i> Modèles de calcul avancés exploités sur les côtes en temps réel.</li>
                 <li><i class="fas fa-clock"></i> Prédictions générées automatiquement à partir de 9h chaque jour.</li>
                 <li><i class="fas fa-trophy"></i> Des résultats fiables pour maximiser vos gains.</li>
                 <li><i class="fas fa-star"></i> Une application intuitive et facile à utiliser.</li>
             </ul>
         </div>
     </div>
-
     <nav class="nav-bottom hidden" id="nav-bottom">
         <a class="nav-item" id="nav-home" onclick="showMainApp()">
             <i class="fas fa-home"></i>
@@ -642,7 +638,6 @@
             <span>VIP</span>
         </a>
     </nav>
-
     <script>
         // Configuration Firebase
         const firebaseConfig = {
@@ -656,7 +651,7 @@
             measurementId: "G-623SHSQMRL"
         };
 
-        // Initialize Firebase
+        // Initialiser Firebase
         firebase.initializeApp(firebaseConfig);
         const analytics = firebase.analytics();
         const database = firebase.database();
@@ -664,7 +659,7 @@
         const tg = window.Telegram.WebApp;
         const TELEGRAM_BOT_TOKEN = '7469991306:AAE3c2AtRQf5qDgVCGVEcl0QAtaI9Wl8NiM';
         const CHANNEL_USERNAME = 'alvecapital1';
-        
+
         let currentFIFAQuestion = 0;
         let fifaAnswers = {};
         let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
@@ -702,12 +697,10 @@
                 });
 
                 const data = await response.json();
-                
                 if (data.ok && data.result && (data.result.status === 'member' || data.result.status === 'administrator' || data.result.status === 'creator')) {
                     loading.classList.add('hidden');
                     checkButton.classList.add('verified');
                     checkButton.innerHTML = '<i class="fas fa-check-circle"></i> Vérifié ✅';
-                    
                     setTimeout(() => {
                         document.querySelector('.subscription-box').remove();
                         document.querySelector('.arguments-container').remove();
@@ -731,19 +724,17 @@
                 <div class="header">
                     <h1 class="header-title">BetSmart <span class="pro-text">PRO</span></h1>
                 </div>
-
                 <div style="text-align: center; margin: 20px 0;">
                     <button class="youtube-button" onclick="window.open('https://www.youtube.com/@alvecapital', '_blank');">
                         <i class="fab fa-youtube"></i> ALVE CAPITAL
                     </button>
-                    <button class="youtube-button" onclick="window.open('https://www.youtube.com/@AlexVerol2', '_blank');">
+                    <button class="youtube-button" onclick="window.open('https://www.youtube.com/@AlexVerol2','_blank');">
                         <i class="fab fa-youtube"></i> ALEX VEROL
                     </button>
                     <p class="description">
                         BetSmart <span class="pro-text">PRO</span> utilise des algorithmes avancés pour vous fournir des prédictions sportives précises et fiables.
                     </p>
                 </div>
-
                 <div class="menu-grid">
                     <div class="menu-card" onclick="showComboPage()">
                         <div class="menu-icon">
@@ -751,21 +742,18 @@
                         </div>
                         <div class="menu-title">Combo du Jour</div>
                     </div>
-
                     <div class="menu-card" onclick="showTopScore()">
                         <div class="menu-icon">
                             <i class="fas fa-trophy"></i>
                         </div>
                         <div class="menu-title">Top Score</div>
                     </div>
-
                     <div class="menu-card" onclick="showFavorites()">
                         <div class="menu-icon">
                             <i class="fas fa-star"></i>
                         </div>
                         <div class="menu-title">Favoris</div>
                     </div>
-
                     <div class="menu-card" onclick="showHistory()">
                         <div class="menu-icon">
                             <i class="fas fa-history"></i>
@@ -789,7 +777,6 @@
                 <div class="header">
                     <h1 class="header-title">Combo du Jour</h1>
                 </div>
-
                 ${sections.map(section => `
                     <div class="prediction-section" onclick="showPredictionDetails('${section.id}')">
                         <div class="prediction-type">
@@ -798,7 +785,6 @@
                         </div>
                     </div>
                 `).join('')}
-
                 <button class="bottom-back-button" onclick="showMainApp()">
                     <i class="fas fa-arrow-left"></i> Retour
                 </button>
@@ -807,32 +793,28 @@
 
         function showPredictionDetails(type) {
             const matches = getPredictionMatches(type);
-
             document.getElementById('main').innerHTML = `
                 <div class="header">
                     <h1 class="header-title">${getTypeTitle(type)}</h1>
                 </div>
-
                 ${matches.map(match => `
                     <div class="prediction-section">
                         <div class="match-league">${match.league}</div>
                         <div class="match-details">
-                            <div class="match-teams">${match.home} vs ${match.away}</div>
+                            <div class="match-teams">${match.home} contre ${match.away}</div>
                             <div class="match-time">
                                 <i class="far fa-clock"></i> ${match.time}
                             </div>
                             <div class="prediction-value">
                                 ${match.prediction}
                                 <span class="reliability-badge">${match.confidence}%</span>
-                                <button class="favorite-btn ${isFavorite(match.id) ? 'active' : ''}" 
-                                        onclick="toggleFavorite('${match.id}')">
+                                <button class="favorite-btn ${isFavorite(match.id) ? 'active' : ''}" onclick="toggleFavorite('${match.id}')">
                                     <i class="fas fa-star"></i>
                                 </button>
                             </div>
                         </div>
                     </div>
                 `).join('')}
-
                 <button class="bottom-back-button" onclick="showComboPage()">
                     <i class="fas fa-arrow-left"></i> Retour
                 </button>
@@ -843,7 +825,7 @@
             const matches = [
                 {
                     id: 'ts1',
-                    league: 'Champions League',
+                    league: 'Ligue des Champions',
                     home: 'PSG',
                     away: 'Bayern Munich',
                     time: '20:45',
@@ -863,27 +845,24 @@
 
             document.getElementById('main').innerHTML = `
                 <div class="header">
-                    <h1 class="header-title">Top Scores</h1>
+                    <h1 class="header-title">Meilleurs scores</h1>
                 </div>
-
                 ${matches.map(match => `
                     <div class="top-score-match">
                         <div class="match-league">${match.league}</div>
-                        <div class="match-teams">${match.home} vs ${match.away}</div>
+                        <div class="match-teams">${match.home} contre ${match.away}</div>
                         <div class="match-time">
                             <i class="far fa-clock"></i> ${match.time}
                         </div>
                         <div class="score-prediction">
                             ${match.predictions.join(' ou ')}
                             <span class="reliability-badge">${match.confidence}%</span>
-                            <button class="favorite-btn ${isFavorite(match.id) ? 'active' : ''}" 
-                                    onclick="toggleFavorite('${match.id}')">
+                            <button class="favorite-btn ${isFavorite(match.id) ? 'active' : ''}" onclick="toggleFavorite('${match.id}')">
                                 <i class="fas fa-star"></i>
                             </button>
                         </div>
                     </div>
                 `).join('')}
-
                 <button class="bottom-back-button" onclick="showMainApp()">
                     <i class="fas fa-arrow-left"></i> Retour
                 </button>
@@ -912,8 +891,8 @@
                             time: '21:00'
                         },
                         {
-                            league: 'Liga',
-                            teams: 'Real Madrid vs Barcelona',
+                            league: 'La Liga',
+                            teams: 'Real Madrid vs Barcelone',
                             prediction: 'Double Chance 1X',
                             confidence: 92,
                             time: '20:00'
@@ -940,7 +919,6 @@
                 <div class="header">
                     <h1 class="header-title">Prédictions Premium</h1>
                 </div>
-
                 ${combos.map(combo => `
                     <div class="vip-combo">
                         <div class="vip-combo-header">
@@ -961,7 +939,6 @@
                         `).join('')}
                     </div>
                 `).join('')}
-
                 <button class="bottom-back-button" onclick="showMainApp()">
                     <i class="fas fa-arrow-left"></i> Retour
                 </button>
@@ -974,13 +951,11 @@
                 <div class="header">
                     <h1 class="header-title">FIFA Prédictions</h1>
                 </div>
-
                 <div class="fifa-container">
                     <div class="fifa-description">
                         <h3>Intelligence Artificielle</h3>
-                        <p>Notre système d'analyse avancé utilise l'IA pour générer des prédictions précises basées sur vos données.</p>
+                        <p>Notre système d'analyse avancé utilise l'IA pour générer des prédictions spécifiquement déterminées sur vos données.</p>
                     </div>
-
                     <div class="fifa-option" onclick="startFIFAQuestions('classic')">
                         <div class="menu-icon">
                             <i class="fas fa-futbol"></i>
@@ -988,7 +963,6 @@
                         <h3>FIFA Classique</h3>
                         <p>Analyse complète pour match régulier</p>
                     </div>
-                    
                     <div class="fifa-option" onclick="startFIFAQuestions('penalty')">
                         <div class="menu-icon">
                             <i class="fas fa-bullseye"></i>
@@ -997,7 +971,6 @@
                         <p>Analyse spécialisée pour les penaltys</p>
                     </div>
                 </div>
-
                 <button class="bottom-back-button" style="margin-top: 40px;" onclick="showMainApp()">
                     <i class="fas fa-arrow-left"></i> Retour
                 </button>
@@ -1009,7 +982,6 @@
                 <div class="header">
                     <h1 class="header-title">Historique</h1>
                 </div>
-
                 <div class="section-list">
                     <div class="section-item" onclick="showHistorySection('combo')">
                         <div class="section-icon">
@@ -1019,16 +991,14 @@
                             <div class="section-title">Combo du jour</div>
                         </div>
                     </div>
-
                     <div class="section-item" onclick="showHistorySection('topScore')">
                         <div class="section-icon">
                             <i class="fas fa-trophy"></i>
                         </div>
                         <div class="section-details">
-                            <div class="section-title">Top Scores</div>
+                            <div class="section-title">Meilleurs scores</div>
                         </div>
                     </div>
-
                     <div class="section-item" onclick="showHistorySection('vip')">
                         <div class="section-icon">
                             <i class="fas fa-crown vip-icon"></i>
@@ -1038,18 +1008,12 @@
                         </div>
                     </div>
                 </div>
-
-                <button class="bottom-back-button" onclick="showMainApp()">
-                    <i class="fas fa-arrow-left"></i> Retour
-                </button>
             `;
         }
 
         function showHistorySection(type) {
             const dateStr = formatDate(currentHistoryDate);
-
             if (type === 'combo') {
-                // Afficher les sections de prédictions comme dans le menu Combo du Jour
                 const sections = [
                     { id: 'victoire', icon: '🏆', title: 'Victoire Directe' },
                     { id: 'btts', icon: '⚽', title: 'Les 2 Équipes Marquent' },
@@ -1060,20 +1024,17 @@
 
                 document.getElementById('main').innerHTML = `
                     <div class="header">
-                        <h1 class="header-title">Historique Combo du Jour</h1>
+                        <h1 class="header-title">Combo historique du jour</h1>
                     </div>
-
                     <div class="history-navigation">
                         <button class="date-nav-btn" onclick="navigateHistory('prev')">
                             <i class="fas fa-chevron-left"></i>
                         </button>
                         <span class="current-date">${dateStr}</span>
-                        <button class="date-nav-btn" onclick="navigateHistory('next')" 
-                                ${isToday(currentHistoryDate) ? 'disabled' : ''}>
+                        <button class="date-nav-btn" onclick="navigateHistory('next')" ${isToday(currentHistoryDate) ? 'disabled' : ''}>
                             <i class="fas fa-chevron-right"></i>
                         </button>
                     </div>
-
                     ${sections.map(section => `
                         <div class="prediction-section">
                             <div class="prediction-type">
@@ -1095,31 +1056,25 @@
                             `).join('')}
                         </div>
                     `).join('')}
-
                     <button class="bottom-back-button" onclick="showHistory()">
                         <i class="fas fa-arrow-left"></i> Retour
                     </button>
                 `;
             } else if (type === 'topScore') {
-                // Afficher uniquement l'historique des scores exacts
                 const historicalScores = getHistoricalTopScores();
-                
                 document.getElementById('main').innerHTML = `
                     <div class="header">
-                        <h1 class="header-title">Historique Top Scores</h1>
+                        <h1 class="header-title">Meilleurs scores historiques</h1>
                     </div>
-
                     <div class="history-navigation">
                         <button class="date-nav-btn" onclick="navigateHistory('prev')">
                             <i class="fas fa-chevron-left"></i>
                         </button>
                         <span class="current-date">${dateStr}</span>
-                        <button class="date-nav-btn" onclick="navigateHistory('next')" 
-                                ${isToday(currentHistoryDate) ? 'disabled' : ''}>
+                        <button class="date-nav-btn" onclick="navigateHistory('next')" ${isToday(currentHistoryDate) ? 'disabled' : ''}>
                             <i class="fas fa-chevron-right"></i>
                         </button>
                     </div>
-
                     ${historicalScores.map(match => `
                         <div class="top-score-match">
                             <div class="match-league">${match.league}</div>
@@ -1133,31 +1088,25 @@
                             </div>
                         </div>
                     `).join('')}
-
                     <button class="bottom-back-button" onclick="showHistory()">
                         <i class="fas fa-arrow-left"></i> Retour
                     </button>
                 `;
             } else if (type === 'vip') {
-                // Afficher l'historique des combos VIP
                 const historicalCombos = getHistoricalVIPCombos();
-                
                 document.getElementById('main').innerHTML = `
                     <div class="header">
                         <h1 class="header-title">Historique VIP</h1>
                     </div>
-
                     <div class="history-navigation">
                         <button class="date-nav-btn" onclick="navigateHistory('prev')">
                             <i class="fas fa-chevron-left"></i>
                         </button>
                         <span class="current-date">${dateStr}</span>
-                        <button class="date-nav-btn" onclick="navigateHistory('next')" 
-                                ${isToday(currentHistoryDate) ? 'disabled' : ''}>
+                        <button class="date-nav-btn" onclick="navigateHistory('next')" ${isToday(currentHistoryDate) ? 'disabled' : ''}>
                             <i class="fas fa-chevron-right"></i>
                         </button>
                     </div>
-
                     ${historicalCombos.map(combo => `
                         <div class="vip-combo">
                             <div class="vip-combo-header">
@@ -1181,7 +1130,6 @@
                             `).join('')}
                         </div>
                     `).join('')}
-
                     <button class="bottom-back-button" onclick="showHistory()">
                         <i class="fas fa-arrow-left"></i> Retour
                     </button>
@@ -1190,7 +1138,6 @@
         }
 
         function getHistoricalPredictions(type) {
-            // Simulation de données historiques par type
             return [
                 {
                     league: 'Champions League',
@@ -1210,7 +1157,6 @@
         }
 
         function getHistoricalTopScores() {
-            // Simulation de données historiques pour les scores exacts
             return [
                 {
                     league: 'Champions League',
@@ -1230,7 +1176,6 @@
         }
 
         function getHistoricalVIPCombos() {
-            // Simulation de données historiques pour les combos VIP
             return [
                 {
                     title: 'Combo Premium #1',
@@ -1252,8 +1197,8 @@
                             confidence: 93
                         },
                         {
-                            league: 'Liga',
-                            teams: 'Real Madrid vs Barcelona',
+                            league: 'La Liga',
+                            teams: 'Real Madrid vs Barcelone',
                             prediction: 'Double Chance 1X',
                             status: 'win',
                             confidence: 92
@@ -1284,7 +1229,6 @@
             ];
         }
 
-        // Firebase functions
         async function savePredictionToFirebase(prediction) {
             try {
                 const ref = database.ref('predictions');
@@ -1293,7 +1237,7 @@
                     date: formatDate(new Date())
                 });
             } catch (error) {
-                console.error('Error saving prediction:', error);
+                console.error('Erreur lors de l\'enregistrement de la prédiction :', error);
             }
         }
 
@@ -1303,41 +1247,34 @@
                 const snapshot = await ref.orderByChild('date').limitToLast(days).once('value');
                 return snapshot.val() || {};
             } catch (error) {
-                console.error('Error getting historical predictions:', error);
+                console.error('Erreur lors de l\'obtention des prédictions historiques :', error);
                 return {};
             }
         }
 
         function showFavorites() {
             const favoritePredictions = getFavoritePredictions();
-
             document.getElementById('main').innerHTML = `
                 <div class="header">
                     <h1 class="header-title">Favoris</h1>
                 </div>
-
-                ${favoritePredictions.length > 0 ? 
-                    favoritePredictions.map(pred => `
-                        <div class="prediction-section">
-                            <div class="match-league">${pred.league}</div>
-                            <div class="match-details">
-                                <div class="match-teams">${pred.teams}</div>
-                                <div class="prediction-value">
-                                    ${pred.prediction}
-                                    <span class="reliability-badge">${pred.confidence}%</span>
-                                    <button class="favorite-btn active" 
-                                            onclick="toggleFavorite('${pred.id}')">
-                                        <i class="fas fa-star"></i>
-                                    </button>
-                                </div>
+                ${favoritePredictions.length > 0 ? favoritePredictions.map(pred => `
+                    <div class="prediction-section">
+                        <div class="match-league">${pred.league}</div>
+                        <div class="match-details">
+                            <div class="match-teams">${pred.teams}</div>
+                            <div class="prediction-value">
+                                ${pred.prediction}
+                                <span class="reliability-badge">${pred.confidence}%</span>
+                                <button class="favorite-btn active" onclick="toggleFavorite('${pred.id}')">
+                                    <i class="fas fa-star"></i>
+                                </button>
                             </div>
                         </div>
-                    `).join('') :
-                    `<div class="text-center p-8">
-                        <p>Aucun favori pour le moment</p>
-                    </div>`
-                }
-
+                    </div>
+                `).join('') : `<div class="text-center p-8">
+                    <p>Aucun favori pour le moment</p>
+                </div>`}
                 <button class="bottom-back-button" onclick="showMainApp()">
                     <i class="fas fa-arrow-left"></i> Retour
                 </button>
@@ -1347,7 +1284,7 @@
         function getFavoritePredictions() {
             return favorites.map(id => ({
                 id: id,
-                league: 'Champions League',
+                league: 'Ligue des Champions',
                 teams: 'PSG vs Bayern Munich',
                 prediction: 'Victoire PSG',
                 confidence: 85
@@ -1413,8 +1350,8 @@
                     {
                         id: 'u1',
                         league: 'La Liga',
-                        home: 'Atletico Madrid',
-                        away: 'Sevilla',
+                        home: 'Atlético Madrid',
+                        away: 'Séville',
                         time: '18:30',
                         prediction: 'Moins de 3.5 buts',
                         confidence: 82
@@ -1432,7 +1369,6 @@
                 favorites.splice(index, 1);
             }
             localStorage.setItem('favorites', JSON.stringify(favorites));
-            
             const button = event.currentTarget;
             button.classList.toggle('active');
         }
@@ -1442,12 +1378,7 @@
         }
 
         function formatDate(date) {
-            return date.toLocaleDateString('fr-FR', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
+            return date.toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
         }
 
         function isToday(date) {
