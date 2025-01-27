@@ -11,6 +11,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
     <style>
+        /* Styles CSS (identique à celui que tu as fourni) */
         :root {
             --primary-color: #0088cc;
             --secondary-color: #34b7f1;
@@ -702,7 +703,7 @@
 
                 const data = await response.json();
                 
-                if (data.ok && data.result && data.result.status !== 'left') {
+                if (data.ok && data.result && (data.result.status === 'member' || data.result.status === 'administrator' || data.result.status === 'creator')) {
                     loading.classList.add('hidden');
                     checkButton.classList.add('verified');
                     checkButton.innerHTML = '<i class="fas fa-check-circle"></i> Vérifié ✅';
@@ -901,7 +902,6 @@
                             teams: 'PSG vs Bayern Munich',
                             prediction: 'Les deux équipes marquent',
                             confidence: 95,
-                            time ```javascript
                             time: '20:45'
                         },
                         {
@@ -1484,4 +1484,5 @@
 
         document.addEventListener('DOMContentLoaded', initApp);
     </script>
-</body
+</body>
+</html>
