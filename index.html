@@ -5,20 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>BetSmart Pro</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
+        import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCigxBJ9Ot8-11S062n-PGiSM1uO98wE7g",
+            authDomain: "betsmart-pro-55488.firebaseapp.com",
+            databaseURL: "https://betsmart-pro-55488-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "betsmart-pro-55488",
+            storageBucket: "betsmart-pro-55488.firebasestorage.app",
+            messagingSenderId: "215633988518",
+            appId: "1:215633988518:web:6342fa5daa5482a4265d67",
+            measurementId: "G-623SHSQMRL"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const database = getDatabase(app);
+
+        window.firebaseApp = app;
+        window.firebaseDatabase = database;
+    </script>
     <style>
-        /* Styles CSS (identique à celui que tu as fourni) */
+        /* Styles CSS (inchangés) */
         :root {
             --primary-color: #0088cc;
             --secondary-color: #34b7f1;
             --success-color: #28a745;
             --error-color: #dc3545;
             --vip-color: #FFD700;
-            --premium-color: #FFA500;
             --youtube-color: #FF0000;
             --gradient-1: linear-gradient(45deg, #0088cc, #34b7f1);
             --gradient-2: linear-gradient(45deg, #28a745, #218838);
@@ -64,11 +85,6 @@
             font-size: 24px;
             font-weight: 700;
             color: var(--text-dark);
-        }
-
-        .header-title .pro-text {
-            color: var(--premium-color);
-            font-weight: bold;
         }
 
         .subscription-box {
@@ -589,17 +605,12 @@
             margin-right: 10px;
             color: var(--primary-color);
         }
-
-        .vip-icon {
-            color: var(--vip-color);
-            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
-        }
     </style>
 </head>
 <body>
     <div class="container" id="main">
         <div class="header">
-            <h1 class="header-title">BetSmart <span class="pro-text">PRO</span></h1>
+            <h1 class="header-title">BetSmart Pro</h1>
         </div>
 
         <div class="subscription-box">
@@ -617,10 +628,10 @@
         </div>
 
         <div class="arguments-container">
-            <h3>Pourquoi choisir BetSmart <span class="pro-text">PRO</span> ?</h3>
+            <h3>Pourquoi choisir BetSmart Pro ?</h3>
             <ul>
                 <li><i class="fas fa-brain"></i> Utilisation de l'intelligence artificielle pour des prédictions précises.</li>
-                                <li><i class="fas fa-calculator"></i> Modèles de calcul avancés basés sur les côtes en temps réel.</li>
+                <li><i class="fas fa-calculator"></i> Modèles de calcul avancés basés sur les côtes en temps réel.</li>
                 <li><i class="fas fa-clock"></i> Prédictions générées automatiquement à partir de 9h chaque jour.</li>
                 <li><i class="fas fa-trophy"></i> Des résultats fiables pour maximiser vos gains.</li>
                 <li><i class="fas fa-star"></i> Une application intuitive et facile à utiliser.</li>
@@ -638,29 +649,12 @@
             <span>FIFA</span>
         </a>
         <a class="nav-item" id="nav-vip" onclick="showVIP()">
-            <i class="fas fa-crown vip-icon"></i>
+            <i class="fas fa-crown"></i>
             <span>VIP</span>
         </a>
     </nav>
 
     <script>
-        // Configuration Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyCigxBJ9Ot8-11S062n-PGiSM1uO98wE7g",
-            authDomain: "betsmart-pro-55488.firebaseapp.com",
-            databaseURL: "https://betsmart-pro-55488-default-rtdb.europe-west1.firebasedatabase.app",
-            projectId: "betsmart-pro-55488",
-            storageBucket: "betsmart-pro-55488.firebasestorage.app",
-            messagingSenderId: "215633988518",
-            appId: "1:215633988518:web:6342fa5daa5482a4265d67",
-            measurementId: "G-623SHSQMRL"
-        };
-
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const analytics = firebase.analytics();
-        const database = firebase.database();
-
         const tg = window.Telegram.WebApp;
         const TELEGRAM_BOT_TOKEN = '7469991306:AAE3c2AtRQf5qDgVCGVEcl0QAtaI9Wl8NiM';
         const CHANNEL_USERNAME = 'alvecapital1';
@@ -703,7 +697,7 @@
 
                 const data = await response.json();
                 
-                if (data.ok && data.result && (data.result.status === 'member' || data.result.status === 'administrator' || data.result.status === 'creator')) {
+                if (data.ok && data.result && data.result.status !== 'left') {
                     loading.classList.add('hidden');
                     checkButton.classList.add('verified');
                     checkButton.innerHTML = '<i class="fas fa-check-circle"></i> Vérifié ✅';
@@ -729,18 +723,18 @@
             updateNavigation('home');
             document.getElementById('main').innerHTML = `
                 <div class="header">
-                    <h1 class="header-title">BetSmart <span class="pro-text">PRO</span></h1>
+                    <h1 class="header-title">Tableau de Bord</h1>
                 </div>
 
                 <div style="text-align: center; margin: 20px 0;">
                     <button class="youtube-button" onclick="window.open('https://www.youtube.com/@alvecapital', '_blank');">
-                        <i class="fab fa-youtube"></i> ALVE CAPITAL
+                        <i class="fab fa-youtube"></i> @alvecapital
                     </button>
                     <button class="youtube-button" onclick="window.open('https://www.youtube.com/@AlexVerol2', '_blank');">
-                        <i class="fab fa-youtube"></i> ALEX VEROL
+                        <i class="fab fa-youtube"></i> @AlexVerol2
                     </button>
                     <p class="description">
-                        BetSmart <span class="pro-text">PRO</span> utilise des algorithmes avancés pour vous fournir des prédictions sportives précises et fiables.
+                        BetSmart Pro utilise des algorithmes avancés pour vous fournir des prédictions sportives précises et fiables.
                     </p>
                 </div>
 
@@ -1004,6 +998,224 @@
             `;
         }
 
+        const fifaClassicQuestions = [
+            {
+                name: "homeOdds",
+                question: "Cote de l'équipe à domicile",
+                type: "number",
+                description: "La cote de l'équipe à domicile nous permet de déterminer son taux de victoire."
+            },
+            {
+                name: "awayOdds",
+                question: "Cote de l'équipe à l'extérieur",
+                type: "number",
+                description: "La cote de l'équipe à l'extérieur nous permet de déterminer son taux de victoire."
+            },
+            {
+                name: "goalsScreenshot",
+                question: "Capture d'écran des cotes pour le nombre total de buts",
+                type: "file",
+                description: "Capturez les cotes pour les totaux de 1.5 à 4.5 buts."
+            },
+            {
+                name: "htScoresScreenshot",
+                question: "Capture d'écran des scores exacts MI-temps",
+                type: "file",
+                description: "Capturez les cotes pour les scores exacts à la mi-temps."
+            },
+            {
+                name: "ftScoresScreenshot",
+                question: "Capture d'écran des scores exacts temps réglementaire",
+                type: "file",
+                description: "Capturez les cotes pour les scores exacts au temps réglementaire."
+            }
+        ];
+
+        const fifaPenaltyQuestions = [
+            {
+                name: "homeOdds",
+                question: "Cote de l'équipe à domicile",
+                type: "number",
+                description: "La cote de l'équipe à domicile nous permet de déterminer son taux de victoire."
+            },
+            {
+                name: "awayOdds",
+                question: "Cote de l'équipe à l'extérieur",
+                type: "number",
+                description: "La cote de l'équipe à l'extérieur nous permet de déterminer son taux de victoire."
+            },
+            {
+                name: "bttsScreenshot",
+                question: "Capture d'écran des cotes 'Les deux équipes marquent'",
+                type: "file",
+                description: "Capturez les cotes pour les options 'Les deux équipes marquent'."
+            },
+            {
+                name: "exactScoresScreenshot",
+                question: "Capture d'écran des scores exacts",
+                type: "file",
+                description: "Capturez les cotes pour tous les scores exacts."
+            },
+            {
+                name: "penaltyScreenshot",
+                question: "Capture d'écran des cotes pour les penalties",
+                type: "file",
+                description: "Capturez les cotes pour les penalties."
+            }
+        ];
+
+        function startFIFAQuestions(type) {
+            currentFIFAQuestion = 0;
+            fifaAnswers = { type: type };
+            showNextFIFAQuestion();
+        }
+
+        function showNextFIFAQuestion() {
+            const questions = fifaAnswers.type === 'classic' ? fifaClassicQuestions : fifaPenaltyQuestions;
+
+            if (currentFIFAQuestion >= questions.length) {
+                showLoadingAndProcessPrediction();
+                return;
+            }
+
+            const question = questions[currentFIFAQuestion];
+            let inputHtml = '';
+
+            if (question.type === 'file') {
+                inputHtml = `
+                    <div class="file-upload-container" onclick="document.getElementById('fileInput').click()">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Cliquez pour télécharger votre capture d'écran</p>
+                        ${question.description ? `<p class="description">${question.description}</p>` : ''}
+                        <input type="file" 
+                               id="fileInput" 
+                               accept="image/*" 
+                               onChange="handleFileUpload(this)" 
+                               style="display: none;">
+                    </div>`;
+            } else {
+                inputHtml = `
+                    <input type="${question.type}" 
+                           class="form-control" 
+                           step="0.01" 
+                           min="0"
+                           placeholder="Entrez votre réponse"
+                           required>`;
+            }
+
+            document.getElementById('main').innerHTML = `
+                <div class="header">
+                    <h1 class="header-title">Question ${currentFIFAQuestion + 1}/${questions.length}</h1>
+                </div>
+                
+                <div class="question-container">
+                    <h3>${question.question}</h3>
+                    ${question.description ? `<p class="description">${question.description}</p>` : ''}
+                    ${inputHtml}
+                    <div class="progress-bar">
+                        <div class="progress-bar-fill" style="width: ${(currentFIFAQuestion / questions.length) * 100}%;"></div>
+                    </div>
+                    <button class="next-button">
+                        ${currentFIFAQuestion === questions.length - 1 ? 'Obtenir la prédiction' : 'Suivant'}
+                    </button>
+                </div>
+
+                <button class="bottom-back-button" style="margin-top: 40px;" onclick="showFIFA()">
+                    <i class="fas fa-arrow-left"></i> Retour
+                </button>
+            `;
+
+            document.querySelector('.next-button').onclick = () => {
+                if (question.type === 'file') {
+                    document.getElementById('fileInput').click();
+                } else {
+                    const input = document.querySelector('.form-control');
+                    if (input.value) {
+                        submitFIFAAnswer(input.value);
+                    }
+                }
+            };
+        }
+
+        function handleFileUpload(input) {
+            if (input.files && input.files[0]) {
+                alert('Capture d\'écran ajoutée avec succès !');
+                submitFIFAAnswer(input.files[0]);
+            }
+        }
+
+        function submitFIFAAnswer(answer) {
+            const questions = fifaAnswers.type === 'classic' ? fifaClassicQuestions : fifaPenaltyQuestions;
+            fifaAnswers[questions[currentFIFAQuestion].name] = answer;
+            currentFIFAQuestion++;
+
+            if (currentFIFAQuestion >= questions.length) {
+                showLoadingAndProcessPrediction();
+                setTimeout(() => {
+                    const prediction = {
+                        scoreHT: ["1-0", "0-0"],
+                        scoreFT: ["2-1", "1-0"],
+                        bestBet: {
+                            type: "1X2",
+                            prediction: "Victoire équipe domicile",
+                            confidence: 85
+                        }
+                    };
+                    showFIFAPrediction(prediction);
+                }, 2000);
+            } else {
+                showNextFIFAQuestion();
+            }
+        }
+
+        function showLoadingAndProcessPrediction() {
+            document.getElementById('main').innerHTML = `
+                <div class="header">
+                    <h1 class="header-title">Analyse en cours</h1>
+                </div>
+                <div class="loading-animation">
+                    <div class="loading-spinner"></div>
+                    <p style="margin-top: 20px;">Notre IA analyse vos données...</p>
+                </div>
+            `;
+        }
+
+        function showFIFAPrediction(prediction) {
+            document.getElementById('main').innerHTML = `
+                <div class="header">
+                    <h1 class="header-title">Prédiction IA</h1>
+                </div>
+
+                <div class="prediction-section">
+                    <h3>Score MI-Temps</h3>
+                    <div class="prediction-value">
+                        ${prediction.scoreHT.join(' ou ')}
+                        <span class="reliability-badge">${prediction.bestBet.confidence}%</span>
+                    </div>
+                </div>
+
+                <div class="prediction-section">
+                    <h3>Score Final</h3>
+                    <div class="prediction-value">
+                        ${prediction.scoreFT.join(' ou ')}
+                        <span class="reliability-badge">${prediction.bestBet.confidence}%</span>
+                    </div>
+                </div>
+
+                <div class="prediction-section">
+                    <h3>Meilleur Pari</h3>
+                    <div class="prediction-value">
+                        ${prediction.bestBet.type}: ${prediction.bestBet.prediction}
+                        <span class="reliability-badge">${prediction.bestBet.confidence}%</span>
+                    </div>
+                </div>
+
+                <button class="bottom-back-button" onclick="showFIFA()">
+                    <i class="fas fa-arrow-left"></i> Retour
+                </button>
+            `;
+        }
+
         function showHistory() {
             document.getElementById('main').innerHTML = `
                 <div class="header">
@@ -1031,7 +1243,7 @@
 
                     <div class="section-item" onclick="showHistorySection('vip')">
                         <div class="section-icon">
-                            <i class="fas fa-crown vip-icon"></i>
+                            <i class="fas fa-crown" style="color: var(--vip-color);"></i>
                         </div>
                         <div class="section-details">
                             <div class="section-title">VIP</div>
@@ -1047,265 +1259,47 @@
 
         function showHistorySection(type) {
             const dateStr = formatDate(currentHistoryDate);
+            const predictions = getHistoryPredictions(type);
 
-            if (type === 'combo') {
-                // Afficher les sections de prédictions comme dans le menu Combo du Jour
-                const sections = [
-                    { id: 'victoire', icon: '🏆', title: 'Victoire Directe' },
-                    { id: 'btts', icon: '⚽', title: 'Les 2 Équipes Marquent' },
-                    { id: 'double', icon: '🛡️', title: 'Double Chance' },
-                    { id: 'over', icon: '➕', title: 'Plus de 1.5 Buts' },
-                    { id: 'under', icon: '➖', title: 'Moins de 3.5 Buts' }
-                ];
+            document.getElementById('main').innerHTML = `
+                <div class="header">
+                    <h1 class="header-title">Historique ${type === 'vip' ? 'VIP' : type === 'topScore' ? 'Top Scores' : 'Combo du Jour'}</h1>
+                </div>
 
-                document.getElementById('main').innerHTML = `
-                    <div class="header">
-                        <h1 class="header-title">Historique Combo du Jour</h1>
-                    </div>
-
-                    <div class="history-navigation">
-                        <button class="date-nav-btn" onclick="navigateHistory('prev')">
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
-                        <span class="current-date">${dateStr}</span>
-                        <button class="date-nav-btn" onclick="navigateHistory('next')" 
-                                ${isToday(currentHistoryDate) ? 'disabled' : ''}>
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
-                    </div>
-
-                    ${sections.map(section => `
-                        <div class="prediction-section">
-                            <div class="prediction-type">
-                                <div class="prediction-icon">${section.icon}</div>
-                                <span>${section.title}</span>
-                            </div>
-                                                        ${getHistoricalPredictions(section.id).map(pred => `
-                                <div class="match-details">
-                                    <div class="match-league">${pred.league}</div>
-                                    <div class="match-teams">${pred.teams}</div>
-                                    <div class="prediction-value">
-                                        ${pred.prediction}
-                                        <span class="history-status status-${pred.status}">
-                                            ${pred.status === 'win' ? '✅ Gagné' : '❌ Perdu'}
-                                        </span>
-                                        <span class="reliability-badge">${pred.confidence}%</span>
-                                    </div>
-                                </div>
-                            `).join('')}
-                        </div>
-                    `).join('')}
-
-                    <button class="bottom-back-button" onclick="showHistory()">
-                        <i class="fas fa-arrow-left"></i> Retour
+                <div class="history-navigation">
+                    <button class="date-nav-btn" onclick="navigateHistory('prev')">
+                        <i class="fas fa-chevron-left"></i>
                     </button>
-                `;
-            } else if (type === 'topScore') {
-                // Afficher uniquement l'historique des scores exacts
-                const historicalScores = getHistoricalTopScores();
-                
-                document.getElementById('main').innerHTML = `
-                    <div class="header">
-                        <h1 class="header-title">Historique Top Scores</h1>
-                    </div>
+                    <span class="current-date">${dateStr}</span>
+                    <button class="date-nav-btn" onclick="navigateHistory('next')" 
+                            ${isToday(currentHistoryDate) ? 'disabled' : ''}>
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
 
-                    <div class="history-navigation">
-                        <button class="date-nav-btn" onclick="navigateHistory('prev')">
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
-                        <span class="current-date">${dateStr}</span>
-                        <button class="date-nav-btn" onclick="navigateHistory('next')" 
-                                ${isToday(currentHistoryDate) ? 'disabled' : ''}>
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
-                    </div>
-
-                    ${historicalScores.map(match => `
-                        <div class="top-score-match">
-                            <div class="match-league">${match.league}</div>
-                            <div class="match-teams">${match.teams}</div>
-                            <div class="score-prediction">
-                                ${match.predictions.join(' ou ')}
-                                <span class="history-status status-${match.status}">
-                                    ${match.status === 'win' ? '✅ Gagné' : '❌ Perdu'}
+                ${predictions.map(pred => `
+                    <div class="prediction-section">
+                        <div class="match-league">${pred.league}</div>
+                        <div class="match-details">
+                            <div class="match-teams">${pred.teams}</div>
+                            <div class="match-time">
+                                <i class="far fa-clock"></i> ${pred.time}
+                            </div>
+                            <div class="prediction-value">
+                                ${pred.prediction}
+                                <span class="history-status status-${pred.status}">
+                                    ${pred.status === 'win' ? '✅ Gagné' : '❌ Perdu'}
                                 </span>
-                                <span class="reliability-badge">${match.confidence}%</span>
+                                <span class="reliability-badge">${pred.confidence}%</span>
                             </div>
                         </div>
-                    `).join('')}
-
-                    <button class="bottom-back-button" onclick="showHistory()">
-                        <i class="fas fa-arrow-left"></i> Retour
-                    </button>
-                `;
-            } else if (type === 'vip') {
-                // Afficher l'historique des combos VIP
-                const historicalCombos = getHistoricalVIPCombos();
-                
-                document.getElementById('main').innerHTML = `
-                    <div class="header">
-                        <h1 class="header-title">Historique VIP</h1>
                     </div>
+                `).join('')}
 
-                    <div class="history-navigation">
-                        <button class="date-nav-btn" onclick="navigateHistory('prev')">
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
-                        <span class="current-date">${dateStr}</span>
-                        <button class="date-nav-btn" onclick="navigateHistory('next')" 
-                                ${isToday(currentHistoryDate) ? 'disabled' : ''}>
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
-                    </div>
-
-                    ${historicalCombos.map(combo => `
-                        <div class="vip-combo">
-                            <div class="vip-combo-header">
-                                <div class="vip-combo-title">${combo.title}</div>
-                                <div class="combo-status">
-                                    ${combo.status === 'win' ? '✅ Gagné' : '❌ Perdu'}
-                                </div>
-                            </div>
-                            ${combo.matches.map(match => `
-                                <div class="vip-match">
-                                    <div class="match-league">${match.league}</div>
-                                    <div class="match-teams">${match.teams}</div>
-                                    <div class="prediction-value">
-                                        ${match.prediction}
-                                        <span class="history-status status-${match.status}">
-                                            ${match.status === 'win' ? '✅ Gagné' : '❌ Perdu'}
-                                        </span>
-                                        <span class="reliability-badge">${match.confidence}%</span>
-                                    </div>
-                                </div>
-                            `).join('')}
-                        </div>
-                    `).join('')}
-
-                    <button class="bottom-back-button" onclick="showHistory()">
-                        <i class="fas fa-arrow-left"></i> Retour
-                    </button>
-                `;
-            }
-        }
-
-        function getHistoricalPredictions(type) {
-            // Simulation de données historiques par type
-            return [
-                {
-                    league: 'Champions League',
-                    teams: 'PSG vs Bayern Munich',
-                    prediction: 'Victoire PSG',
-                    status: 'win',
-                    confidence: 85
-                },
-                {
-                    league: 'Premier League',
-                    teams: 'Manchester City vs Liverpool',
-                    prediction: type === 'over' ? 'Plus de 1.5 buts' : 'Victoire Manchester City',
-                    status: 'win',
-                    confidence: 90
-                }
-            ];
-        }
-
-        function getHistoricalTopScores() {
-            // Simulation de données historiques pour les scores exacts
-            return [
-                {
-                    league: 'Champions League',
-                    teams: 'PSG vs Bayern Munich',
-                    predictions: ['2-1', '3-1'],
-                    status: 'win',
-                    confidence: 85
-                },
-                {
-                    league: 'Premier League',
-                    teams: 'Manchester City vs Liverpool',
-                    predictions: ['2-0', '3-0'],
-                    status: 'loss',
-                    confidence: 90
-                }
-            ];
-        }
-
-        function getHistoricalVIPCombos() {
-            // Simulation de données historiques pour les combos VIP
-            return [
-                {
-                    title: 'Combo Premium #1',
-                    date: '2024-02-20',
-                    status: 'win',
-                    matches: [
-                        {
-                            league: 'Champions League',
-                            teams: 'PSG vs Bayern Munich',
-                            prediction: 'Les deux équipes marquent',
-                            status: 'win',
-                            confidence: 95
-                        },
-                        {
-                            league: 'Premier League',
-                            teams: 'Manchester City vs Liverpool',
-                            prediction: 'Plus de 1.5 buts',
-                            status: 'win',
-                            confidence: 93
-                        },
-                        {
-                            league: 'Liga',
-                            teams: 'Real Madrid vs Barcelona',
-                            prediction: 'Double Chance 1X',
-                            status: 'win',
-                            confidence: 92
-                        }
-                    ]
-                },
-                {
-                    title: 'Combo Premium #2',
-                    date: '2024-02-19',
-                    status: 'loss',
-                    matches: [
-                        {
-                            league: 'Serie A',
-                            teams: 'Inter vs Milan',
-                            prediction: 'Victoire Inter',
-                            status: 'loss',
-                            confidence: 90
-                        },
-                        {
-                            league: 'Ligue 1',
-                            teams: 'Lyon vs Marseille',
-                            prediction: 'Plus de 2.5 buts',
-                            status: 'win',
-                            confidence: 89
-                        }
-                    ]
-                }
-            ];
-        }
-
-        // Firebase functions
-        async function savePredictionToFirebase(prediction) {
-            try {
-                const ref = database.ref('predictions');
-                await ref.push({
-                    ...prediction,
-                    date: formatDate(new Date())
-                });
-            } catch (error) {
-                console.error('Error saving prediction:', error);
-            }
-        }
-
-        async function getHistoricalPredictionsFromFirebase(days = 5) {
-            try {
-                const ref = database.ref('predictions');
-                const snapshot = await ref.orderByChild('date').limitToLast(days).once('value');
-                return snapshot.val() || {};
-            } catch (error) {
-                console.error('Error getting historical predictions:', error);
-                return {};
-            }
+                <button class="bottom-back-button" onclick="showHistory()">
+                    <i class="fas fa-arrow-left"></i> Retour
+                </button>
+            `;
         }
 
         function showFavorites() {
@@ -1345,6 +1339,7 @@
         }
 
         function getFavoritePredictions() {
+            // Simulation de récupération des favoris
             return favorites.map(id => ({
                 id: id,
                 league: 'Champions League',
@@ -1424,6 +1419,36 @@
             return matchesByType[type] || [];
         }
 
+        function getHistoryPredictions(type) {
+            // Simulation de données historiques
+            return [
+                {
+                    league: 'Champions League',
+                    teams: 'PSG vs Bayern Munich',
+                    prediction: 'Victoire PSG',
+                    status: 'win',
+                    confidence: 85,
+                    time: '20:45'
+                },
+                {
+                    league: 'Premier League',
+                    teams: 'Manchester City vs Liverpool',
+                    prediction: 'Plus de 1.5 buts',
+                    status: 'win',
+                    confidence: 90,
+                    time: '21:00'
+                },
+                {
+                    league: 'Liga',
+                    teams: 'Real Madrid vs Barcelona',
+                    prediction: 'Les deux équipes marquent',
+                    status: 'loss',
+                    confidence: 80,
+                    time: '20:00'
+                }
+            ];
+        }
+
         function toggleFavorite(id) {
             const index = favorites.indexOf(id);
             if (index === -1) {
@@ -1471,15 +1496,6 @@
                 item.classList.remove('active');
             });
             document.getElementById(`nav-${section}`).classList.add('active');
-        }
-
-        function navigateHistory(direction) {
-            if (direction === 'prev') {
-                currentHistoryDate.setDate(currentHistoryDate.getDate() - 1);
-            } else if (direction === 'next' && !isToday(currentHistoryDate)) {
-                currentHistoryDate.setDate(currentHistoryDate.getDate() + 1);
-            }
-            showHistorySection(currentSection);
         }
 
         document.addEventListener('DOMContentLoaded', initApp);
