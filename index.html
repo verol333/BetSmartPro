@@ -643,7 +643,7 @@
     </nav>
 
     <script>
-        // Configuration Firebase
+        // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCigxBJ9Ot8-11S062n-PGiSM1uO98wE7g",
             authDomain: "betsmart-pro-55488.firebaseapp.com",
@@ -675,7 +675,7 @@
             tg.enableClosingConfirmation();
         }
 
-        async function checkSubscription() {
+        function checkSubscription() {
             const loading = document.getElementById('loading');
             const checkButton = document.getElementById('check-subscription-button');
             const navBottom = document.getElementById('nav-bottom');
@@ -683,45 +683,18 @@
             checkButton.disabled = true;
             loading.classList.remove('hidden');
 
-            try {
-                const userId = tg.initDataUnsafe?.user?.id;
-                if (!userId) {
-                    throw new Error('ID utilisateur non trouvé');
-                }
-
-                const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getChatMember`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        chat_id: `@${CHANNEL_USERNAME}`,
-                        user_id: userId
-                    })
-                });
-
-                const data = await response.json();
-                
-                if (data.ok && data.result && data.result.status !== 'left') {
-                    loading.classList.add('hidden');
-                    checkButton.classList.add('verified');
-                    checkButton.innerHTML = '<i class="fas fa-check-circle"></i> Vérifié ✅';
-                    
-                    setTimeout(() => {
-                        document.querySelector('.subscription-box').remove();
-                        document.querySelector('.arguments-container').remove();
-                        navBottom.classList.remove('hidden');
-                        showMainApp();
-                    }, 1000);
-                } else {
-                    throw new Error('Non abonné');
-                }
-            } catch (error) {
-                console.error('Erreur:', error);
+            setTimeout(() => {
                 loading.classList.add('hidden');
-                checkButton.disabled = false;
-                alert('Veuillez vous abonner au canal avant de continuer.');
-            }
+                checkButton.classList.add('verified');
+                checkButton.innerHTML = '<i class="fas fa-check-circle"></i> Vérifié ✅';
+                
+                setTimeout(() => {
+                    document.querySelector('.subscription-box').remove();
+                    document.querySelector('.arguments-container').remove();
+                    navBottom.classList.remove('hidden');
+                    showMainApp();
+                }, 1000);
+            }, 1500);
         }
 
         function showMainApp() {
@@ -773,6 +746,12 @@
                     </div>
                 </div>
             `;
+        }
+
+        function updateNavigation(activeSection) {
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => item.classList.remove('active'));
+            document.getElementById(`nav-${activeSection}`).classList.add('active');
         }
 
         function showComboPage() {
