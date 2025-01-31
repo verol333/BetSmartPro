@@ -11,6 +11,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
     <style>
+        /* Styles CSS (identique à celui que tu as fourni) */
         :root {
             --primary-color: #0088cc;
             --secondary-color: #34b7f1;
@@ -643,7 +644,7 @@
     </nav>
 
     <script>
-        // Firebase Configuration
+        // Configuration Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyCigxBJ9Ot8-11S062n-PGiSM1uO98wE7g",
             authDomain: "betsmart-pro-55488.firebaseapp.com",
@@ -675,7 +676,7 @@
             tg.enableClosingConfirmation();
         }
 
-        function checkSubscription() {
+        async function checkSubscription() {
             const loading = document.getElementById('loading');
             const checkButton = document.getElementById('check-subscription-button');
             const navBottom = document.getElementById('nav-bottom');
@@ -683,36 +684,63 @@
             checkButton.disabled = true;
             loading.classList.remove('hidden');
 
-            setTimeout(() => {
-                loading.classList.add('hidden');
-                checkButton.classList.add('verified');
-                checkButton.innerHTML = '<i class="fas fa-check-circle"></i> Vérifié ✅';
+            try {
+                const userId = tg.initDataUnsafe?.user?.id;
+                if (!userId) {
+                    throw new Error('ID utilisateur non trouvé');
+                }
+
+                const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getChatMember`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        chat_id: `@${CHANNEL_USERNAME}`,
+                        user_id: userId
+                    })
+                });
+
+                const data = await response.json();
                 
-                setTimeout(() => {
-                    document.querySelector('.subscription-box').remove();
-                    document.querySelector('.arguments-container').remove();
-                    navBottom.classList.remove('hidden');
-                    showMainApp();
-                }, 1000);
-            }, 1500);
+                if (data.ok && data.result && (data.result.status === 'member' || data.result.status === 'administrator' || data.result.status === 'creator')) {
+                    loading.classList.add('hidden');
+                    checkButton.classList.add('verified');
+                    checkButton.innerHTML = '<i class="fas fa-check-circle"></i> Vérifié ✅';
+                    
+                    setTimeout(() => {
+                        document.querySelector('.subscription-box').remove();
+                        document.querySelector('.arguments-container').remove();
+                        navBottom.classList.remove('hidden');
+                        showMainApp();
+                    }, 1000);
+                } else {
+                    throw new Error('Non abonné');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                loading.classList.add('hidden');
+                checkButton.disabled = false;
+                alert('Veuillez vous abonner au canal avant de continuer.');
+            }
         }
 
         function showMainApp() {
             updateNavigation('home');
             document.getElementById('main').innerHTML = `
                 <div class="header">
-                    <h1 class="header-title">Tableau de Bord</h1>
+                    <h1 class="header-title">BetSmart <span class="pro-text">PRO</span></h1>
                 </div>
 
                 <div style="text-align: center; margin: 20px 0;">
                     <button class="youtube-button" onclick="window.open('https://www.youtube.com/@alvecapital', '_blank');">
-                        <i class="fab fa-youtube"></i> @alvecapital
+                        <i class="fab fa-youtube"></i> ALVE CAPITAL
                     </button>
                     <button class="youtube-button" onclick="window.open('https://www.youtube.com/@AlexVerol2', '_blank');">
-                        <i class="fab fa-youtube"></i> @AlexVerol2
+                        <i class="fab fa-youtube"></i> ALEX VEROL
                     </button>
                     <p class="description">
-                        BetSmart Pro utilise des algorithmes avancés pour vous fournir des prédictions sportives précises et fiables.
+                        BetSmart <span class="pro-text">PRO</span> utilise des algorithmes avancés pour vous fournir des prédictions sportives précises et fiables.
                     </p>
                 </div>
 
@@ -746,12 +774,6 @@
                     </div>
                 </div>
             `;
-        }
-
-        function updateNavigation(activeSection) {
-            const navItems = document.querySelectorAll('.nav-item');
-            navItems.forEach(item => item.classList.remove('active'));
-            document.getElementById(`nav-${activeSection}`).classList.add('active');
         }
 
         function showComboPage() {
@@ -1462,4 +1484,5 @@
 
         document.addEventListener('DOMContentLoaded', initApp);
     </script>
-</body
+</body>
+</html>
